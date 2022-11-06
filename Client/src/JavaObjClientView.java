@@ -13,22 +13,28 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JavaObjClientView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private String UserName;
-	private static final int BUF_LEN = 128; // Windows Ã³·³ BUF_LEN À» Á¤ÀÇ
-	private Socket socket; // ¿¬°á¼ÒÄÏ
+	private static final int BUF_LEN = 128; // Windows ì²˜ëŸ¼ BUF_LEN ì„ ì •ì˜
+	private Socket socket; // ì—°ê²°ì†Œì¼“
 	private InputStream is;
 	private OutputStream os;
 	private DataInputStream dis;
 	private DataOutputStream dos;
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
+	
+	String imgsrc = "src/card.png";
+	ImageIcon cardImg = new ImageIcon(imgsrc);
+	JLabel card = new JLabel("New label");
 
 	public JavaObjClientView(String username, String ip_addr, String port_no) {
-		/*¼­¹ö¿Í Å¬¶óÀÌ¾ğÆ® ¿¬°á °ü·Ã ºÎºĞ*/
+		/*ì„œë²„ì™€ í´ë¼ì´ì–¸íŠ¸ ì—°ê²° ê´€ë ¨ ë¶€ë¶„*/
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
 		UserName = username;
 
@@ -50,7 +56,7 @@ public class JavaObjClientView extends JFrame {
 			e.printStackTrace();
 			AppendText("connect error");
 		}
-		/*¼­¹ö¿Í Å¬¶óÀÌ¾ğÆ® ¿¬°á °ü·Ã ºÎºĞ*/
+		/*ì„œë²„ì™€ í´ë¼ì´ì–¸íŠ¸ ì—°ê²° ê´€ë ¨ ë¶€ë¶„*/
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 630);
@@ -60,29 +66,25 @@ public class JavaObjClientView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		/*È­Åõ*/
-		ImageIcon imgicon1 = new ImageIcon("src/card.png");
-		Image img1 = imgicon1.getImage();
-		Image img2 = img1.getScaledInstance(100, 140, java.awt.Image.SCALE_SMOOTH);
-		ImageIcon imgicon2 = new ImageIcon(img2);
+		/*í™”íˆ¬*/
 		
-		JLabel card;
-		JLabel card2;
 		
-		card = new JLabel("New label");
+		card.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				ChatMsg obcm=new ChatMsg(UserName,"200",imgsrc);
+				SendObject(obcm);
+			}
+		});
+		
 		card.setBounds(200, 400, 100, 140);
-		card.setIcon(imgicon2);
+		card.setIcon(cardImg);
 		contentPane.add(card);
 		
-		card2 = new JLabel("New label");
-		card2.setBounds(200, 10, 100, 140);
-		card2.setIcon(imgicon2);
-		contentPane.add(card2);
 		setVisible(true);
-		/*È­Åõ*/
+		/*í™”íˆ¬*/
 	}
 
-	class ListenNetwork extends Thread { // Server Message¸¦ ¼ö½ÅÇØ¼­ È­¸é¿¡ Ç¥½Ã
+	class ListenNetwork extends Thread {
 		public void run() {
 			while (true) {
 				try {
@@ -103,31 +105,48 @@ public class JavaObjClientView extends JFrame {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 					} else
 						continue;
+					switch (cm.getCode()) {
+					case "200": // chat message
+						imgsrc=ChangeCard(cm.getData());
+						card.setIcon(cardImg);
+						
+						break;
+					case "300": // Image ì²¨ë¶€
+						break;
+					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
 					try {
 						ois.close();
 						oos.close();
 						socket.close();
+
 						break;
 					} catch (Exception ee) {
 						break;
-					} // catch¹® ³¡
-				} // ¹Ù±ù catch¹®³¡
+					} // catchë¬¸ ë
+				} // ë°”ê¹¥ catchë¬¸ë
 
 			}
 		}
 	}
 
-	public void AppendText(String msg) { // È­¸é¿¡ Ãâ·Â
+	public void AppendText(String msg) { // í™”ë©´ì— ì¶œë ¥
 		msg = msg.trim();
 	}
 
-	public void SendObject(Object ob) { // ¼­¹ö·Î ¸Ş¼¼Áö¸¦ º¸³»´Â ¸Ş¼Òµå
+	public void SendObject(Object ob) { // ì„œë²„ë¡œ ë©”ì„¸ì§€ë¥¼ ë³´ë‚´ëŠ” ë©”ì†Œë“œ
 		try {
 			oos.writeObject(ob);
 		} catch (IOException e) {
 			AppendText("SendObject Error");
 		}
+	}
+	
+	public String ChangeCard(String msg) {
+		if(msg=="src/card.png")
+			return "src/card2.png";
+		else
+			return "src/card.png";
 	}
 }
