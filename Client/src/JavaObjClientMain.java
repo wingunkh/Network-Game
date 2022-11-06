@@ -14,19 +14,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class JavaObjClientMain extends JFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUserName;
 	private JTextField txtIpAddress;
 	private JTextField txtPortNumber;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,9 +33,6 @@ public class JavaObjClientMain extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public JavaObjClientMain() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 254, 321);
@@ -104,5 +94,3 @@ public class JavaObjClientMain extends JFrame {
 		}
 	}
 }
-
-
