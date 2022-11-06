@@ -1,3 +1,8 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.FileDialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -5,39 +10,115 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.JToggleButton;
+import javax.swing.JList;
 
 public class JavaObjClientView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextField txtInput;
 	private String UserName;
-	private static final int BUF_LEN = 128; // Windows ì²˜ëŸ¼ BUF_LEN ì„ ì •ì˜
-	private Socket socket; // ì—°ê²°ì†Œì¼“
+	private JButton btnSend;
+	private static final int BUF_LEN = 128; // Windows Ã³·³ BUF_LEN À» Á¤ÀÇ
+	private Socket socket; // ¿¬°á¼ÒÄÏ
 	private InputStream is;
 	private OutputStream os;
+	
 	private DataInputStream dis;
 	private DataOutputStream dos;
+	
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
 	
-	String imgsrc = "src/card.png";
-	ImageIcon cardImg = new ImageIcon(imgsrc);
-	JLabel card = new JLabel("New label");
+	private JLabel lblUserName;
+	private JTextPane textArea;
+	private Frame frame;
+	private FileDialog fd;
+	private JButton imgBtn;
 
 	public JavaObjClientView(String username, String ip_addr, String port_no) {
-		/*ì„œë²„ì™€ í´ë¼ì´ì–¸íŠ¸ ì—°ê²° ê´€ë ¨ ë¶€ë¶„*/
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 900, 630);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(128, 255, 128));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(524, 10, 352, 471);
+		contentPane.add(scrollPane);
+		textArea = new JTextPane();
+		textArea.setEditable(true);
+		textArea.setFont(new Font("±¼¸²Ã¼", Font.PLAIN, 14));
+		scrollPane.setViewportView(textArea);
+
+		txtInput = new JTextField();
+		txtInput.setBounds(586, 492, 209, 40);
+		contentPane.add(txtInput);
+		txtInput.setColumns(10);
+
+		btnSend = new JButton("Send");
+		btnSend.setFont(new Font("±¼¸²", Font.PLAIN, 14));
+		btnSend.setBounds(807, 491, 69, 40);
+		contentPane.add(btnSend);
+
+		lblUserName = new JLabel("Name");
+		lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName.setBackground(Color.WHITE);
+		lblUserName.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName.setBounds(524, 545, 62, 40);
+		contentPane.add(lblUserName);
+		setVisible(true);
+
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
 		UserName = username;
+		lblUserName.setText(username);
 
+		imgBtn = new JButton("+");
+		imgBtn.setFont(new Font("±¼¸²", Font.PLAIN, 16));
+		imgBtn.setBounds(524, 491, 50, 40);
+		contentPane.add(imgBtn);
+		
+		JButton btnNewButton = new JButton("Á¾ ·á");
+		btnNewButton.setFont(new Font("±¼¸²", Font.PLAIN, 14));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
+				SendObject(msg);
+				System.exit(0);
+			}
+		});
+		btnNewButton.setBounds(807, 545, 69, 40);
+		contentPane.add(btnNewButton);
+		
+		JLabel card = new JLabel("New label");
+		card.setBounds(162, 435, 100, 150);
+		contentPane.add(card);
+		
+		ImageIcon imgIcon1 = new ImageIcon("src/card1.png");
+		card.setIcon(imgIcon1);
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
 
@@ -50,40 +131,22 @@ public class JavaObjClientView extends JFrame {
 			
 			ListenNetwork net = new ListenNetwork();
 			net.start();
+			TextSendAction action = new TextSendAction();
+			btnSend.addActionListener(action);
+			txtInput.addActionListener(action);
+			txtInput.requestFocus();
+			ImageSendAction action2 = new ImageSendAction();
+			imgBtn.addActionListener(action2);
 
 		} catch (NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			AppendText("connect error");
 		}
-		/*ì„œë²„ì™€ í´ë¼ì´ì–¸íŠ¸ ì—°ê²° ê´€ë ¨ ë¶€ë¶„*/
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 630);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(128, 255, 128));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		/*í™”íˆ¬*/
-		
-		
-		card.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				ChatMsg obcm=new ChatMsg(UserName,"200",imgsrc);
-				SendObject(obcm);
-			}
-		});
-		
-		card.setBounds(200, 400, 100, 140);
-		card.setIcon(cardImg);
-		contentPane.add(card);
-		
-		setVisible(true);
-		/*í™”íˆ¬*/
+
 	}
 
+	// Server Message¸¦ ¼ö½ÅÇØ¼­ È­¸é¿¡ Ç¥½Ã
 	class ListenNetwork extends Thread {
 		public void run() {
 			while (true) {
@@ -107,11 +170,11 @@ public class JavaObjClientView extends JFrame {
 						continue;
 					switch (cm.getCode()) {
 					case "200": // chat message
-						imgsrc=ChangeCard(cm.getData());
-						card.setIcon(cardImg);
-						
+						AppendText(msg);
 						break;
-					case "300": // Image ì²¨ë¶€
+					case "300": // Image Ã·ºÎ
+						AppendText("[" + cm.getId() + "]");
+						AppendImage(cm.img);
 						break;
 					}
 				} catch (IOException e) {
@@ -124,29 +187,140 @@ public class JavaObjClientView extends JFrame {
 						break;
 					} catch (Exception ee) {
 						break;
-					} // catchë¬¸ ë
-				} // ë°”ê¹¥ catchë¬¸ë
+					} // catch¹® ³¡
+				} // ¹Ù±ù catch¹®³¡
 
 			}
 		}
 	}
 
-	public void AppendText(String msg) { // í™”ë©´ì— ì¶œë ¥
-		msg = msg.trim();
+	// keyboard enter key Ä¡¸é ¼­¹ö·Î Àü¼Û
+	class TextSendAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// Send buttonÀ» ´©¸£°Å³ª ¸Þ½ÃÁö ÀÔ·ÂÇÏ°í Enter key Ä¡¸é
+			if (e.getSource() == btnSend || e.getSource() == txtInput) {
+				String msg = null;
+				msg = txtInput.getText();
+				SendMessage(msg);
+				txtInput.setText(""); // ¸Þ¼¼Áö¸¦ º¸³»°í ³ª¸é ¸Þ¼¼Áö ¾²´ÂÃ¢À» ºñ¿î´Ù.
+				txtInput.requestFocus(); // ¸Þ¼¼Áö¸¦ º¸³»°í Ä¿¼­¸¦ ´Ù½Ã ÅØ½ºÆ® ÇÊµå·Î À§Ä¡½ÃÅ²´Ù
+				if (msg.contains("/exit")) // Á¾·á Ã³¸®
+					System.exit(0);
+			}
+		}
 	}
 
-	public void SendObject(Object ob) { // ì„œë²„ë¡œ ë©”ì„¸ì§€ë¥¼ ë³´ë‚´ëŠ” ë©”ì†Œë“œ
+	class ImageSendAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// ¾×¼Ç ÀÌº¥Æ®°¡ sendBtnÀÏ¶§ ¶Ç´Â textField ¿¡¼¼ Enter key Ä¡¸é
+			if (e.getSource() == imgBtn) {
+				frame = new Frame("ÀÌ¹ÌÁöÃ·ºÎ");
+				fd = new FileDialog(frame, "ÀÌ¹ÌÁö ¼±ÅÃ", FileDialog.LOAD);
+				fd.setVisible(true);
+				ChatMsg obcm = new ChatMsg(UserName, "300", "IMG");
+				ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
+				obcm.setImg(img);
+				SendObject(obcm);
+			}
+		}
+	}
+
+	ImageIcon icon1 = new ImageIcon("src/icon2.jpg");
+	Image mediator=icon1.getImage();
+	Image mediator2=mediator.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+	ImageIcon my_icon=new ImageIcon(mediator2);
+
+	public void AppendIcon(ImageIcon icon) {
+		int len = textArea.getDocument().getLength();
+		// ³¡À¸·Î ÀÌµ¿
+		textArea.setCaretPosition(len);
+		textArea.insertIcon(icon);
+	}
+
+	// È­¸é¿¡ Ãâ·Â
+	public void AppendText(String msg) {
+		AppendIcon(my_icon);
+		msg = msg.trim(); // ¾ÕµÚ blank¿Í \nÀ» Á¦°ÅÇÑ´Ù.
+		int len = textArea.getDocument().getLength();
+		// ³¡À¸·Î ÀÌµ¿
+		textArea.setCaretPosition(len);
+		textArea.replaceSelection(msg + "\n");
+	}
+
+	public void AppendImage(ImageIcon ori_icon) {
+		int len = textArea.getDocument().getLength();
+		textArea.setCaretPosition(len); // place caret at the end (with no selection)
+		Image ori_img = ori_icon.getImage();
+		int width, height;
+		double ratio;
+		width = ori_icon.getIconWidth();
+		height = ori_icon.getIconHeight();
+		// Image°¡ ³Ê¹« Å©¸é ÃÖ´ë °¡·Î ¶Ç´Â ¼¼·Î 200 ±âÁØÀ¸·Î Ãà¼Ò½ÃÅ²´Ù.
+		if (width > 200 || height > 200) {
+			if (width > height) { // °¡·Î »çÁø
+				ratio = (double) height / width;
+				width = 200;
+				height = (int) (width * ratio);
+			} else { // ¼¼·Î »çÁø
+				ratio = (double) width / height;
+				height = 200;
+				width = (int) (height * ratio);
+			}
+			Image new_img = ori_img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			ImageIcon new_icon = new ImageIcon(new_img);
+			textArea.insertIcon(new_icon);
+		} else
+			textArea.insertIcon(ori_icon);
+		len = textArea.getDocument().getLength();
+		textArea.setCaretPosition(len);
+		textArea.replaceSelection("\n");
+	}
+
+	// Windows Ã³·³ message Á¦¿ÜÇÑ ³ª¸ÓÁö ºÎºÐÀº NULL ·Î ¸¸µé±â À§ÇÑ ÇÔ¼ö
+	public byte[] MakePacket(String msg) {
+		byte[] packet = new byte[BUF_LEN];
+		byte[] bb = null;
+		int i;
+		for (i = 0; i < BUF_LEN; i++)
+			packet[i] = 0;
+		try {
+			bb = msg.getBytes("euc-kr");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(0);
+		}
+		for (i = 0; i < bb.length; i++)
+			packet[i] = bb[i];
+		return packet;
+	}
+
+	// Server¿¡°Ô networkÀ¸·Î Àü¼Û
+	public void SendMessage(String msg) {
+		try {
+			ChatMsg obcm = new ChatMsg(UserName, "200", msg);
+			oos.writeObject(obcm);
+		} catch (IOException e) {
+			AppendText("oos.writeObject() error");
+			try {
+				ois.close();
+				oos.close();
+				socket.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				System.exit(0);
+			}
+		}
+	}
+
+	public void SendObject(Object ob) { // ¼­¹ö·Î ¸Þ¼¼Áö¸¦ º¸³»´Â ¸Þ¼Òµå
 		try {
 			oos.writeObject(ob);
 		} catch (IOException e) {
 			AppendText("SendObject Error");
 		}
-	}
-	
-	public String ChangeCard(String msg) {
-		if(msg=="src/card.png")
-			return "src/card2.png";
-		else
-			return "src/card.png";
 	}
 }
