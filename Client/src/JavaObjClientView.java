@@ -32,6 +32,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JToggleButton;
 import javax.swing.JList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JavaObjClientView extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -114,11 +116,21 @@ public class JavaObjClientView extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JLabel card = new JLabel("New label");
+		
 		card.setBounds(162, 435, 100, 150);
 		contentPane.add(card);
 		
 		ImageIcon imgIcon1 = new ImageIcon("src/card1.png");
 		card.setIcon(imgIcon1);
+		
+		card.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ChatMsg msg = new ChatMsg(UserName, "777", "이미지를 변경해보자!");
+				SendObject(msg);
+			}
+		});
+		
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
 
@@ -175,6 +187,9 @@ public class JavaObjClientView extends JFrame {
 					case "300": // Image 첨부
 						AppendText("[" + cm.getId() + "]");
 						AppendImage(cm.img);
+						break;
+					case "777":
+						AppendText(msg);
 						break;
 					}
 				} catch (IOException e) {

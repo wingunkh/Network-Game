@@ -356,6 +356,8 @@ public class JavaObjServer extends JFrame {
 						break;
 					} else if (cm.getCode().matches("300")) {
 						WriteAllObject(cm);
+					} else if (cm.getCode().matches("777")) {
+						WriteAllObject(cm);
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
