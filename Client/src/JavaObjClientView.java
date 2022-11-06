@@ -1,4 +1,3 @@
-
 // JavaObjClientView.java ObjecStram 기반 Client
 //실질적인 채팅 창
 import java.awt.BorderLayout;
@@ -66,18 +65,18 @@ public class JavaObjClientView extends JFrame {
 	
 	private Frame frame;
 	private FileDialog fd;
-	private JButton imgBtn;
 
 	public JavaObjClientView(String username, String ip_addr, String port_no) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 394, 630);
+		setBounds(100, 100, 900, 630);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(128, 255, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 10, 352, 471);
+		scrollPane.setBounds(524, 10, 352, 471);
 		contentPane.add(scrollPane);
 
 		/*--------------------9주차--------------------*/
@@ -89,13 +88,13 @@ public class JavaObjClientView extends JFrame {
 		scrollPane.setViewportView(textArea);
 
 		txtInput = new JTextField();
-		txtInput.setBounds(74, 489, 209, 40);
+		txtInput.setBounds(524, 500, 209, 40);
 		contentPane.add(txtInput);
 		txtInput.setColumns(10);
 
 		btnSend = new JButton("Send");
 		btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-		btnSend.setBounds(295, 489, 69, 40);
+		btnSend.setBounds(737, 499, 69, 40);
 		contentPane.add(btnSend);
 
 		lblUserName = new JLabel("Name");
@@ -103,18 +102,13 @@ public class JavaObjClientView extends JFrame {
 		lblUserName.setBackground(Color.WHITE);
 		lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName.setBounds(12, 539, 62, 40);
+		lblUserName.setBounds(524, 545, 62, 40);
 		contentPane.add(lblUserName);
 		setVisible(true);
 
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
 		UserName = username;
 		lblUserName.setText(username);
-
-		imgBtn = new JButton("+");
-		imgBtn.setFont(new Font("굴림", Font.PLAIN, 16));
-		imgBtn.setBounds(12, 489, 50, 40);
-		contentPane.add(imgBtn);
 		
 		JButton btnNewButton = new JButton("종 료");
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 14));
@@ -125,8 +119,12 @@ public class JavaObjClientView extends JFrame {
 				System.exit(0);
 			}
 		});
-		btnNewButton.setBounds(295, 539, 69, 40);
+		btnNewButton.setBounds(807, 499, 69, 40);
 		contentPane.add(btnNewButton);
+		
+		JPanel card = new JPanel();
+		card.setBounds(220, 395, 100, 145);
+		contentPane.add(card);
 
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
@@ -137,7 +135,6 @@ public class JavaObjClientView extends JFrame {
 			ois = new ObjectInputStream(socket.getInputStream());
 			/*--------------------9주차--------------------*/
 
-			//SendMessage("/login " + UserName);
 			ChatMsg obcm = new ChatMsg(UserName, "100", "Hello");
 			SendObject(obcm);
 			
@@ -147,8 +144,6 @@ public class JavaObjClientView extends JFrame {
 			btnSend.addActionListener(action);
 			txtInput.addActionListener(action);
 			txtInput.requestFocus();
-			ImageSendAction action2 = new ImageSendAction();
-			imgBtn.addActionListener(action2);
 
 		} catch (NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
@@ -192,8 +187,6 @@ public class JavaObjClientView extends JFrame {
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
 					try {
-//						dos.close();
-//						dis.close();
 						ois.close();
 						oos.close();
 						socket.close();
@@ -225,25 +218,6 @@ public class JavaObjClientView extends JFrame {
 		}
 	}
 
-	class ImageSendAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// 액션 이벤트가 sendBtn일때 또는 textField 에세 Enter key 치면
-			if (e.getSource() == imgBtn) {
-				frame = new Frame("이미지첨부");
-				fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
-				// frame.setVisible(true);
-				// fd.setDirectory(".\\");
-				fd.setVisible(true);
-				//System.out.println(fd.getDirectory() + fd.getFile());
-				ChatMsg obcm = new ChatMsg(UserName, "300", "IMG");
-				ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
-				obcm.setImg(img);
-				SendObject(obcm);
-			}
-		}
-	}
-
 	ImageIcon icon1 = new ImageIcon("src/icon2.jpg");
 	Image mediator=icon1.getImage();
 	Image mediator2=mediator.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
@@ -258,7 +232,6 @@ public class JavaObjClientView extends JFrame {
 
 	// 화면에 출력
 	public void AppendText(String msg) {
-		// textArea.append(msg + "\n");
 		AppendIcon(my_icon);
 		msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
 		int len = textArea.getDocument().getLength();
@@ -294,8 +267,6 @@ public class JavaObjClientView extends JFrame {
 		len = textArea.getDocument().getLength();
 		textArea.setCaretPosition(len);
 		textArea.replaceSelection("\n");
-		// ImageViewAction viewaction = new ImageViewAction();
-		// new_icon.addActionListener(viewaction); // 내부클래스로 액션 리스너를 상속받은 클래스로
 	}
 
 	// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
@@ -320,18 +291,11 @@ public class JavaObjClientView extends JFrame {
 	// Server에게 network으로 전송
 	public void SendMessage(String msg) {
 		try {
-			// dos.writeUTF(msg);
-//			byte[] bb;
-//			bb = MakePacket(msg);
-//			dos.write(bb, 0, bb.length);
 			ChatMsg obcm = new ChatMsg(UserName, "200", msg);
 			oos.writeObject(obcm);
 		} catch (IOException e) {
-			// AppendText("dos.write() error");
 			AppendText("oos.writeObject() error");
 			try {
-//				dos.close();
-//				dis.close();
 				ois.close();
 				oos.close();
 				socket.close();
@@ -347,7 +311,6 @@ public class JavaObjClientView extends JFrame {
 		try {
 			oos.writeObject(ob);
 		} catch (IOException e) {
-			// textArea.append("메세지 송신 에러!!\n");
 			AppendText("SendObject Error");
 		}
 	}
