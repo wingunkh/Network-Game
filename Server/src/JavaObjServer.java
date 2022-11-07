@@ -147,7 +147,6 @@ public class JavaObjServer extends JFrame {
 		public String UserStatus;
 
 		public UserService(Socket client_socket) {
-			// TODO Auto-generated constructor stub
 			// 매개변수로 넘어온 자료 저장
 			this.client_socket = client_socket;
 			this.user_vc = UserVec;
@@ -211,7 +210,6 @@ public class JavaObjServer extends JFrame {
 			try {
 				bb = msg.getBytes("euc-kr");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			for (i = 0; i < bb.length; i++)
@@ -234,7 +232,6 @@ public class JavaObjServer extends JFrame {
 					ois = null;
 					oos = null;
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				Logout(); // 에러가난 현재 객체를 벡터에서 지운다
@@ -255,7 +252,6 @@ public class JavaObjServer extends JFrame {
 					ois = null;
 					oos = null;
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				Logout(); // 에러가난 현재 객체를 벡터에서 지운다
@@ -275,7 +271,6 @@ public class JavaObjServer extends JFrame {
 					ois = null;
 					oos = null;				
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				Logout();
@@ -293,7 +288,6 @@ public class JavaObjServer extends JFrame {
 					try {
 						obcm = ois.readObject();
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						return;
 					}
@@ -342,13 +336,11 @@ public class JavaObjServer extends JFrame {
 									}
 									// /to 빼고.. [귓속말] [user1] Hello user2..
 									user.WritePrivate(args[0] + " " + msg2 + "\n");
-									//user.WriteOne("[귓속말] " + args[0] + " " + msg2 + "\n");
 									break;
 								}
 							}
 						} else { // 일반 채팅 메시지
 							UserStatus = "O";
-							//WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
 					} else if (cm.getCode().matches("400")) { // logout message 처리

@@ -1,8 +1,4 @@
-// JavaObjClient.java
-// ObjecStream 사용하는 채팅 Client
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -82,6 +78,7 @@ public class JavaObjClientMain extends JFrame {
 		txtIpAddress.addActionListener(action);
 		txtPortNumber.addActionListener(action);
 	}
+	
 	class Myaction implements ActionListener // 내부클래스로 액션 이벤트 처리 클래스
 	{
 		@Override

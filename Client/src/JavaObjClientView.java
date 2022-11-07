@@ -43,20 +43,19 @@ public class JavaObjClientView extends JFrame {
 	private JButton btnSend;
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 	private Socket socket; // 연결소켓
-	private InputStream is;
-	private OutputStream os;
-	
-	private DataInputStream dis;
-	private DataOutputStream dos;
-	
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
-	
 	private JLabel lblUserName;
 	private JTextPane textArea;
 	private Frame frame;
 	private FileDialog fd;
 	private JButton imgBtn;
+	
+	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
+	private JLabel card;
+	private String imgSrc;
+	private ImageIcon imgIcon1;
+	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
 	public JavaObjClientView(String username, String ip_addr, String port_no) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +75,7 @@ public class JavaObjClientView extends JFrame {
 		scrollPane.setViewportView(textArea);
 
 		txtInput = new JTextField();
-		txtInput.setBounds(586, 492, 209, 40);
+		txtInput.setBounds(586, 491, 209, 40);
 		contentPane.add(txtInput);
 		txtInput.setColumns(10);
 
@@ -100,7 +99,7 @@ public class JavaObjClientView extends JFrame {
 
 		imgBtn = new JButton("+");
 		imgBtn.setFont(new Font("굴림", Font.PLAIN, 16));
-		imgBtn.setBounds(524, 491, 50, 40);
+		imgBtn.setBounds(524, 490, 50, 40);
 		contentPane.add(imgBtn);
 		
 		JButton btnNewButton = new JButton("종 료");
@@ -115,14 +114,10 @@ public class JavaObjClientView extends JFrame {
 		btnNewButton.setBounds(807, 545, 69, 40);
 		contentPane.add(btnNewButton);
 		
-		JLabel card = new JLabel("New label");
-		
-		card.setBounds(162, 435, 100, 150);
-		contentPane.add(card);
-		
-		ImageIcon imgIcon1 = new ImageIcon("src/card1.png");
+		card = new JLabel("New label");
+		imgSrc = "src/card1.png";
+		imgIcon1 = new ImageIcon(imgSrc);
 		card.setIcon(imgIcon1);
-		
 		card.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -130,6 +125,8 @@ public class JavaObjClientView extends JFrame {
 				SendObject(msg);
 			}
 		});
+		card.setBounds(200, 400, 100, 150);
+		contentPane.add(card);
 		
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
@@ -151,7 +148,6 @@ public class JavaObjClientView extends JFrame {
 			imgBtn.addActionListener(action2);
 
 		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			AppendText("connect error");
 		}
@@ -190,6 +186,9 @@ public class JavaObjClientView extends JFrame {
 						break;
 					case "777":
 						AppendText(msg);
+						imgSrc = ChangeImgSrc(imgSrc);
+						imgIcon1 = new ImageIcon(imgSrc);
+						card.setIcon(imgIcon1);
 						break;
 					}
 				} catch (IOException e) {
@@ -337,5 +336,12 @@ public class JavaObjClientView extends JFrame {
 		} catch (IOException e) {
 			AppendText("SendObject Error");
 		}
+	}
+	
+	public String ChangeImgSrc(String str) {
+		if(str=="src/card1.png")
+			return "src/card2.png";
+		else
+			return "src/card1.png";
 	}
 }
