@@ -328,7 +328,8 @@ public class JavaObjClientView extends JFrame {
 		}
 	}
 
-	public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
+	// Server에게 메세지를 보내는 메소드
+	public void SendObject(Object ob) {
 		try {
 			oos.writeObject(ob);
 		} catch (IOException e) {
