@@ -302,7 +302,6 @@ public class JavaObjClientView extends JFrame {
 		try {
 			bb = msg.getBytes("euc-kr");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -323,7 +322,6 @@ public class JavaObjClientView extends JFrame {
 				oos.close();
 				socket.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				System.exit(0);
 			}

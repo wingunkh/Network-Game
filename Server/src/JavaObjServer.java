@@ -1,9 +1,7 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
@@ -81,7 +79,6 @@ public class JavaObjServer extends JFrame {
 				try {
 					socket = new ServerSocket(Integer.parseInt(txtPortNumber.getText()));
 				} catch (NumberFormatException | IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				AppendText("Chat Server Running..");
@@ -112,7 +109,6 @@ public class JavaObjServer extends JFrame {
 					AppendText("현재 참가자 수 " + UserVec.size());
 				} catch (IOException e) {
 					AppendText("accept() error");
-					// System.exit(0);
 				}
 			}
 		}
@@ -133,18 +129,11 @@ public class JavaObjServer extends JFrame {
 	// User 당 생성되는 Thread
 	// Read One 에서 대기 -> Write All
 	class UserService extends Thread {
-		private InputStream is;
-		private OutputStream os;
-		private DataInputStream dis;
-		private DataOutputStream dos;
-
 		private ObjectInputStream ois;
 		private ObjectOutputStream oos;
-
 		private Socket client_socket;
 		private Vector user_vc;
 		public String UserName = "";
-		public String UserStatus;
 
 		public UserService(Socket client_socket) {
 			// 매개변수로 넘어온 자료 저장
@@ -178,16 +167,14 @@ public class JavaObjServer extends JFrame {
 		public void WriteAll(String str) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus == "O")
-					user.WriteOne(str);
+				user.WriteOne(str);
 			}
 		}
 		// 모든 User들에게 Object를 방송. 채팅 message와 image object를 보낼 수 있다
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus == "O")
-					user.WriteOneObject(ob);
+				user.WriteOneObject(ob);
 			}
 		}
 
@@ -195,7 +182,7 @@ public class JavaObjServer extends JFrame {
 		public void WriteOthers(String str) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user != this && user.UserStatus == "O")
+				if (user != this)
 					user.WriteOne(str);
 			}
 		}
@@ -238,25 +225,7 @@ public class JavaObjServer extends JFrame {
 			}
 		}
 
-		// 귓속말 전송
-		public void WritePrivate(String msg) {
-			try {
-				ChatMsg obcm = new ChatMsg("귓속말", "200", msg);
-				oos.writeObject(obcm);
-			} catch (IOException e) {
-				AppendText("dos.writeObject() error");
-				try {
-					oos.close();
-					client_socket.close();
-					client_socket = null;
-					ois = null;
-					oos = null;
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				Logout(); // 에러가난 현재 객체를 벡터에서 지운다
-			}
-		}
+		
 		public void WriteOneObject(Object ob) {
 			try {
 			    oos.writeObject(ob);
@@ -300,50 +269,13 @@ public class JavaObjServer extends JFrame {
 						continue;
 					if (cm.getCode().matches("100")) {
 						UserName = cm.getId();
-						UserStatus = "O"; // Online 상태
 						Login();
 					} else if (cm.getCode().matches("200")) {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg); // server 화면에 출력
-						String[] args = msg.split(" "); // 단어들을 분리한다.
-						if (args.length == 1) { // Enter key 만 들어온 경우 Wakeup 처리만 한다.
-							UserStatus = "O";
-						} else if (args[1].matches("/exit")) {
-							Logout();
-							break;
-						} else if (args[1].matches("/list")) {
-							WriteOne("User list\n");
-							WriteOne("Name\tStatus\n");
-							WriteOne("-----------------------------\n");
-							for (int i = 0; i < user_vc.size(); i++) {
-								UserService user = (UserService) user_vc.elementAt(i);
-								WriteOne(user.UserName + "\t" + user.UserStatus + "\n");
-							}
-							WriteOne("-----------------------------\n");
-						} else if (args[1].matches("/sleep")) {
-							UserStatus = "S";
-						} else if (args[1].matches("/wakeup")) {
-							UserStatus = "O";
-						} else if (args[1].matches("/to")) { // 귓속말
-							for (int i = 0; i < user_vc.size(); i++) {
-								UserService user = (UserService) user_vc.elementAt(i);
-								if (user.UserName.matches(args[2]) && user.UserStatus.matches("O")) {
-									String msg2 = "";
-									for (int j = 3; j < args.length; j++) {// 실제 message 부분
-										msg2 += args[j];
-										if (j < args.length - 1)
-											msg2 += " ";
-									}
-									// /to 빼고.. [귓속말] [user1] Hello user2..
-									user.WritePrivate(args[0] + " " + msg2 + "\n");
-									break;
-								}
-							}
-						} else { // 일반 채팅 메시지
-							UserStatus = "O";
-							WriteAllObject(cm);
-						}
-					} else if (cm.getCode().matches("400")) { // logout message 처리
+						WriteAllObject(cm);
+					} 
+					else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;
 					} else if (cm.getCode().matches("300")) {
