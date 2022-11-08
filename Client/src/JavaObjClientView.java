@@ -1,23 +1,14 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ImageIcon;
@@ -25,13 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Image;
 import java.awt.Color;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.JToggleButton;
-import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -47,9 +33,6 @@ public class JavaObjClientView extends JFrame {
 	private ObjectOutputStream oos;
 	private JLabel lblUserName;
 	private JTextPane textArea;
-	private Frame frame;
-	private FileDialog fd;
-	private JButton imgBtn;
 	
 	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 	private JLabel card;
@@ -96,11 +79,6 @@ public class JavaObjClientView extends JFrame {
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
 		UserName = username;
 		lblUserName.setText(username);
-
-		imgBtn = new JButton("+");
-		imgBtn.setFont(new Font("굴림", Font.PLAIN, 16));
-		imgBtn.setBounds(524, 490, 50, 40);
-		contentPane.add(imgBtn);
 		
 		JButton btnNewButton = new JButton("종 료");
 		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 14));
@@ -144,14 +122,11 @@ public class JavaObjClientView extends JFrame {
 			btnSend.addActionListener(action);
 			txtInput.addActionListener(action);
 			txtInput.requestFocus();
-			ImageSendAction action2 = new ImageSendAction();
-			imgBtn.addActionListener(action2);
 
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 			AppendText("connect error");
 		}
-
 	}
 
 	// Server Message를 수신해서 화면에 표시
@@ -180,10 +155,6 @@ public class JavaObjClientView extends JFrame {
 					case "200": // chat message
 						AppendText(msg);
 						break;
-					case "300": // Image 첨부
-						AppendText("[" + cm.getId() + "]");
-						AppendImage(cm.img);
-						break;
 					case "777":
 						AppendText(msg);
 						imgSrc = ChangeImgSrc(imgSrc);
@@ -197,13 +168,11 @@ public class JavaObjClientView extends JFrame {
 						ois.close();
 						oos.close();
 						socket.close();
-
 						break;
 					} catch (Exception ee) {
 						break;
 					} // catch문 끝
 				} // 바깥 catch문끝
-
 			}
 		}
 	}
@@ -225,71 +194,13 @@ public class JavaObjClientView extends JFrame {
 		}
 	}
 
-	class ImageSendAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// 액션 이벤트가 sendBtn일때 또는 textField 에세 Enter key 치면
-			if (e.getSource() == imgBtn) {
-				frame = new Frame("이미지첨부");
-				fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
-				fd.setVisible(true);
-				ChatMsg obcm = new ChatMsg(UserName, "300", "IMG");
-				ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
-				obcm.setImg(img);
-				SendObject(obcm);
-			}
-		}
-	}
-
-	ImageIcon icon1 = new ImageIcon("src/icon2.jpg");
-	Image mediator=icon1.getImage();
-	Image mediator2=mediator.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-	ImageIcon my_icon=new ImageIcon(mediator2);
-
-	public void AppendIcon(ImageIcon icon) {
-		int len = textArea.getDocument().getLength();
-		// 끝으로 이동
-		textArea.setCaretPosition(len);
-		textArea.insertIcon(icon);
-	}
-
 	// 화면에 출력
 	public void AppendText(String msg) {
-		AppendIcon(my_icon);
 		msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
 		int len = textArea.getDocument().getLength();
 		// 끝으로 이동
 		textArea.setCaretPosition(len);
 		textArea.replaceSelection(msg + "\n");
-	}
-
-	public void AppendImage(ImageIcon ori_icon) {
-		int len = textArea.getDocument().getLength();
-		textArea.setCaretPosition(len); // place caret at the end (with no selection)
-		Image ori_img = ori_icon.getImage();
-		int width, height;
-		double ratio;
-		width = ori_icon.getIconWidth();
-		height = ori_icon.getIconHeight();
-		// Image가 너무 크면 최대 가로 또는 세로 200 기준으로 축소시킨다.
-		if (width > 200 || height > 200) {
-			if (width > height) { // 가로 사진
-				ratio = (double) height / width;
-				width = 200;
-				height = (int) (width * ratio);
-			} else { // 세로 사진
-				ratio = (double) width / height;
-				height = 200;
-				width = (int) (height * ratio);
-			}
-			Image new_img = ori_img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-			ImageIcon new_icon = new ImageIcon(new_img);
-			textArea.insertIcon(new_icon);
-		} else
-			textArea.insertIcon(ori_icon);
-		len = textArea.getDocument().getLength();
-		textArea.setCaretPosition(len);
-		textArea.replaceSelection("\n");
 	}
 
 	// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수

@@ -114,7 +114,7 @@ public class JavaObjServer extends JFrame {
 		}
 	}
 
-	public void AppendText(String str) {
+	public void AppendText(String str) { // server 화면에 출력
 		textArea.append(str + "\n");
 		textArea.setCaretPosition(textArea.getText().length());
 	}
@@ -270,8 +270,6 @@ public class JavaObjServer extends JFrame {
 					else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;
-					} else if (cm.getCode().matches("300")) {
-						WriteAllObject(cm);
 					} else if (cm.getCode().matches("777")) {
 						WriteAllObject(cm);
 					}
