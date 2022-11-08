@@ -93,7 +93,7 @@ public class JavaObjClientView extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		card = new JLabel("New label");
-		imgSrc = "src/card1.png";
+		imgSrc = "src/cards/0.png";
 		imgIcon1 = new ImageIcon(imgSrc);
 		card.setIcon(imgIcon1);
 		card.addMouseListener(new MouseAdapter() {
@@ -249,9 +249,9 @@ public class JavaObjClientView extends JFrame {
 	}
 	
 	public String ChangeImgSrc(String str) {
-		if(str=="src/card1.png")
-			return "src/card2.png";
+		if(str=="src/cards/0.png")
+			return "src/cards/1.png";
 		else
-			return "src/card1.png";
+			return "src/cards/0.png";
 	}
 }
