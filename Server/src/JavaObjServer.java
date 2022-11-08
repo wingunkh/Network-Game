@@ -119,7 +119,7 @@ public class JavaObjServer extends JFrame {
 		textArea.setCaretPosition(textArea.getText().length());
 	}
 
-	public void AppendObject(ChatMsg msg) {
+	public void AppendObject(ChatMsg msg) { // server 화면에 출력
 		textArea.append("code = " + msg.getCode() + "\n");
 		textArea.append("id = " + msg.getId() + "\n");
 		textArea.append("data = " + msg.getData() + "\n");
@@ -279,7 +279,7 @@ public class JavaObjServer extends JFrame {
 						ois.close();
 						oos.close();
 						client_socket.close();
-						Logout(); // 에러가난 현재 객체를 벡터에서 지운다
+						Logout(); // 에러가 난 현재 객체를 벡터에서 지운다
 						break;
 					} catch (Exception ee) {
 						break;
