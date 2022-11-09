@@ -35,16 +35,18 @@ public class JavaObjClientView extends JFrame {
 	private JTextPane textArea;
 	
 	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
+	private JLabel Background;
 	private JLabel card;
 	private String imgSrc;
+	private ImageIcon backIcon;
 	private ImageIcon imgIcon1;
 	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
 	public JavaObjClientView(String username, String ip_addr, String port_no) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 630);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(128, 255, 128));
+		setBounds(100, 100, 900, 630);
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -105,6 +107,13 @@ public class JavaObjClientView extends JFrame {
 		});
 		card.setBounds(200, 400, 100, 150);
 		contentPane.add(card);
+		
+		Background = new JLabel("New label");
+		imgSrc = "src/images/background.jpg";
+		backIcon = new ImageIcon(imgSrc);
+		Background.setIcon(backIcon);
+		Background.setBounds(0, 0, 900, 595);
+		contentPane.add(Background);
 		
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
