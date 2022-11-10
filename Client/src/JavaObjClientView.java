@@ -38,6 +38,7 @@ public class JavaObjClientView extends JFrame {
 	private JLabel Background;
 	private JLabel card;
 	private String imgSrc;
+	private String backSrc;
 	private ImageIcon backIcon;
 	private ImageIcon imgIcon1;
 	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
@@ -109,8 +110,8 @@ public class JavaObjClientView extends JFrame {
 		contentPane.add(card);
 		
 		Background = new JLabel("New label");
-		imgSrc = "src/images/background.jpg";
-		backIcon = new ImageIcon(imgSrc);
+		backSrc = "src/images/background.jpg";
+		backIcon = new ImageIcon(backSrc);
 		Background.setIcon(backIcon);
 		Background.setBounds(0, 0, 900, 595);
 		contentPane.add(Background);
@@ -258,7 +259,7 @@ public class JavaObjClientView extends JFrame {
 	}
 	
 	public String ChangeImgSrc(String str) {
-		if(str=="src/cards/0.png")
+		if(str.equals("src/cards/0.png"))
 			return "src/cards/1.png";
 		else
 			return "src/cards/0.png";
