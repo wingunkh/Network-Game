@@ -206,11 +206,27 @@ public class JavaObjClientView extends JFrame {
                case "1":
             	   AppendText(msg);
             	   String[] array = cm.getData().split(" ");
-            	   //myRight.setCardSrc(Integer.parseInt(cm.getData()));
-            	   myRight.setCardSrc(Integer.parseInt(array[0]));
-            	   AppendText(array[0]);
-            	   myRight.setCardIcon(myRight.getCardSrc());
-            	   myRight.setCard();
+            	   
+            	   for(int i=0;i<4;i++) {
+                	   switch(i) {
+                	   	case 0 :
+                        	myLeft.setCardSrc(Integer.parseInt(array[i]));
+                	   		myLeft.setCardIcon(myLeft.getCardSrc());
+                	   		myLeft.setCard();
+                	   	case 1 :
+                        	myRight.setCardSrc(Integer.parseInt(array[i]));
+                	   		myRight.setCardIcon(myRight.getCardSrc());
+                	   		myRight.setCard();
+                	   	case 2 :
+                	   		otherLeft.setCardSrc(Integer.parseInt(array[i]));
+                	   		otherLeft.setCardIcon(otherLeft.getCardSrc());
+                	   		otherLeft.setCard();
+                	   	case 3 :
+                	   		otherRight.setCardSrc(Integer.parseInt(array[i]));
+                	   		otherRight.setCardIcon(otherRight.getCardSrc());
+                	   		otherRight.setCard();
+                	   } 
+            	   }
             	   break;
                }
             } catch (IOException e) {
