@@ -18,7 +18,6 @@ class Card {
 		this.cardIcon = new ImageIcon(src);
 	}
 	public void setCard() {
-		this.card = new JLabel(Integer.toString(cardNum));
 		this.card.setIcon(this.cardIcon);
 	}
 	public int getCardNum() {
@@ -36,6 +35,7 @@ class Card {
 	}
 	
 	public Card(int num) {
+		this.card = new JLabel(Integer.toString(cardNum));
 		setCardNum(num);
 		setCardIcon(backSrc);
 		setCard();
