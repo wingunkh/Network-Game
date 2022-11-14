@@ -205,7 +205,10 @@ public class JavaObjClientView extends JFrame {
                   break;
                case "1":
             	   AppendText(msg);
-            	   myRight.setCardSrc(Integer.parseInt(cm.getData()));
+            	   String[] array = cm.getData().split(" ");
+            	   //myRight.setCardSrc(Integer.parseInt(cm.getData()));
+            	   myRight.setCardSrc(Integer.parseInt(array[0]));
+            	   AppendText(array[0]);
             	   myRight.setCardIcon(myRight.getCardSrc());
             	   myRight.setCard();
             	   break;
