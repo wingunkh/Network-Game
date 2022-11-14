@@ -21,6 +21,7 @@ import java.net.Socket;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import java.util.Random;
 
 public class JavaObjServer extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -33,6 +34,7 @@ public class JavaObjServer extends JFrame {
 	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 
+	private Random random = new Random();
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -273,6 +275,9 @@ public class JavaObjServer extends JFrame {
 					} else if (cm.getCode().matches("777")) {
 						WriteAllObject(cm);
 					} else if (cm.getCode().matches("1")) {
+						cm.setData(Integer.toString(random.nextInt(19)));
+						msg = String.format("[%s] %s", cm.getId(), cm.getData());
+						AppendText(msg);
 						WriteAllObject(cm);
 					}
 				} catch (IOException e) {

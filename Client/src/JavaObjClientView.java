@@ -41,12 +41,13 @@ public class JavaObjClientView extends JFrame {
    private String backSrc;
    private ImageIcon backIcon;
    private ImageIcon imgIcon1;
-   private JLabel myRight;
+//   private JLabel myRight;
    private JLabel otherLeft;
    private JLabel otherRight;
    private JLabel start;
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
+   private Card myRight = new Card(0);
    public JavaObjClientView(String username, String ip_addr, String port_no) {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       contentPane = new JPanel();
@@ -64,9 +65,12 @@ public class JavaObjClientView extends JFrame {
       otherLeft.setBounds(150, 10, 75, 100);
       contentPane.add(otherLeft);
       
-      myRight = new JLabel("myRight");
-      myRight.setBounds(300, 460, 75, 100);
-      contentPane.add(myRight);
+		/*
+		 * myRight = new JLabel("myRight"); myRight.setBounds(300, 460, 75, 100);
+		 * contentPane.add(myRight);
+		 */
+      myRight.getCard().setBounds(300, 460, 75, 100);
+      contentPane.add(myRight.getCard());
       
       JLabel myLeft = new JLabel("myLeft");
       myLeft.setBounds(150, 460, 75, 100);
@@ -204,6 +208,10 @@ public class JavaObjClientView extends JFrame {
                   break;
                case "1":
             	   AppendText(msg);
+            	   AppendText(cm.getData());
+            	   myRight.setCardSrc(Integer.parseInt(cm.getData()));
+            	   myRight.setCardIcon(myRight.getCardSrc());
+            	   myRight.setCard();
             	   break;
                }
             } catch (IOException e) {
