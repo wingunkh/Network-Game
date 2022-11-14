@@ -41,6 +41,9 @@ public class JavaObjClientView extends JFrame {
 	private String backSrc;
 	private ImageIcon backIcon;
 	private ImageIcon imgIcon1;
+	private JLabel myRight;
+	private JLabel otherLeft;
+	private JLabel otherRight;
 	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
 	public JavaObjClientView(String username, String ip_addr, String port_no) {
@@ -51,6 +54,22 @@ public class JavaObjClientView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		otherRight = new JLabel("otherRight");
+		otherRight.setBounds(300, 10, 75, 100);
+		contentPane.add(otherRight);
+		
+		otherLeft = new JLabel("otherLeft");
+		otherLeft.setBounds(150, 10, 75, 100);
+		contentPane.add(otherLeft);
+		
+		myRight = new JLabel("myRight");
+		myRight.setBounds(300, 460, 75, 100);
+		contentPane.add(myRight);
+		
+		JLabel myLeft = new JLabel("myLeft");
+		myLeft.setBounds(150, 460, 75, 100);
+		contentPane.add(myLeft);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(524, 10, 352, 471);
@@ -106,10 +125,10 @@ public class JavaObjClientView extends JFrame {
 				SendObject(msg);
 			}
 		});
-		card.setBounds(200, 400, 100, 150);
+		card.setBounds(524, 503, 20, 15);
 		contentPane.add(card);
 		
-		Background = new JLabel("New label");
+		Background = new JLabel("");
 		backSrc = "src/images/background.jpg";
 		backIcon = new ImageIcon(backSrc);
 		Background.setIcon(backIcon);
