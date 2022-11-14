@@ -41,13 +41,13 @@ public class JavaObjClientView extends JFrame {
    private String backSrc;
    private ImageIcon backIcon;
    private ImageIcon imgIcon1;
-//   private JLabel myRight;
-   private JLabel otherLeft;
-   private JLabel otherRight;
+   private Card myLeft = new Card(0);
+   private Card myRight = new Card(0);
+   private Card otherLeft =new Card(0);
+   private Card otherRight = new Card(0);
    private JLabel start;
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
-   private Card myRight = new Card(0);
    public JavaObjClientView(String username, String ip_addr, String port_no) {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       contentPane = new JPanel();
@@ -57,25 +57,18 @@ public class JavaObjClientView extends JFrame {
       setContentPane(contentPane);
       contentPane.setLayout(null);
       
-      otherRight = new JLabel("otherRight");
-      otherRight.setBounds(300, 10, 75, 100);
-      contentPane.add(otherRight);
+      myLeft.getCard().setBounds(100, 460, 75, 100);
+      contentPane.add(myLeft.getCard());
       
-      otherLeft = new JLabel("otherLeft");
-      otherLeft.setBounds(150, 10, 75, 100);
-      contentPane.add(otherLeft);
-      
-		/*
-		 * myRight = new JLabel("myRight"); myRight.setBounds(300, 460, 75, 100);
-		 * contentPane.add(myRight);
-		 */
       myRight.getCard().setBounds(300, 460, 75, 100);
       contentPane.add(myRight.getCard());
       
-      JLabel myLeft = new JLabel("myLeft");
-      myLeft.setBounds(150, 460, 75, 100);
-      contentPane.add(myLeft);
-
+      otherLeft.getCard().setBounds(100, 10, 75, 100);
+      contentPane.add(otherLeft.getCard());
+      
+      otherRight.getCard().setBounds(300, 10, 75, 100);
+      contentPane.add(otherRight.getCard());
+      
       JScrollPane scrollPane = new JScrollPane();
       scrollPane.setBounds(524, 10, 352, 471);
       contentPane.add(scrollPane);
@@ -208,7 +201,6 @@ public class JavaObjClientView extends JFrame {
                   break;
                case "1":
             	   AppendText(msg);
-            	   AppendText(cm.getData());
             	   myRight.setCardSrc(Integer.parseInt(cm.getData()));
             	   myRight.setCardIcon(myRight.getCardSrc());
             	   myRight.setCard();
