@@ -206,25 +206,24 @@ public class JavaObjClientView extends JFrame {
                case "1":
             	   AppendText(msg);
             	   String[] array = cm.getData().split(" ");
-            	   
             	   for(int i=0;i<4;i++) {
-                	   switch(i) {
-                	   	case 0 :
-                        	myLeft.setCardSrc(Integer.parseInt(array[i]));
-                	   		myLeft.setCardIcon(myLeft.getCardSrc());
-                	   		myLeft.setCard();
-                	   	case 1 :
-                        	myRight.setCardSrc(Integer.parseInt(array[i]));
-                	   		myRight.setCardIcon(myRight.getCardSrc());
-                	   		myRight.setCard();
-                	   	case 2 :
-                	   		otherLeft.setCardSrc(Integer.parseInt(array[i]));
-                	   		otherLeft.setCardIcon(otherLeft.getCardSrc());
-                	   		otherLeft.setCard();
-                	   	case 3 :
-                	   		otherRight.setCardSrc(Integer.parseInt(array[i]));
-                	   		otherRight.setCardIcon(otherRight.getCardSrc());
-                	   		otherRight.setCard();
+            		   switch(i) {
+                	   case 0 :
+                		   myLeft.setCardSrc(Integer.parseInt(array[i]));
+                		   myLeft.setCardIcon(myLeft.getCardSrc());
+                		   myLeft.setCard();
+                	   case 1 :
+                		   myRight.setCardSrc(Integer.parseInt(array[i]));
+                		   myRight.setCardIcon(myRight.getCardSrc());
+                		   myRight.setCard();
+                	   case 2 :
+                		   otherLeft.setCardSrc(Integer.parseInt(array[i]));
+                		   otherLeft.setCardIcon(otherLeft.getCardSrc());
+                		   otherLeft.setCard();
+                	   case 3 :
+                		   otherRight.setCardSrc(Integer.parseInt(array[i]));
+                		   otherRight.setCardIcon(otherRight.getCardSrc());
+                		   otherRight.setCard();
                 	   } 
             	   }
             	   break;
