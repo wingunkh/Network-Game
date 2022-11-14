@@ -41,10 +41,10 @@ public class JavaObjClientView extends JFrame {
    private String backSrc;
    private ImageIcon backIcon;
    private ImageIcon imgIcon1;
-   private Card myLeft = new Card(0);
-   private Card myRight = new Card(0);
-   private Card otherLeft =new Card(0);
-   private Card otherRight = new Card(0);
+   private Card myLeft;
+   private Card myRight;
+   private Card otherLeft;
+   private Card otherRight;
    private JLabel start;
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
@@ -57,15 +57,19 @@ public class JavaObjClientView extends JFrame {
       setContentPane(contentPane);
       contentPane.setLayout(null);
       
+      myLeft = new Card();
       myLeft.getCard().setBounds(100, 460, 75, 100);
       contentPane.add(myLeft.getCard());
       
+      myRight = new Card();
       myRight.getCard().setBounds(300, 460, 75, 100);
       contentPane.add(myRight.getCard());
       
+      otherLeft = new Card();
       otherLeft.getCard().setBounds(100, 10, 75, 100);
       contentPane.add(otherLeft.getCard());
       
+      otherRight = new Card();
       otherRight.getCard().setBounds(300, 10, 75, 100);
       contentPane.add(otherRight.getCard());
       

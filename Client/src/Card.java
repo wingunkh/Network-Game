@@ -2,16 +2,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 class Card {
-	private int cardNum;
 	private String cardSrc;
 	private String backSrc = "src/cards/Back.png";
 	private ImageIcon cardIcon;
 	private JLabel card;
 	
 	/*Setter 메서드*/
-	public void setCardNum(int cardNum) {
-		this.cardNum = cardNum;
-	}
 	public void setCardSrc(int srcNum) {
 		this.cardSrc = "src/cards/" + srcNum + ".png";
 	}
@@ -24,9 +20,6 @@ class Card {
 	/*Setter 메서드*/
 	
 	/*Getter 메서드*/
-	public int getCardNum() {
-		return this.cardNum;
-	}
 	public String getCardSrc() {
 		return this.cardSrc;
 	}
@@ -38,9 +31,8 @@ class Card {
 	}
 	/*Getter 메서드*/
 	
-	public Card(int num) { //생성자
-		this.card = new JLabel(Integer.toString(cardNum));
-		setCardNum(num);
+	public Card() { //생성자
+		this.card = new JLabel();
 		setCardIcon(backSrc);
 		setCard();
 	}
