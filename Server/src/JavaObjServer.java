@@ -272,6 +272,8 @@ public class JavaObjServer extends JFrame {
 						break;
 					} else if (cm.getCode().matches("777")) {
 						WriteAllObject(cm);
+					} else if (cm.getCode().matches("1")) {
+						WriteAllObject(cm);
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");

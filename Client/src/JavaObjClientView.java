@@ -44,6 +44,7 @@ public class JavaObjClientView extends JFrame {
    private JLabel myRight;
    private JLabel otherLeft;
    private JLabel otherRight;
+   private JLabel start;
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
    public JavaObjClientView(String username, String ip_addr, String port_no) {
@@ -128,6 +129,17 @@ public class JavaObjClientView extends JFrame {
       card.setBounds(524, 503, 20, 15);
       contentPane.add(card);
       
+      start = new JLabel("start");
+      start.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+             ChatMsg msg = new ChatMsg(UserName, "1", "게임을 시작해보자!");
+             SendObject(msg);
+          }
+       });
+      start.setBounds(215, 271, 55, 15);
+      contentPane.add(start);
+      
       Background = new JLabel("");
       backSrc = "src/images/background.jpg";
       backIcon = new ImageIcon(backSrc);
@@ -190,6 +202,9 @@ public class JavaObjClientView extends JFrame {
                   imgIcon1 = new ImageIcon(imgSrc);
                   card.setIcon(imgIcon1);
                   break;
+               case "1":
+            	   AppendText(msg);
+            	   break;
                }
             } catch (IOException e) {
                AppendText("ois.readObject() error");
