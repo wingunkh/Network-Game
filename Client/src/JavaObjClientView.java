@@ -35,16 +35,22 @@ public class JavaObjClientView extends JFrame {
 	private JTextPane textArea;
 	
 	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
+	private JLabel Background;
 	private JLabel card;
 	private String imgSrc;
+	private String backSrc;
+	private ImageIcon backIcon;
 	private ImageIcon imgIcon1;
 	/*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
+	//수정
+	Card card1 = new Card(0);
+	
 	public JavaObjClientView(String username, String ip_addr, String port_no) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 630);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(128, 255, 128));
+		setBounds(100, 100, 900, 630);
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -92,8 +98,9 @@ public class JavaObjClientView extends JFrame {
 		btnNewButton.setBounds(807, 545, 69, 40);
 		contentPane.add(btnNewButton);
 		
-		card = new JLabel("New label");
-		imgSrc = "src/card1.png";
+		//수정
+		/*card = new JLabel("New label");
+		imgSrc = "src/cards/0.png";
 		imgIcon1 = new ImageIcon(imgSrc);
 		card.setIcon(imgIcon1);
 		card.addMouseListener(new MouseAdapter() {
@@ -105,6 +112,27 @@ public class JavaObjClientView extends JFrame {
 		});
 		card.setBounds(200, 400, 100, 150);
 		contentPane.add(card);
+		*/
+		card1.setCardSrc(0);
+		card1.getCard().setBounds(200, 400, 100, 150);
+		card1.getCard().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ChatMsg msg = new ChatMsg(UserName, "777", "이미지를 변경해보자!");
+				SendObject(msg);
+			}
+		});
+		contentPane.add(card1.getCard());
+		
+		
+		
+		
+		Background = new JLabel("New label");
+		backSrc = "src/images/background.jpg";
+		backIcon = new ImageIcon(backSrc);
+		Background.setIcon(backIcon);
+		Background.setBounds(0, 0, 900, 595);
+		contentPane.add(Background);
 		
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
@@ -157,9 +185,8 @@ public class JavaObjClientView extends JFrame {
 						break;
 					case "777":
 						AppendText(msg);
-						imgSrc = ChangeImgSrc(imgSrc);
-						imgIcon1 = new ImageIcon(imgSrc);
-						card.setIcon(imgIcon1);
+						card1.setCardIcon(card1.getCardSrc());
+						card1.setCard();
 						break;
 					}
 				} catch (IOException e) {
@@ -249,9 +276,9 @@ public class JavaObjClientView extends JFrame {
 	}
 	
 	public String ChangeImgSrc(String str) {
-		if(str=="src/card1.png")
-			return "src/card2.png";
+		if(str.equals("src/cards/0.png"))
+			return "src/cards/1.png";
 		else
-			return "src/card1.png";
+			return "src/cards/0.png";
 	}
 }
