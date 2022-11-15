@@ -122,7 +122,6 @@ public class JavaObjClientView extends JFrame {
           public void mouseClicked(MouseEvent e) {
         	  ChatMsg msg = new ChatMsg(UserName, "1", "µ¦À» ¼¯¾îº¸ÀÚ!");
               SendObject(msg);
-              shuffle.setVisible(false);
           }
        });
       shuffle.setBounds(200, 300, 100, 50);
@@ -187,6 +186,7 @@ public class JavaObjClientView extends JFrame {
                case "1":
             	   AppendText(msg);
             	   String[] array = cm.getData().split(" ");
+                   shuffle.setVisible(false);
             	   myLeft.backside();
         		   myRight.backside();
         		   otherLeft.backside();
