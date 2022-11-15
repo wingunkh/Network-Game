@@ -274,16 +274,18 @@ public class JavaObjServer extends JFrame {
 						break;
 					} else if (cm.getCode().matches("777")) {
 						WriteAllObject(cm);
+					} else if (cm.getCode().matches("0")) {
+						WriteAllObject(cm);
 					} else if (cm.getCode().matches("1")) {
-							cm.setData(
+						cm.setData(
 								Integer.toString(random.nextInt(20)) + " " +
 								Integer.toString(random.nextInt(20)) + " " +
 								Integer.toString(random.nextInt(20)) + " " +
 								Integer.toString(random.nextInt(20)) + " "
-							);
-							msg = String.format("[%s] %s", cm.getId(), cm.getData());
-							AppendText(msg);
-							WriteAllObject(cm);
+						);
+						msg = String.format("[%s] %s", cm.getId(), cm.getData());
+						AppendText(msg);
+						WriteAllObject(cm);
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");

@@ -3,7 +3,6 @@ import javax.swing.JLabel;
 
 class Card {
 	private String cardSrc;
-	private String backSrc = "src/cards/Back.png";
 	private ImageIcon cardIcon;
 	private JLabel card;
 	
@@ -23,17 +22,18 @@ class Card {
 	public String getCardSrc() {
 		return this.cardSrc;
 	}
-	public String getBackSrc() {
-		return this.backSrc;
-	}
-	public JLabel getCard() { //
+	public JLabel getCard() {
 		return this.card;
 	}
 	/*Getter 메서드*/
 	
+	public void backside() {
+		this.cardSrc = "src/cards/Back.png";
+		setCardIcon(cardSrc);
+		setCard();
+	}
+	
 	public Card() { //생성자
 		this.card = new JLabel();
-		setCardIcon(backSrc);
-		setCard();
 	}
 }

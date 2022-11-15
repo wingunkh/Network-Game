@@ -46,6 +46,7 @@ public class JavaObjClientView extends JFrame {
    private Card otherLeft;
    private Card otherRight;
    private JLabel start;
+   private JLabel shuffle;
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
    public JavaObjClientView(String username, String ip_addr, String port_no) {
@@ -131,15 +132,28 @@ public class JavaObjClientView extends JFrame {
       contentPane.add(card);
       
       start = new JLabel("start");
+      start.setFont(new Font("굴림", Font.PLAIN, 18));
       start.addMouseListener(new MouseAdapter() {
+    	  @Override
+    	  public void mouseClicked(MouseEvent e) {
+    		  ChatMsg msg = new ChatMsg(UserName, "0", "게임을 시작해보자!");
+              SendObject(msg);
+    	  }
+      });
+      start.setBounds(238, 254, 43, 40);
+      contentPane.add(start);
+      
+      shuffle = new JLabel("shuffle");
+      shuffle.setFont(new Font("굴림", Font.PLAIN, 18));
+      shuffle.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
-             ChatMsg msg = new ChatMsg(UserName, "1", "게임을 시작해보자!");
-             SendObject(msg);
+        	  ChatMsg msg = new ChatMsg(UserName, "1", "덱을 섞어보자!");
+              SendObject(msg);
           }
        });
-      start.setBounds(215, 271, 55, 15);
-      contentPane.add(start);
+      shuffle.setBounds(238, 329, 62, 31);
+      contentPane.add(shuffle);
       
       Background = new JLabel("");
       backSrc = "src/images/background.jpg";
@@ -203,6 +217,13 @@ public class JavaObjClientView extends JFrame {
                   imgIcon1 = new ImageIcon(imgSrc);
                   card.setIcon(imgIcon1);
                   break;
+               case "0":
+            	   AppendText(msg);
+            	   myLeft.backside();
+        		   myRight.backside();
+        		   otherLeft.backside();
+        		   otherRight.backside();
+        		   break;
                case "1":
             	   AppendText(msg);
             	   String[] array = cm.getData().split(" ");
