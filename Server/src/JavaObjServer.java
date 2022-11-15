@@ -272,10 +272,6 @@ public class JavaObjServer extends JFrame {
 					else if (cm.getCode().matches("400")) { // logout message Ã³¸®
 						Logout();
 						break;
-					} else if (cm.getCode().matches("777")) {
-						WriteAllObject(cm);
-					} else if (cm.getCode().matches("0")) {
-						WriteAllObject(cm);
 					} else if (cm.getCode().matches("1")) {
 						cm.setData(
 								Integer.toString(random.nextInt(20)) + " " +

@@ -1,38 +1,39 @@
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 class Card {
-	/* Card 객체의 Swing component */
 	private String cardSrc;
 	private ImageIcon cardIcon;
 	private JLabel card;
-	/* Card 객체의 card.setBounds를 위한 위치, 크기 값*/
+
 	private int x;
 	private int y;
 	private int width;
 	private int height;
 	
-	/*Setter 메서드*/
 	public void setCardSrc(int srcNum) {
 		this.cardSrc = "src/cards/" + srcNum + ".png";
 	}
 	public void setCardIcon(String src) {
-		this.cardIcon = new ImageIcon(src);
+		Image img = new ImageIcon(src).getImage();
+		Image updateImage = img.getScaledInstance(75, 125, java.awt.Image.SCALE_SMOOTH);
+		this.cardIcon = new ImageIcon(updateImage);
 	}
-	public void setCard() {
-		this.card.setIcon(this.cardIcon);
-	}
+	
 	public void setX(int x) {
 		this.x = x;
 	}
 	public void setY(int y) {
 		this.y = y;
 	}
-	/*Setter 메서드*/
 	
-	/*Getter 메서드*/
 	public String getCardSrc() {
 		return this.cardSrc;
+	}
+	public ImageIcon getCardIcon() {
+		return this.cardIcon;
 	}
 	public JLabel getCard() {
 		return this.card;
@@ -43,15 +44,18 @@ class Card {
 	public int getY() {
 		return this.y;
 	}
-	/*Getter 메서드*/
 	
-	public void backside() {
+	public void backside() { //카드의 뒷면이 보이게 화면에 보여주는 메서드
 		this.cardSrc = "src/cards/Back.png";
 		setCardIcon(cardSrc);
-		setCard();
+		this.card.setIcon(getCardIcon());
 	}
 	
-	public void drawCard() {
+	public void flip() { //카드의 앞면이 보이게 화면에 보여주는 메서드
+		this.card.setIcon(getCardIcon());
+	}
+	
+	public void setCardBounds() {
 		this.card.setBounds(x, y, width, height);
 	}
 	
@@ -61,8 +65,5 @@ class Card {
 		this.width = w;
 		this.height = h;
 		this.card = new JLabel();
-		
 	}
-	
-	
 }

@@ -38,16 +38,12 @@ public class JavaObjClientView extends JFrame {
    
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
    private JLabel Background;
-   private JLabel card;
-   private String imgSrc;
    private String backSrc;
    private ImageIcon backIcon;
-   private ImageIcon imgIcon1;
    private Card myLeft;
    private Card myRight;
    private Card otherLeft;
    private Card otherRight;
-   private JLabel start;
    private JLabel shuffle;
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
@@ -59,25 +55,21 @@ public class JavaObjClientView extends JFrame {
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
       setContentPane(contentPane);
       contentPane.setLayout(null);
-      
 
-//    setBounds 초기값 (200, 250, 75, 100)
-//    100 => left, 300 => right 10 => other 490 => my
-
-      myLeft = new Card(200, 250, 75, 100);
-      myLeft.drawCard();
+      myLeft = new Card(200, 250, 75, 125);
+      myLeft.setCardBounds();
       contentPane.add(myLeft.getCard());
       
-      myRight = new Card(200, 250, 75, 100);
-      myRight.drawCard();
+      myRight = new Card(200, 250, 75, 125);
+      myRight.setCardBounds();
       contentPane.add(myRight.getCard());
       
-      otherLeft = new Card(200, 250, 75, 100);
-      otherLeft.drawCard();
+      otherLeft = new Card(200, 250, 75, 125);
+      otherLeft.setCardBounds();
       contentPane.add(otherLeft.getCard());
       
-      otherRight = new Card(200, 250, 75, 100);
-      otherRight.drawCard();
+      otherRight = new Card(200, 250, 75, 125);
+      otherRight.setCardBounds();
       contentPane.add(otherRight.getCard());
       
       JScrollPane scrollPane = new JScrollPane();
@@ -123,42 +115,17 @@ public class JavaObjClientView extends JFrame {
       btnNewButton.setBounds(807, 545, 69, 40);
       contentPane.add(btnNewButton);
       
-      card = new JLabel("New label");
-      imgSrc = "src/cards/0.png";
-      imgIcon1 = new ImageIcon(imgSrc);
-      card.setIcon(imgIcon1);
-      card.addMouseListener(new MouseAdapter() {
-         @Override
-         public void mouseClicked(MouseEvent e) {
-            ChatMsg msg = new ChatMsg(UserName, "777", "이미지를 변경해보자!");
-            SendObject(msg);
-         }
-      });
-      card.setBounds(524, 503, 20, 15);
-      contentPane.add(card);
-      
-      start = new JLabel("start");
-      start.setFont(new Font("굴림", Font.PLAIN, 18));
-      start.addMouseListener(new MouseAdapter() {
-    	  @Override
-    	  public void mouseClicked(MouseEvent e) {
-    		  ChatMsg msg = new ChatMsg(UserName, "0", "게임을 시작해보자!");
-              SendObject(msg);
-    	  }
-      });
-      start.setBounds(238, 254, 43, 40);
-      contentPane.add(start);
-      
       shuffle = new JLabel("shuffle");
-      shuffle.setFont(new Font("굴림", Font.PLAIN, 18));
+      shuffle.setFont(new Font("굴림", Font.PLAIN, 28));
       shuffle.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
         	  ChatMsg msg = new ChatMsg(UserName, "1", "덱을 섞어보자!");
               SendObject(msg);
+              shuffle.setVisible(false);
           }
        });
-      shuffle.setBounds(238, 329, 62, 31);
+      shuffle.setBounds(200, 300, 100, 50);
       contentPane.add(shuffle);
       
       Background = new JLabel("");
@@ -215,47 +182,37 @@ public class JavaObjClientView extends JFrame {
                   continue;
                switch (cm.getCode()) {
                case "200": // chat message
-                  AppendText(msg);
-                  break;
-               case "777":
-                  AppendText(msg);
-                  imgSrc = ChangeImgSrc(imgSrc);
-                  imgIcon1 = new ImageIcon(imgSrc);
-                  card.setIcon(imgIcon1);
-                  break;
-               case "0":
             	   AppendText(msg);
+                   break;
+               case "1":
+            	   AppendText(msg);
+            	   String[] array = cm.getData().split(" ");
             	   myLeft.backside();
         		   myRight.backside();
         		   otherLeft.backside();
         		   otherRight.backside();
-        		   break;
-               case "1":
-            	   AppendText(msg);
-            	   String[] array = cm.getData().split(" ");
+        		   Thread.sleep(1500);
             	   for(int i=0;i<4;i++) {
             		   switch(i) {
                 	   case 0 :
                 		   myLeft.setCardSrc(Integer.parseInt(array[i]));
                 		   myLeft.setCardIcon(myLeft.getCardSrc());
-                		   while(myLeft.getX() > 100 || myLeft.getY() < 460 ) {
+                		   while(myLeft.getX() > 100 || myLeft.getY() < 450 ) {
                 			   if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
-                			   if (myLeft.getY() < 460) myLeft.setY(myLeft.getY() + 12);
-                			   myLeft.drawCard();
+                			   if (myLeft.getY() < 450) myLeft.setY(myLeft.getY() + 12);
+                			   myLeft.setCardBounds();
                 			   repaint();
-                			   revalidate();
-                			   Thread.sleep(5);
+                			   Thread.sleep(10);
                 		   }
                 	   case 1 :
                 		   myRight.setCardSrc(Integer.parseInt(array[i]));
                 		   myRight.setCardIcon(myRight.getCardSrc());
-                		   while(myRight.getX() < 300 || myRight.getY() < 460 ) {
+                		   while(myRight.getX() < 300 || myRight.getY() < 450 ) {
                 			   if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
-                			   if (myRight.getY() < 460) myRight.setY(myRight.getY() + 12);
-                			   myRight.drawCard();
+                			   if (myRight.getY() < 450) myRight.setY(myRight.getY() + 12);
+                			   myRight.setCardBounds();
                 			   repaint();
-                			   revalidate();
-                			   Thread.sleep(5);
+                			   Thread.sleep(10);
                 		   }
                 	   case 2 :
                 		   otherLeft.setCardSrc(Integer.parseInt(array[i]));
@@ -263,10 +220,9 @@ public class JavaObjClientView extends JFrame {
                 		   while(otherLeft.getX() > 100 || otherLeft.getY() > 10 ) {
                 			   if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
                 			   if (otherLeft.getY() > 10) otherLeft.setY(otherLeft.getY() - 12);
-                			   otherLeft.drawCard();
+                			   otherLeft.setCardBounds();
                 			   repaint();
-                			   revalidate();
-                			   Thread.sleep(5);
+                			   Thread.sleep(10);
                 		   }
                 	   case 3 :
                 		   otherRight.setCardSrc(Integer.parseInt(array[i]));
@@ -274,17 +230,16 @@ public class JavaObjClientView extends JFrame {
                 		   while(otherRight.getX() < 300 || otherRight.getY() > 10 ) {
                 			   if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
                 			   if (otherRight.getY() > 10) otherRight.setY(otherRight.getY() - 12);
-                			   otherRight.drawCard();
+                			   otherRight.setCardBounds();
                 			   repaint();
-                			   revalidate();
-                			   Thread.sleep(5);
+                			   Thread.sleep(10);
                 		   }
                 	   } 
             	   }
-            	   myLeft.setCard();
-            	   myRight.setCard();
-            	   otherLeft.setCard();
-            	   otherRight.setCard();
+            	   myLeft.flip();
+            	   myRight.flip();
+            	   otherLeft.flip();
+            	   otherRight.flip();
             	   break;
                }
             } catch (IOException e) {
