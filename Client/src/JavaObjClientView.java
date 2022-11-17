@@ -180,7 +180,7 @@ public class JavaObjClientView extends JFrame {
                } else
                   continue;
                switch (cm.getCode()) {
-               case "200": // chat message
+               case "200":
             	   AppendText(msg);
                    break;
                case "1":
@@ -253,7 +253,7 @@ public class JavaObjClientView extends JFrame {
                   break;
                } // catch문 끝
             } // 바깥 catch문끝
- catch (InterruptedException e) {
+            catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
