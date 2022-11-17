@@ -10,8 +10,8 @@ class Card {
 
 	private int x;
 	private int y;
-	private int width;
-	private int height;
+	private int width=75;
+	private int height=125;
 	
 	public void setCardSrc(int srcNum) {
 		this.cardSrc = "src/cards/" + srcNum + ".png";
@@ -59,11 +59,9 @@ class Card {
 		this.card.setBounds(x, y, width, height);
 	}
 	
-	public Card(int x, int y, int w, int h) { //持失切
+	public Card(int x, int y) { //持失切
 		this.x = x;
 		this.y = y;
-		this.width = w;
-		this.height = h;
 		this.card = new JLabel();
 	}
 }

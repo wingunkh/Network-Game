@@ -56,19 +56,19 @@ public class JavaObjClientView extends JFrame {
       setContentPane(contentPane);
       contentPane.setLayout(null);
 
-      myLeft = new Card(200, 250, 75, 125);
+      myLeft = new Card(200, 250);
       myLeft.setCardBounds();
       contentPane.add(myLeft.getCard());
       
-      myRight = new Card(200, 250, 75, 125);
+      myRight = new Card(200, 250);
       myRight.setCardBounds();
       contentPane.add(myRight.getCard());
       
-      otherLeft = new Card(200, 250, 75, 125);
+      otherLeft = new Card(200, 250);
       otherLeft.setCardBounds();
       contentPane.add(otherLeft.getCard());
       
-      otherRight = new Card(200, 250, 75, 125);
+      otherRight = new Card(200, 250);
       otherRight.setCardBounds();
       contentPane.add(otherRight.getCard());
       
