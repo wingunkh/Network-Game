@@ -34,7 +34,9 @@ public class JavaObjServer extends JFrame {
 	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 
-	private Random random = new Random();
+	private int[] dupCheck = new int[4];
+	
+	private Random rand = new Random();
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -273,11 +275,25 @@ public class JavaObjServer extends JFrame {
 						Logout();
 						break;
 					} else if (cm.getCode().matches("1")) {
+						dupCheck[0] = rand.nextInt(20);
+						for (int i = 1; i < 4; i++) {
+							dupCheck[i] = rand.nextInt(20);
+							for (int j = 0; j < i; j++) {
+								if (dupCheck[i] == dupCheck[j]) {
+									i--;
+								}
+							}
+						}
+//						cm.setData(
+//								Integer.toString(rand.nextInt(20)) + " " +
+//								Integer.toString(rand.nextInt(20)) + " " +
+//								Integer.toString(rand.nextInt(20)) + " " +
+//								Integer.toString(rand.nextInt(20)) + " "
+//						);
 						cm.setData(
-								Integer.toString(random.nextInt(20)) + " " +
-								Integer.toString(random.nextInt(20)) + " " +
-								Integer.toString(random.nextInt(20)) + " " +
-								Integer.toString(random.nextInt(20)) + " "
+								String.format("%d %d %d %d",
+									dupCheck[0], dupCheck[1], dupCheck[2], dupCheck[3]
+								)
 						);
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg);
