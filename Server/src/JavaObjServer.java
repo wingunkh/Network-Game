@@ -284,12 +284,6 @@ public class JavaObjServer extends JFrame {
 								}
 							}
 						}
-//						cm.setData(
-//								Integer.toString(rand.nextInt(20)) + " " +
-//								Integer.toString(rand.nextInt(20)) + " " +
-//								Integer.toString(rand.nextInt(20)) + " " +
-//								Integer.toString(rand.nextInt(20)) + " "
-//						);
 						cm.setData(
 								String.format("%d %d %d %d",
 									dupCheck[0], dupCheck[1], dupCheck[2], dupCheck[3]
