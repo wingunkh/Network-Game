@@ -169,14 +169,6 @@ public class JavaObjServer extends JFrame {
 			return packet;
 		}
 
-		public void Login() {
-			AppendText("새로운 참가자 " + UserName + " 입장.");
-			WriteOne("Welcome to Java chat server\n");
-			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
-			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
-			WriteOthers(msg); // 아직 user_vc에 새로 입장한 user는 포함되지 않았다.
-		}
-
 		public void Logout() {
 			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
@@ -265,7 +257,10 @@ public class JavaObjServer extends JFrame {
 						continue;
 					if (cm.getCode().matches("100")) {
 						UserName = cm.getId();
-						Login();
+						cm.setData(Integer.toString(user_vc.size()));
+						msg = String.format("[%s] %s", cm.getId(),cm.getData());
+						AppendText(msg); // server 화면에 출력
+						WriteOneObject(cm);
 					} else if (cm.getCode().matches("200")) {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg); // server 화면에 출력
