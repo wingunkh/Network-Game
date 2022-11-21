@@ -291,7 +291,7 @@ public class JavaObjClientView extends JFrame {
       try {
          oos.writeObject(ob);
       } catch (IOException e) {
-         AppendText("SendObject Error");
+         AppendText("SendObj ect Error");
       }
    }
    
@@ -339,6 +339,8 @@ public class JavaObjClientView extends JFrame {
                 }
              } 
          }
+         jokbo = new Jokbo(myLeft, myRight);
+         AppendText(jokbo.calculateJokbo());
       }
       else {
          for(int i=0;i<4;i++) {
@@ -383,6 +385,10 @@ public class JavaObjClientView extends JFrame {
                 }
              } 
          }
+         jokbo = new Jokbo(myLeft, myRight);
+         AppendText(jokbo.calculateJokbo());
       }
+
+      
    }   
 }
