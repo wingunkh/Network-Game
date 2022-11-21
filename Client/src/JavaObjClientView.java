@@ -121,7 +121,7 @@ public class JavaObjClientView extends JFrame {
       shuffle.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
-             ChatMsg msg = new ChatMsg(UserName, "1", "µ¦À» ¼¯¾îº¸ÀÚ!");
+        	  ChatMsg msg = new ChatMsg(UserName, "1", "µ¦À» ¼¯¾îº¸ÀÚ!");
               SendObject(msg);
           }
        });
@@ -190,20 +190,60 @@ public class JavaObjClientView extends JFrame {
                case "1":
                   AppendText(msg);
                   array = cm.getData().split(" ");
-                   shuffle.setVisible(false);
+                  shuffle.setVisible(false);
                   myLeft.backside();
-                 myRight.backside();
-                 otherLeft.backside();
-                 otherRight.backside();
-                 Thread.sleep(1500);
+                  myRight.backside();
+                  otherLeft.backside();
+                  otherRight.backside();
+                  Thread.sleep(1500);
                  
-                 Placing(uID);
+                  Placing(uID);
                     
                   myLeft.flip();
                   myRight.flip();
                   otherLeft.flip();
                   otherRight.flip();
+                  
+                  myLeft.getCard().addMouseListener(new MouseAdapter() {
+                      @Override
+                      public void mouseClicked(MouseEvent e) {
+                    	  ChatMsg msg;
+                    	  if(uID.equals("1"))
+                    		  msg = new ChatMsg(UserName, "2", "1 myLeft");
+                    	  else
+                    		  msg = new ChatMsg(UserName, "2", "2 myLeft");
+                          SendObject(msg);
+                      }
+                  });
+                  
+                  myRight.getCard().addMouseListener(new MouseAdapter() {
+                      @Override
+                      public void mouseClicked(MouseEvent e) {
+                    	  ChatMsg msg;
+                    	  if(uID.equals("1"))
+                    		  msg = new ChatMsg(UserName, "2", "1 myRight");
+                    	  else
+                    		  msg = new ChatMsg(UserName, "2", "2 myRight");
+                          SendObject(msg);
+                      }
+                  });
+            
                   break;
+               case "2":
+            	   AppendText(msg);
+            	   if(cm.getData().equals("1 myLeft")) {
+            		   Opening(cm.getData());
+            	   }
+            	   else if(cm.getData().equals("2 myLeft")) {
+            		   Opening(cm.getData());
+            	   }
+            	   else if(cm.getData().equals("1 myRight")) {
+            		   Opening(cm.getData());
+            	   }
+            	   else {
+            		   Opening(cm.getData());
+            	   }
+            	   break;
                }
             } catch (IOException e) {
                AppendText("ois.readObject() error");
@@ -302,9 +342,9 @@ public class JavaObjClientView extends JFrame {
              case 0 :
                 myLeft.setCardSrc(array[i]);
                 myLeft.setCardIcon(myLeft.getCardSrc());
-                while(myLeft.getX() > 100 || myLeft.getY() < 450 ) {
+                while(myLeft.getX() > 100 || myLeft.getY() < 460 ) {
                    if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
-                   if (myLeft.getY() < 450) myLeft.setY(myLeft.getY() + 12);
+                   if (myLeft.getY() < 460) myLeft.setY(myLeft.getY() + 12);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -312,9 +352,9 @@ public class JavaObjClientView extends JFrame {
              case 1 :
                 myRight.setCardSrc(array[i]);
                 myRight.setCardIcon(myRight.getCardSrc());
-                while(myRight.getX() < 300 || myRight.getY() < 450 ) {
+                while(myRight.getX() < 300 || myRight.getY() < 460 ) {
                    if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
-                   if (myRight.getY() < 450) myRight.setY(myRight.getY() + 12);
+                   if (myRight.getY() < 460) myRight.setY(myRight.getY() + 12);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -366,9 +406,9 @@ public class JavaObjClientView extends JFrame {
              case 2 :
                 myLeft.setCardSrc(array[i]);
                 myLeft.setCardIcon(myLeft.getCardSrc());
-                while(myLeft.getX() > 100 || myLeft.getY() < 450 ) {
+                while(myLeft.getX() > 100 || myLeft.getY() < 460 ) {
                    if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
-                   if (myLeft.getY() < 450) myLeft.setY(myLeft.getY() + 12);
+                   if (myLeft.getY() < 460) myLeft.setY(myLeft.getY() + 12);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -376,9 +416,9 @@ public class JavaObjClientView extends JFrame {
              case 3 :
                 myRight.setCardSrc(array[i]);
                 myRight.setCardIcon(myRight.getCardSrc());
-                while(myRight.getX() < 300 || myRight.getY() < 450 ) {
+                while(myRight.getX() < 300 || myRight.getY() < 460 ) {
                    if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
-                   if (myRight.getY() < 450) myRight.setY(myRight.getY() + 12);
+                   if (myRight.getY() < 460) myRight.setY(myRight.getY() + 12);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -388,7 +428,150 @@ public class JavaObjClientView extends JFrame {
          jokbo = new Jokbo(myLeft, myRight);
          AppendText(jokbo.calculateJokbo());
       }
-
-      
    }   
+   
+   public void Opening(String str) throws InterruptedException {  
+	   switch(str) {
+	   case "1 myLeft":
+		   if(uID.equals("1")) {
+			   while(myLeft.getY() > 300) {
+                   myLeft.setY(myLeft.getY() - 12);
+                   myLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(myLeft.getY() < 460) {
+                   myLeft.setY(myLeft.getY() + 12);
+                   myLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+		   }
+		   else {
+			   while(otherLeft.getY() < 160) {
+				   otherLeft.setY(otherLeft.getY() + 12);
+				   otherLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(otherLeft.getY() > 10) {
+				   otherLeft.setY(otherLeft.getY() - 12);
+				   otherLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   otherLeft.setCardSrc(array[0]);
+			   otherLeft.setCardIcon(otherLeft.getCardSrc());
+			   otherLeft.flip();
+		   }
+		   break;
+	   case "2 myLeft":
+		   if(uID.equals("2")) {
+			   while(myLeft.getY() > 300) {
+                   myLeft.setY(myLeft.getY() - 12);
+                   myLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(myLeft.getY() < 460) {
+                   myLeft.setY(myLeft.getY() + 12);
+                   myLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+		   }
+		   else {
+			   while(otherLeft.getY() < 160) {
+				   otherLeft.setY(otherLeft.getY() + 12);
+				   otherLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(otherLeft.getY() > 10) {
+				   otherLeft.setY(otherLeft.getY() - 12);
+				   otherLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   otherLeft.setCardSrc(array[2]);
+			   otherLeft.setCardIcon(otherLeft.getCardSrc());
+			   otherLeft.flip();
+		   }
+		   break;
+	   case "1 myRight":
+		   if(uID.equals("1")) {
+			   while(myRight.getY() > 300) {
+                   myRight.setY(myRight.getY() - 12);
+                   myRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(myRight.getY() < 460) {
+                   myRight.setY(myRight.getY() + 12);
+                   myRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+		   }
+		   else {
+			   while(otherRight.getY() < 160) {
+				   otherRight.setY(otherRight.getY() + 12);
+				   otherRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(otherRight.getY() > 10) {
+				   otherRight.setY(otherRight.getY() - 12);
+				   otherRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   otherRight.setCardSrc(array[1]);
+			   otherRight.setCardIcon(otherRight.getCardSrc());
+			   otherRight.flip();
+		   }
+		   break;
+	   case "2 myRight":
+		   if(uID.equals("2")) {
+			   while(myRight.getY() > 300) {
+                   myRight.setY(myRight.getY() - 12);
+                   myRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(myRight.getY() < 460) {
+                   myRight.setY(myRight.getY() + 12);
+                   myRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+		   }
+		   else {
+			   while(otherRight.getY() < 160) {
+				   otherRight.setY(otherRight.getY() + 12);
+				   otherRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(otherRight.getY() > 10) {
+				   otherRight.setY(otherRight.getY() - 12);
+				   otherRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   otherRight.setCardSrc(array[3]);
+			   otherRight.setCardIcon(otherRight.getCardSrc());
+			   otherRight.flip();
+		   }
+		   break;
+	   }
+   }
 }

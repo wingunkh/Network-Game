@@ -265,8 +265,7 @@ public class JavaObjServer extends JFrame {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg); // server 화면에 출력
 						WriteAllObject(cm);
-					} 
-					else if (cm.getCode().matches("400")) { // logout message 처리
+					} else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;
 					} else if (cm.getCode().matches("1")) {
@@ -284,6 +283,11 @@ public class JavaObjServer extends JFrame {
 								)
 						);
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
+						AppendText(msg);
+						WriteAllObject(cm);
+					} else if(cm.getCode().matches("2")) {
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm);
 						AppendText(msg);
 						WriteAllObject(cm);
 					}
