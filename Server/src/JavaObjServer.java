@@ -270,8 +270,7 @@ public class JavaObjServer extends JFrame {
 						Logout();
 						break;
 					} else if (cm.getCode().matches("1")) {
-						dupCheck[0] = rand.nextInt(20);
-						for (int i = 1; i < 4; i++) {
+						for (int i = 0; i < 4; i++) {
 							dupCheck[i] = rand.nextInt(20);
 							for (int j = 0; j < i; j++) {
 								if (dupCheck[i] == dupCheck[j]) {
@@ -280,7 +279,7 @@ public class JavaObjServer extends JFrame {
 							}
 						}
 						cm.setData(
-								String.format("%d %d %d %d",
+								String.format("%02d %02d %02d %02d",
 									dupCheck[0], dupCheck[1], dupCheck[2], dupCheck[3]
 								)
 						);

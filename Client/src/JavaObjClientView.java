@@ -47,6 +47,7 @@ public class JavaObjClientView extends JFrame {
    private Card otherRight;
    private JLabel shuffle;
    private String array[];
+   private Jokbo jokbo;
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
    public JavaObjClientView(String username, String ip_addr, String port_no) {
@@ -301,7 +302,7 @@ public class JavaObjClientView extends JFrame {
 		   for(int i=0;i<4;i++) {
 			   switch(i) {
 	    	   case 0 :
-	    		   myLeft.setCardSrc(Integer.parseInt(array[i]));
+	    		   myLeft.setCardSrc(array[i]);
 	    		   myLeft.setCardIcon(myLeft.getCardSrc());
 	    		   while(myLeft.getX() > 100 || myLeft.getY() < 450 ) {
 	    			   if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
@@ -311,7 +312,7 @@ public class JavaObjClientView extends JFrame {
 	    			   Thread.sleep(10);
 	    		   }
 	    	   case 1 :
-	    		   myRight.setCardSrc(Integer.parseInt(array[i]));
+	    		   myRight.setCardSrc(array[i]);
 	    		   myRight.setCardIcon(myRight.getCardSrc());
 	    		   while(myRight.getX() < 300 || myRight.getY() < 450 ) {
 	    			   if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
@@ -363,7 +364,7 @@ public class JavaObjClientView extends JFrame {
 	    			   Thread.sleep(10);
 	    		   }
 	    	   case 2 :
-	    		   myLeft.setCardSrc(Integer.parseInt(array[i]));
+	    		   myLeft.setCardSrc(array[i]);
 	    		   myLeft.setCardIcon(myLeft.getCardSrc());
 	    		   while(myLeft.getX() > 100 || myLeft.getY() < 450 ) {
 	    			   if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
@@ -373,7 +374,7 @@ public class JavaObjClientView extends JFrame {
 	    			   Thread.sleep(10);
 	    		   }
 	    	   case 3 :
-	    		   myRight.setCardSrc(Integer.parseInt(array[i]));
+	    		   myRight.setCardSrc(array[i]);
 	    		   myRight.setCardIcon(myRight.getCardSrc());
 	    		   while(myRight.getX() < 300 || myRight.getY() < 450 ) {
 	    			   if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);

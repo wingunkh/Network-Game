@@ -13,7 +13,7 @@ class Card {
 	private int width=75;
 	private int height=125;
 	
-	public void setCardSrc(int srcNum) {
+	public void setCardSrc(String srcNum) {
 		this.cardSrc = "src/cards/" + srcNum + ".png";
 	}
 	public void setCardIcon(String src) {
