@@ -20,6 +20,7 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class JavaObjClientView extends JFrame {
    private static final long serialVersionUID = 1L;
@@ -46,6 +47,31 @@ public class JavaObjClientView extends JFrame {
    private JLabel shuffle;
    private String array[];
    private Jokbo jokbo;
+   
+   private MouseAdapter ml = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	  ChatMsg msg;
+     	  if(uID.equals("1"))
+     		  msg = new ChatMsg(UserName, "2", "1 myLeft");
+     	  else
+     		  msg = new ChatMsg(UserName, "2", "2 myLeft");
+           SendObject(msg);
+       }
+   };
+   
+   private MouseAdapter mr = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	  ChatMsg msg;
+     	  if(uID.equals("1"))
+     		  msg = new ChatMsg(UserName, "2", "1 myRight");
+     	  else
+     		  msg = new ChatMsg(UserName, "2", "2 myRight");
+           SendObject(msg);
+       }
+   };
+   
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
    public JavaObjClientView(String username, String ip_addr, String port_no) {
@@ -204,29 +230,8 @@ public class JavaObjClientView extends JFrame {
                   otherLeft.flip();
                   otherRight.flip();
                   
-                  myLeft.getCard().addMouseListener(new MouseAdapter() {
-                      @Override
-                      public void mouseClicked(MouseEvent e) {
-                    	  ChatMsg msg;
-                    	  if(uID.equals("1"))
-                    		  msg = new ChatMsg(UserName, "2", "1 myLeft");
-                    	  else
-                    		  msg = new ChatMsg(UserName, "2", "2 myLeft");
-                          SendObject(msg);
-                      }
-                  });
-                  
-                  myRight.getCard().addMouseListener(new MouseAdapter() {
-                      @Override
-                      public void mouseClicked(MouseEvent e) {
-                    	  ChatMsg msg;
-                    	  if(uID.equals("1"))
-                    		  msg = new ChatMsg(UserName, "2", "1 myRight");
-                    	  else
-                    		  msg = new ChatMsg(UserName, "2", "2 myRight");
-                          SendObject(msg);
-                      }
-                  });
+                  myLeft.getCard().addMouseListener(ml);
+                  myRight.getCard().addMouseListener(mr);
             
                   break;
                case "2":
@@ -439,14 +444,16 @@ public class JavaObjClientView extends JFrame {
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-                }
+               }
 			   Thread.sleep(1000);
 			   while(myLeft.getY() < 460) {
                    myLeft.setY(myLeft.getY() + 12);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-                }
+			   }
+			   myLeft.getCard().removeMouseListener(ml);
+			   myRight.getCard().removeMouseListener(mr);
 		   }
 		   else {
 			   while(otherLeft.getY() < 160) {
@@ -482,6 +489,8 @@ public class JavaObjClientView extends JFrame {
                    repaint();
                    Thread.sleep(10);
                 }
+			   myLeft.getCard().removeMouseListener(ml);
+			   myRight.getCard().removeMouseListener(mr);
 		   }
 		   else {
 			   while(otherLeft.getY() < 160) {
@@ -516,7 +525,9 @@ public class JavaObjClientView extends JFrame {
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-                }
+               }
+			   myLeft.getCard().removeMouseListener(ml);
+			   myRight.getCard().removeMouseListener(mr);
 		   }
 		   else {
 			   while(otherRight.getY() < 160) {
@@ -551,7 +562,9 @@ public class JavaObjClientView extends JFrame {
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-                }
+               }
+			   myLeft.getCard().removeMouseListener(ml);
+			   myRight.getCard().removeMouseListener(mr);
 		   }
 		   else {
 			   while(otherRight.getY() < 160) {
