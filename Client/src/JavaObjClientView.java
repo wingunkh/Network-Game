@@ -21,8 +21,6 @@ import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
-
 public class JavaObjClientView extends JFrame {
    private static final long serialVersionUID = 1L;
    private JPanel contentPane;
