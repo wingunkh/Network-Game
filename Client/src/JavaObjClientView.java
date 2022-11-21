@@ -47,6 +47,7 @@ public class JavaObjClientView extends JFrame {
    private JLabel shuffle;
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
+   private Jokbo jokbo;
    public JavaObjClientView(String username, String ip_addr, String port_no) {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       contentPane = new JPanel();
@@ -195,7 +196,7 @@ public class JavaObjClientView extends JFrame {
             	   for(int i=0;i<4;i++) {
             		   switch(i) {
                 	   case 0 :
-                		   myLeft.setCardSrc(Integer.parseInt(array[i]));
+                		   myLeft.setCardSrc((array[i]));
                 		   myLeft.setCardIcon(myLeft.getCardSrc());
                 		   while(myLeft.getX() > 100 || myLeft.getY() < 450 ) {
                 			   if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
@@ -205,7 +206,7 @@ public class JavaObjClientView extends JFrame {
                 			   Thread.sleep(10);
                 		   }
                 	   case 1 :
-                		   myRight.setCardSrc(Integer.parseInt(array[i]));
+                		   myRight.setCardSrc((array[i]));
                 		   myRight.setCardIcon(myRight.getCardSrc());
                 		   while(myRight.getX() < 300 || myRight.getY() < 450 ) {
                 			   if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
@@ -215,7 +216,7 @@ public class JavaObjClientView extends JFrame {
                 			   Thread.sleep(10);
                 		   }
                 	   case 2 :
-                		   otherLeft.setCardSrc(Integer.parseInt(array[i]));
+                		   otherLeft.setCardSrc((array[i]));
                 		   otherLeft.setCardIcon(otherLeft.getCardSrc());
                 		   while(otherLeft.getX() > 100 || otherLeft.getY() > 10 ) {
                 			   if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
@@ -225,7 +226,7 @@ public class JavaObjClientView extends JFrame {
                 			   Thread.sleep(10);
                 		   }
                 	   case 3 :
-                		   otherRight.setCardSrc(Integer.parseInt(array[i]));
+                		   otherRight.setCardSrc((array[i]));
                 		   otherRight.setCardIcon(otherRight.getCardSrc());
                 		   while(otherRight.getX() < 300 || otherRight.getY() > 10 ) {
                 			   if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
@@ -234,12 +235,16 @@ public class JavaObjClientView extends JFrame {
                 			   repaint();
                 			   Thread.sleep(10);
                 		   }
-                	   } 
+                	   } 	 
             	   }
             	   myLeft.flip();
             	   myRight.flip();
             	   otherLeft.flip();
             	   otherRight.flip();
+            	   jokbo = new Jokbo(myLeft, myRight);
+            	   AppendText(jokbo.calculateJokbo());
+            	   jokbo = new Jokbo(otherLeft, otherRight);
+            	   AppendText(jokbo.calculateJokbo());
             	   break;
                }
             } catch (IOException e) {
