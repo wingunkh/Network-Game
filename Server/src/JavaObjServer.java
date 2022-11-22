@@ -35,6 +35,7 @@ public class JavaObjServer extends JFrame {
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 
 	private int[] dupCheck = new int[4];
+	private int cnt=0;
 	
 	private Random rand = new Random();
 	public static void main(String[] args) {
@@ -265,8 +266,7 @@ public class JavaObjServer extends JFrame {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg); // server 화면에 출력
 						WriteAllObject(cm);
-					} 
-					else if (cm.getCode().matches("400")) { // logout message 처리
+					} else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;
 					} else if (cm.getCode().matches("1")) {
@@ -285,6 +285,26 @@ public class JavaObjServer extends JFrame {
 						);
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg);
+						WriteAllObject(cm);
+					} else if(cm.getCode().matches("2")) {
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm.getData());
+						AppendText(msg);
+						WriteAllObject(cm);
+					} else if(cm.getCode().matches("3")) {
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm.getData());
+						AppendText(msg); // server 화면에 출력
+						WriteAllObject(cm);
+					} else if(cm.getCode().matches("4")) {
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm.getData());
+						AppendText(msg); // server 화면에 출력
+						WriteAllObject(cm);
+					} else if(cm.getCode().matches("5")) {
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm.getData());
+						AppendText(msg); // server 화면에 출력
 						WriteAllObject(cm);
 					}
 				} catch (IOException e) {

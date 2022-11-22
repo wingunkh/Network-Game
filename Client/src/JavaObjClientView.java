@@ -16,10 +16,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class JavaObjClientView extends JFrame {
    private static final long serialVersionUID = 1L;
@@ -37,15 +39,122 @@ public class JavaObjClientView extends JFrame {
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
    private String uID;
    private JLabel Background;
+   private JButton shuffle;
+   private JButton call;
+   private JButton half;
+   private JButton ddadang;
+   private JLabel money;
+   private Image img;
+   private Image updateimg;
+   private JButton die;
    private String backSrc;
    private ImageIcon backIcon;
    private Card myLeft;
    private Card myRight;
    private Card otherLeft;
    private Card otherRight;
-   private JLabel shuffle;
    private String array[];
    private Jokbo jokbo;
+   private int count=0;
+   private int amount=10000;
+   private boolean toggle=true;
+   
+   private MouseAdapter leftcardpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	  ChatMsg msg;
+     	  if(uID.equals("1"))
+     		  msg = new ChatMsg(UserName, "2", "1 myLeft");
+     	  else
+     		  msg = new ChatMsg(UserName, "2", "2 myLeft");
+          SendObject(msg);
+       }
+   };
+   
+   private MouseAdapter rightcardpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	  ChatMsg msg;
+     	  if(uID.equals("1"))
+     		  msg = new ChatMsg(UserName, "2", "1 myRight");
+     	  else
+     		  msg = new ChatMsg(UserName, "2", "2 myRight");
+          SendObject(msg);
+       }
+   };
+   
+   private MouseAdapter callpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+    	   ChatMsg msg;
+     	   ChatMsg msg2;
+     	   if(uID.equals("1")) {
+     		   msg = new ChatMsg(UserName, "4", "1 call");
+     		   msg2 = new ChatMsg(UserName, "5", "1 call");
+     	   }
+     	   else {
+      	 	   msg = new ChatMsg(UserName, "4", "2 call");
+       		   msg2 = new ChatMsg(UserName, "5", "2 call");
+     	   }
+           SendObject(msg);
+           SendObject(msg2);
+       }
+   };
+   
+   private MouseAdapter halfpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	   ChatMsg msg;
+     	   ChatMsg msg2;
+     	   if(uID.equals("1")) {
+     	 	  msg = new ChatMsg(UserName, "4", "1 half");
+     		  msg2 = new ChatMsg(UserName, "5", "1 half");
+     	   } 
+     	   else {
+     		  msg = new ChatMsg(UserName, "4", "2 half");
+     		  msg2 = new ChatMsg(UserName, "5", "2 half");
+     	   }
+           SendObject(msg);
+           SendObject(msg2);
+       }
+   };
+   
+   private MouseAdapter ddadangpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+      	  ChatMsg msg;
+      	  ChatMsg msg2;
+      	  if(uID.equals("1")) {
+      		 msg = new ChatMsg(UserName, "4", "1 ddadang");
+      		 msg2 = new ChatMsg(UserName, "5", "1 ddadang");
+      	  }
+      		 
+      	  else {
+      		 msg = new ChatMsg(UserName, "4", "2 ddadang");
+      		 msg2 = new ChatMsg(UserName, "5", "2 ddadang");
+      	  }
+          SendObject(msg);
+          SendObject(msg2);
+      }
+   };
+   
+   private MouseAdapter diepressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+       	   ChatMsg msg;
+       	   ChatMsg msg2;
+       	   if(uID.equals("1")) {
+       	 	  msg = new ChatMsg(UserName, "4", "1 die");
+       		  msg2 = new ChatMsg(UserName, "5", "1 die");
+       	   }
+       	   else {
+       		  msg = new ChatMsg(UserName, "4", "2 die");
+       		  msg2 = new ChatMsg(UserName, "5", "2 die");
+       	   }
+           SendObject(msg);
+           SendObject(msg2);
+       }
+   };
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
    public JavaObjClientView(String username, String ip_addr, String port_no) {
@@ -56,7 +165,13 @@ public class JavaObjClientView extends JFrame {
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
       setContentPane(contentPane);
       contentPane.setLayout(null);
+      
+      /*게임 배경*/
+      backSrc = "src/images/background.jpg";
+      backIcon = new ImageIcon(backSrc);
+      /*게임 배경*/
 
+      /*화투 패*/
       myLeft = new Card(200, 250);
       myLeft.setCardBounds();
       contentPane.add(myLeft.getCard());
@@ -72,9 +187,51 @@ public class JavaObjClientView extends JFrame {
       otherRight = new Card(200, 250);
       otherRight.setCardBounds();
       contentPane.add(otherRight.getCard());
+      /*화투 패*/
+      
+      /*판돈*/
+      money = new JLabel(Integer.toString(amount));
+      money.setBounds(650, 416, 55, 15);
+      contentPane.add(money);
+      /*판돈*/
+      
+      /*시작 버튼*/
+      img = new ImageIcon("src/images/start.png").getImage();
+      updateimg = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+      shuffle = new JButton(new ImageIcon(updateimg));
+      shuffle.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+        	  ChatMsg msg = new ChatMsg(UserName, "1", "덱 분배");
+              SendObject(msg);
+          }
+       });
+      shuffle.setBorderPainted(false);
+      shuffle.setContentAreaFilled(false);
+      shuffle.setBounds(210, 250, 100, 100);
+      contentPane.add(shuffle);
+      /*시작 버튼*/
+      
+      /*배팅 버튼*/
+      call= new JButton("삥 / 콜");
+      call.setBounds(524, 475, 150, 50);
+      contentPane.add(call);
+      
+      half = new JButton("하프");
+      half.setBounds(686, 475, 150, 50);
+      contentPane.add(half);
+      
+      ddadang = new JButton("따당");
+      ddadang.setBounds(524, 535, 150, 50);
+      contentPane.add(ddadang);
+      
+      die = new JButton("다이");
+      die.setBounds(686, 535, 150, 50);
+      contentPane.add(die);
+      /*배팅 버튼*/
       
       JScrollPane scrollPane = new JScrollPane();
-      scrollPane.setBounds(524, 10, 352, 471);
+      scrollPane.setBounds(524, 10, 352, 237);
       contentPane.add(scrollPane);
       textArea = new JTextPane();
       textArea.setEditable(true);
@@ -82,13 +239,13 @@ public class JavaObjClientView extends JFrame {
       scrollPane.setViewportView(textArea);
 
       txtInput = new JTextField();
-      txtInput.setBounds(586, 491, 209, 40);
+      txtInput.setBounds(586, 257, 209, 40);
       contentPane.add(txtInput);
       txtInput.setColumns(10);
 
       btnSend = new JButton("Send");
       btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-      btnSend.setBounds(807, 491, 69, 40);
+      btnSend.setBounds(807, 257, 69, 40);
       contentPane.add(btnSend);
 
       lblUserName = new JLabel("Name");
@@ -96,7 +253,7 @@ public class JavaObjClientView extends JFrame {
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(524, 545, 62, 40);
+      lblUserName.setBounds(524, 311, 62, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
@@ -113,28 +270,14 @@ public class JavaObjClientView extends JFrame {
             System.exit(0);
          }
       });
-      btnNewButton.setBounds(807, 545, 69, 40);
+      btnNewButton.setBounds(807, 311, 69, 40);
       contentPane.add(btnNewButton);
-      
-      shuffle = new JLabel("shuffle");
-      shuffle.setFont(new Font("굴림", Font.PLAIN, 28));
-      shuffle.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-             ChatMsg msg = new ChatMsg(UserName, "1", "덱을 섞어보자!");
-              SendObject(msg);
-          }
-       });
-      shuffle.setBounds(200, 300, 100, 50);
-      contentPane.add(shuffle);
-      
       Background = new JLabel("");
-      backSrc = "src/images/background.jpg";
-      backIcon = new ImageIcon(backSrc);
       Background.setIcon(backIcon);
       Background.setBounds(0, 0, 900, 595);
       contentPane.add(Background);
       
+    
       try {
          socket = new Socket(ip_addr, Integer.parseInt(port_no));
 
@@ -190,20 +333,77 @@ public class JavaObjClientView extends JFrame {
                case "1":
                   AppendText(msg);
                   array = cm.getData().split(" ");
-                   shuffle.setVisible(false);
+                  shuffle.setVisible(false);
                   myLeft.backside();
-                 myRight.backside();
-                 otherLeft.backside();
-                 otherRight.backside();
-                 Thread.sleep(1500);
+                  myRight.backside();
+                  otherLeft.backside();
+                  otherRight.backside();
+                  Thread.sleep(1500);
                  
-                 Placing(uID);
+                  Placing(uID);
                     
                   myLeft.flip();
                   myRight.flip();
                   otherLeft.flip();
                   otherRight.flip();
+                  
+                  myLeft.getCard().addMouseListener(leftcardpressed);
+                  myRight.getCard().addMouseListener(rightcardpressed);
                   break;
+               case "2":
+            	   AppendText(msg);
+            	   if(cm.getData().equals("1 myLeft")) {
+            		   Opening(cm.getData());
+            	   }
+            	   else if(cm.getData().equals("2 myLeft")) {
+            		   Opening(cm.getData());
+            	   }
+            	   else if(cm.getData().equals("1 myRight")) {
+            		   Opening(cm.getData());
+            	   }
+            	   else if(cm.getData().equals("2 myRight")){
+            		   Opening(cm.getData());
+            	   }
+            	   break;
+               case "3":
+            	   AppendText(msg);
+            	   if(uID.equals("1")) {
+                	   ChatMsg chatmsg = new ChatMsg(UserName, "4", "배팅 시작!");
+                       SendObject(chatmsg);
+            	   }
+            	   break;
+               case "4":
+            	   AppendText(msg);
+            	   if(toggle) {
+            		   if(uID.equals("1"))
+                		   batting();
+                	   else
+                		   waitbatting();  
+            		   toggle=!toggle;
+            	   }
+            	   else {
+            		   if(uID.equals("1"))
+                		   waitbatting();
+                	   else
+                		   batting();  
+            		   toggle=!toggle;
+            	   }
+            	   break;
+               case "5":
+            	   AppendText(msg);
+            	   if(cm.getData().equals("1 call"))
+            		   updateMoney(amount+=10000);
+            	   else if(cm.getData().equals("2 call"))
+            		   updateMoney(amount+=10000);
+            	   else if(cm.getData().equals("1 half"))
+            			   updateMoney(amount+=15000);
+            	   else if(cm.getData().equals("2 half"))
+        			   updateMoney(amount+=15000);
+            	   else if(cm.getData().equals("1 ddadang"))
+        			   updateMoney(amount+=20000);
+            	   else if(cm.getData().equals("2 ddadang"))
+        			   updateMoney(amount+=20000);
+            	   break;
                }
             } catch (IOException e) {
                AppendText("ois.readObject() error");
@@ -219,7 +419,7 @@ public class JavaObjClientView extends JFrame {
             catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-         }
+            }
          }
       }
    }
@@ -302,9 +502,9 @@ public class JavaObjClientView extends JFrame {
              case 0 :
                 myLeft.setCardSrc(array[i]);
                 myLeft.setCardIcon(myLeft.getCardSrc());
-                while(myLeft.getX() > 100 || myLeft.getY() < 450 ) {
+                while(myLeft.getX() > 100 || myLeft.getY() < 460 ) {
                    if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
-                   if (myLeft.getY() < 450) myLeft.setY(myLeft.getY() + 12);
+                   if (myLeft.getY() < 460) myLeft.setY(myLeft.getY() + 12);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -312,9 +512,9 @@ public class JavaObjClientView extends JFrame {
              case 1 :
                 myRight.setCardSrc(array[i]);
                 myRight.setCardIcon(myRight.getCardSrc());
-                while(myRight.getX() < 300 || myRight.getY() < 450 ) {
+                while(myRight.getX() < 300 || myRight.getY() < 460 ) {
                    if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
-                   if (myRight.getY() < 450) myRight.setY(myRight.getY() + 12);
+                   if (myRight.getY() < 460) myRight.setY(myRight.getY() + 12);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -366,9 +566,9 @@ public class JavaObjClientView extends JFrame {
              case 2 :
                 myLeft.setCardSrc(array[i]);
                 myLeft.setCardIcon(myLeft.getCardSrc());
-                while(myLeft.getX() > 100 || myLeft.getY() < 450 ) {
+                while(myLeft.getX() > 100 || myLeft.getY() < 460 ) {
                    if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
-                   if (myLeft.getY() < 450) myLeft.setY(myLeft.getY() + 12);
+                   if (myLeft.getY() < 460) myLeft.setY(myLeft.getY() + 12);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -376,9 +576,9 @@ public class JavaObjClientView extends JFrame {
              case 3 :
                 myRight.setCardSrc(array[i]);
                 myRight.setCardIcon(myRight.getCardSrc());
-                while(myRight.getX() < 300 || myRight.getY() < 450 ) {
+                while(myRight.getX() < 300 || myRight.getY() < 460 ) {
                    if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
-                   if (myRight.getY() < 450) myRight.setY(myRight.getY() + 12);
+                   if (myRight.getY() < 460) myRight.setY(myRight.getY() + 12);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -388,7 +588,183 @@ public class JavaObjClientView extends JFrame {
          jokbo = new Jokbo(myLeft, myRight);
          AppendText(jokbo.calculateJokbo());
       }
-
-      
    }   
+   
+   public void Opening(String str) throws InterruptedException {  
+	   switch(str) {
+	   case "1 myLeft":
+		   if(uID.equals("1")) {
+			   while(myLeft.getY() > 300) {
+                   myLeft.setY(myLeft.getY() - 12);
+                   myLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+               }
+			   Thread.sleep(1000);
+			   while(myLeft.getY() < 460) {
+                   myLeft.setY(myLeft.getY() + 12);
+                   myLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   myLeft.getCard().removeMouseListener(leftcardpressed);
+			   myRight.getCard().removeMouseListener(rightcardpressed);
+		   }
+		   else {
+			   while(otherLeft.getY() < 160) {
+				   otherLeft.setY(otherLeft.getY() + 12);
+				   otherLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(otherLeft.getY() > 10) {
+				   otherLeft.setY(otherLeft.getY() - 12);
+				   otherLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   otherLeft.setCardSrc(array[0]);
+			   otherLeft.setCardIcon(otherLeft.getCardSrc());
+			   otherLeft.flip();
+		   }
+		   break;
+	   case "2 myLeft":
+		   if(uID.equals("2")) {
+			   while(myLeft.getY() > 300) {
+                   myLeft.setY(myLeft.getY() - 12);
+                   myLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(myLeft.getY() < 460) {
+                   myLeft.setY(myLeft.getY() + 12);
+                   myLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   myLeft.getCard().removeMouseListener(leftcardpressed);
+			   myRight.getCard().removeMouseListener(rightcardpressed);
+		   }
+		   else {
+			   while(otherLeft.getY() < 160) {
+				   otherLeft.setY(otherLeft.getY() + 12);
+				   otherLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(otherLeft.getY() > 10) {
+				   otherLeft.setY(otherLeft.getY() - 12);
+				   otherLeft.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   otherLeft.setCardSrc(array[2]);
+			   otherLeft.setCardIcon(otherLeft.getCardSrc());
+			   otherLeft.flip();
+		   }
+		   break;
+	   case "1 myRight":
+		   if(uID.equals("1")) {
+			   while(myRight.getY() > 300) {
+                   myRight.setY(myRight.getY() - 12);
+                   myRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(myRight.getY() < 460) {
+                   myRight.setY(myRight.getY() + 12);
+                   myRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+               }
+			   myLeft.getCard().removeMouseListener(leftcardpressed);
+			   myRight.getCard().removeMouseListener(rightcardpressed);
+		   }
+		   else {
+			   while(otherRight.getY() < 160) {
+				   otherRight.setY(otherRight.getY() + 12);
+				   otherRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(otherRight.getY() > 10) {
+				   otherRight.setY(otherRight.getY() - 12);
+				   otherRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   otherRight.setCardSrc(array[1]);
+			   otherRight.setCardIcon(otherRight.getCardSrc());
+			   otherRight.flip();
+		   }
+		   break;
+	   case "2 myRight":
+		   if(uID.equals("2")) {
+			   while(myRight.getY() > 300) {
+                   myRight.setY(myRight.getY() - 12);
+                   myRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(myRight.getY() < 460) {
+                   myRight.setY(myRight.getY() + 12);
+                   myRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+               }
+			   myLeft.getCard().removeMouseListener(leftcardpressed);
+			   myRight.getCard().removeMouseListener(rightcardpressed);
+		   }
+		   else {
+			   while(otherRight.getY() < 160) {
+				   otherRight.setY(otherRight.getY() + 12);
+				   otherRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+                }
+			   Thread.sleep(1000);
+			   while(otherRight.getY() > 10) {
+				   otherRight.setY(otherRight.getY() - 12);
+				   otherRight.setCardBounds();
+                   repaint();
+                   Thread.sleep(10);
+			   }
+			   otherRight.setCardSrc(array[3]);
+			   otherRight.setCardIcon(otherRight.getCardSrc());
+			   otherRight.flip();
+		   }
+		   break;
+	   }
+	   count++;
+	   if(count == 2) {
+		   if(uID.equals("1")) {
+			   ChatMsg msg = new ChatMsg(UserName, "3", "배팅버튼 활성화");
+	           SendObject(msg);  
+		   }
+	   }
+   }
+   
+   public void batting() {
+	   call.addMouseListener(callpressed);
+	   half.addMouseListener(halfpressed);
+	   ddadang.addMouseListener(ddadangpressed);
+	   die.addMouseListener(diepressed);
+   }
+   
+   public void waitbatting() {
+	   call.removeMouseListener(callpressed);
+	   half.removeMouseListener(halfpressed);
+	   ddadang.removeMouseListener(ddadangpressed);
+	   die.removeMouseListener(diepressed);
+   }
+   
+   public void updateMoney(int updatedAmount) {
+	   money.setText(Integer.toString(updatedAmount));
+   }
 }
