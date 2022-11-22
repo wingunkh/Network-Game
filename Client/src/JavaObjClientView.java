@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
@@ -38,17 +39,24 @@ public class JavaObjClientView extends JFrame {
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
    private String uID;
    private JLabel Background;
+   private JButton shuffle;
+   private JButton call;
+   private JButton half;
+   private JButton ddadang;
+   private Image img;
+   private Image updateimg;
+   private JButton die;
    private String backSrc;
    private ImageIcon backIcon;
    private Card myLeft;
    private Card myRight;
    private Card otherLeft;
    private Card otherRight;
-   private JLabel shuffle;
    private String array[];
    private Jokbo jokbo;
+   private int count=0;
    
-   private MouseAdapter ml = new MouseAdapter() {
+   private MouseAdapter leftcardpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
      	  ChatMsg msg;
@@ -60,7 +68,7 @@ public class JavaObjClientView extends JFrame {
        }
    };
    
-   private MouseAdapter mr = new MouseAdapter() {
+   private MouseAdapter rightcardpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
      	  ChatMsg msg;
@@ -72,6 +80,53 @@ public class JavaObjClientView extends JFrame {
        }
    };
    
+   private MouseAdapter callpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	  ChatMsg msg;
+     	  if(uID.equals("1"))
+     		  msg = new ChatMsg(UserName, "3", "1 call");
+     	  else
+     		  msg = new ChatMsg(UserName, "3", "2 call");
+           SendObject(msg);
+       }
+   };
+   
+   private MouseAdapter halfpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	  ChatMsg msg;
+     	  if(uID.equals("1"))
+     		  msg = new ChatMsg(UserName, "3", "1 half");
+     	  else
+     		  msg = new ChatMsg(UserName, "3", "2 half");
+           SendObject(msg);
+       }
+   };
+   
+   private MouseAdapter ddadangpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	  ChatMsg msg;
+     	  if(uID.equals("1"))
+     		  msg = new ChatMsg(UserName, "3", "1 ddadang");
+     	  else
+     		  msg = new ChatMsg(UserName, "3", "2 ddadang");
+           SendObject(msg);
+       }
+   };
+   
+   private MouseAdapter diepressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+     	  ChatMsg msg;
+     	  if(uID.equals("1"))
+     		  msg = new ChatMsg(UserName, "3", "1 die");
+     	  else
+     		  msg = new ChatMsg(UserName, "3", "2 die");
+           SendObject(msg);
+       }
+   };
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
    public JavaObjClientView(String username, String ip_addr, String port_no) {
@@ -82,7 +137,13 @@ public class JavaObjClientView extends JFrame {
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
       setContentPane(contentPane);
       contentPane.setLayout(null);
+      
+      /*게임 배경*/
+      backSrc = "src/images/background.jpg";
+      backIcon = new ImageIcon(backSrc);
+      /*게임 배경*/
 
+      /*화투 패*/
       myLeft = new Card(200, 250);
       myLeft.setCardBounds();
       contentPane.add(myLeft.getCard());
@@ -98,9 +159,45 @@ public class JavaObjClientView extends JFrame {
       otherRight = new Card(200, 250);
       otherRight.setCardBounds();
       contentPane.add(otherRight.getCard());
+      /*화투 패*/
+      
+      /*시작 버튼*/
+      img = new ImageIcon("src/images/start.png").getImage();
+      updateimg = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+      shuffle = new JButton(new ImageIcon(updateimg));
+      shuffle.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+        	  ChatMsg msg = new ChatMsg(UserName, "1", "덱을 섞어보자!");
+              SendObject(msg);
+          }
+       });
+      shuffle.setBorderPainted(false);
+      shuffle.setContentAreaFilled(false);
+      shuffle.setBounds(210, 250, 100, 100);
+      contentPane.add(shuffle);
+      /*시작 버튼*/
+      
+      /*배팅 버튼*/
+      call= new JButton("삥 / 콜");
+      call.setBounds(524, 475, 150, 50);
+      contentPane.add(call);
+      
+      half = new JButton("하프");
+      half.setBounds(686, 475, 150, 50);
+      contentPane.add(half);
+      
+      ddadang = new JButton("따당");
+      ddadang.setBounds(524, 535, 150, 50);
+      contentPane.add(ddadang);
+      
+      die = new JButton("다이");
+      die.setBounds(686, 535, 150, 50);
+      contentPane.add(die);
+      /*배팅 버튼*/
       
       JScrollPane scrollPane = new JScrollPane();
-      scrollPane.setBounds(524, 10, 352, 471);
+      scrollPane.setBounds(524, 10, 352, 237);
       contentPane.add(scrollPane);
       textArea = new JTextPane();
       textArea.setEditable(true);
@@ -108,13 +205,13 @@ public class JavaObjClientView extends JFrame {
       scrollPane.setViewportView(textArea);
 
       txtInput = new JTextField();
-      txtInput.setBounds(586, 491, 209, 40);
+      txtInput.setBounds(586, 257, 209, 40);
       contentPane.add(txtInput);
       txtInput.setColumns(10);
 
       btnSend = new JButton("Send");
       btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-      btnSend.setBounds(807, 491, 69, 40);
+      btnSend.setBounds(807, 257, 69, 40);
       contentPane.add(btnSend);
 
       lblUserName = new JLabel("Name");
@@ -122,7 +219,7 @@ public class JavaObjClientView extends JFrame {
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(524, 545, 62, 40);
+      lblUserName.setBounds(524, 311, 62, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
@@ -139,28 +236,14 @@ public class JavaObjClientView extends JFrame {
             System.exit(0);
          }
       });
-      btnNewButton.setBounds(807, 545, 69, 40);
+      btnNewButton.setBounds(807, 311, 69, 40);
       contentPane.add(btnNewButton);
-      
-      shuffle = new JLabel("shuffle");
-      shuffle.setFont(new Font("굴림", Font.PLAIN, 28));
-      shuffle.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-        	  ChatMsg msg = new ChatMsg(UserName, "1", "덱을 섞어보자!");
-              SendObject(msg);
-          }
-       });
-      shuffle.setBounds(200, 300, 100, 50);
-      contentPane.add(shuffle);
-      
       Background = new JLabel("");
-      backSrc = "src/images/background.jpg";
-      backIcon = new ImageIcon(backSrc);
       Background.setIcon(backIcon);
       Background.setBounds(0, 0, 900, 595);
       contentPane.add(Background);
       
+    
       try {
          socket = new Socket(ip_addr, Integer.parseInt(port_no));
 
@@ -230,9 +313,8 @@ public class JavaObjClientView extends JFrame {
                   otherLeft.flip();
                   otherRight.flip();
                   
-                  myLeft.getCard().addMouseListener(ml);
-                  myRight.getCard().addMouseListener(mr);
-            
+                  myLeft.getCard().addMouseListener(leftcardpressed);
+                  myRight.getCard().addMouseListener(rightcardpressed);
                   break;
                case "2":
             	   AppendText(msg);
@@ -245,9 +327,19 @@ public class JavaObjClientView extends JFrame {
             	   else if(cm.getData().equals("1 myRight")) {
             		   Opening(cm.getData());
             	   }
-            	   else {
+            	   else if(cm.getData().equals("2 myRight")){
             		   Opening(cm.getData());
             	   }
+            	   break;
+               case "3":
+            	   count = 0;
+            	   call.addMouseListener(new MouseAdapter() {
+            	          @Override
+            	          public void mouseClicked(MouseEvent e) {
+            	        	  ChatMsg msg = new ChatMsg(UserName, "3", "call");
+            	              SendObject(msg);
+            	          }
+            	       });
             	   break;
                }
             } catch (IOException e) {
@@ -452,8 +544,8 @@ public class JavaObjClientView extends JFrame {
                    repaint();
                    Thread.sleep(10);
 			   }
-			   myLeft.getCard().removeMouseListener(ml);
-			   myRight.getCard().removeMouseListener(mr);
+			   myLeft.getCard().removeMouseListener(leftcardpressed);
+			   myRight.getCard().removeMouseListener(rightcardpressed);
 		   }
 		   else {
 			   while(otherLeft.getY() < 160) {
@@ -489,8 +581,8 @@ public class JavaObjClientView extends JFrame {
                    repaint();
                    Thread.sleep(10);
                 }
-			   myLeft.getCard().removeMouseListener(ml);
-			   myRight.getCard().removeMouseListener(mr);
+			   myLeft.getCard().removeMouseListener(leftcardpressed);
+			   myRight.getCard().removeMouseListener(rightcardpressed);
 		   }
 		   else {
 			   while(otherLeft.getY() < 160) {
@@ -526,8 +618,8 @@ public class JavaObjClientView extends JFrame {
                    repaint();
                    Thread.sleep(10);
                }
-			   myLeft.getCard().removeMouseListener(ml);
-			   myRight.getCard().removeMouseListener(mr);
+			   myLeft.getCard().removeMouseListener(leftcardpressed);
+			   myRight.getCard().removeMouseListener(rightcardpressed);
 		   }
 		   else {
 			   while(otherRight.getY() < 160) {
@@ -563,8 +655,8 @@ public class JavaObjClientView extends JFrame {
                    repaint();
                    Thread.sleep(10);
                }
-			   myLeft.getCard().removeMouseListener(ml);
-			   myRight.getCard().removeMouseListener(mr);
+			   myLeft.getCard().removeMouseListener(leftcardpressed);
+			   myRight.getCard().removeMouseListener(rightcardpressed);
 		   }
 		   else {
 			   while(otherRight.getY() < 160) {
@@ -586,5 +678,12 @@ public class JavaObjClientView extends JFrame {
 		   }
 		   break;
 	   }
+	   count++;
+	   if(count == 2) {
+		   ChatMsg msg = new ChatMsg(UserName, "3", "배팅을 시작해보자!");
+           SendObject(msg);
+	   }
    }
+   
+   public void batting() {}
 }

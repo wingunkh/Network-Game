@@ -50,10 +50,6 @@ class Card {
 		this.cardSrc = "src/cards/Back.png";
 		setCardIcon(cardSrc);
 		this.card.setIcon(getCardIcon());
-//		Image img = new ImageIcon("src/cards/Back.png").getImage();
-//		Image updateImage = img.getScaledInstance(75, 125, java.awt.Image.SCALE_SMOOTH);
-//		this.cardIcon = new ImageIcon(updateImage);
-//		this.card.setIcon(this.cardIcon);
 	}
 	
 	public void flip() { //카드의 앞면이 보이게 화면에 보여주는 메서드
