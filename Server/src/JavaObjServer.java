@@ -292,7 +292,18 @@ public class JavaObjServer extends JFrame {
 						AppendText(msg);
 						WriteAllObject(cm);
 					} else if(cm.getCode().matches("3")) {
-						msg = String.format("[%s] %s", cm.getId(), cm.getData());
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm.getData());
+						AppendText(msg); // server 화면에 출력
+						WriteAllObject(cm);
+					} else if(cm.getCode().matches("4")) {
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm.getData());
+						AppendText(msg); // server 화면에 출력
+						WriteAllObject(cm);
+					} else if(cm.getCode().matches("5")) {
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm.getData());
 						AppendText(msg); // server 화면에 출력
 						WriteAllObject(cm);
 					}
