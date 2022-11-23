@@ -396,14 +396,24 @@ public class JavaObjClientView extends JFrame {
             		   updatePanmoney(amount+=10000);
             	   else if(cm.getData().equals("2 bbing"))
             		   updatePanmoney(amount+=10000);
-            	   else if(cm.getData().equals("1 half"))
+            	   else if(cm.getData().equals("1 half")) {
             		   updatePanmoney(amount+=15000);
-            	   else if(cm.getData().equals("2 half"))
+            		   bbing.removeMouseListener(bbingpressed);
+            	   }
+            	   else if(cm.getData().equals("2 half")) {
         			   updatePanmoney(amount+=15000);
-            	   else if(cm.getData().equals("1 ddadang"))
+        			   bbing.removeMouseListener(bbingpressed);
+            	   }
+            	   else if(cm.getData().equals("1 ddadang")) {
         			   updatePanmoney(amount+=20000);
-            	   else if(cm.getData().equals("2 ddadang"))
+        			   bbing.removeMouseListener(bbingpressed);
+        			   half.removeMouseListener(halfpressed);
+            	   }
+            	   else if(cm.getData().equals("2 ddadang")) {
         			   updatePanmoney(amount+=20000);
+        			   bbing.removeMouseListener(bbingpressed);
+        			   half.removeMouseListener(halfpressed);
+            	   }
             	   break;
                }
             } catch (IOException e) {
