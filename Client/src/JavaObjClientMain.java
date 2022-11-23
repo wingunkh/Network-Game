@@ -86,7 +86,7 @@ public class JavaObjClientMain extends JFrame {
 			String username = txtUserName.getText().trim();
 			String ip_addr = txtIpAddress.getText().trim();
 			String port_no = txtPortNumber.getText().trim();
-			JavaObjClientView view = new JavaObjClientView(username, ip_addr, port_no);
+			JavaObjClientLobby view = new JavaObjClientLobby(username, ip_addr, port_no);
 			setVisible(false);
 		}
 	}

@@ -23,7 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class JavaObjClientView extends JFrame {
+public class JavaObjClientGame extends JFrame {
    private static final long serialVersionUID = 1L;
    private JPanel contentPane;
    private JTextField txtInput;
@@ -157,7 +157,7 @@ public class JavaObjClientView extends JFrame {
    };
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
-   public JavaObjClientView(String username, String ip_addr, String port_no) {
+   public JavaObjClientGame(String username, String ip_addr, String port_no) {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       contentPane = new JPanel();
       setBounds(100, 100, 900, 630);
