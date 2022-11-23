@@ -26,9 +26,7 @@ import java.awt.event.MouseListener;
 public class JavaObjClientView extends JFrame {
    private static final long serialVersionUID = 1L;
    private JPanel contentPane;
-   private JTextField txtInput;
    private String UserName;
-   private JButton btnSend;
    private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
    private Socket socket; // 연결소켓
    private ObjectInputStream ois;
@@ -40,10 +38,12 @@ public class JavaObjClientView extends JFrame {
    private String uID;
    private JLabel Background;
    private JButton shuffle;
-   private JButton call;
+   private JButton bbing;
    private JButton half;
    private JButton ddadang;
-   private JLabel money;
+   private JButton call;
+   private JLabel panmoney;
+   private JLabel mymoney;
    private Image img;
    private Image updateimg;
    private JButton die;
@@ -57,6 +57,7 @@ public class JavaObjClientView extends JFrame {
    private Jokbo jokbo;
    private int count=0;
    private int amount=10000;
+   private int property=100000;
    private boolean toggle=true;
    
    private MouseAdapter leftcardpressed = new MouseAdapter() {
@@ -83,19 +84,20 @@ public class JavaObjClientView extends JFrame {
        }
    };
    
-   private MouseAdapter callpressed = new MouseAdapter() {
+   private MouseAdapter bbingpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
     	   ChatMsg msg;
      	   ChatMsg msg2;
      	   if(uID.equals("1")) {
-     		   msg = new ChatMsg(UserName, "4", "1 call");
-     		   msg2 = new ChatMsg(UserName, "5", "1 call");
+     		   msg = new ChatMsg(UserName, "4", "1 bbing");
+     		   msg2 = new ChatMsg(UserName, "5", "1 bbing");
      	   }
      	   else {
-      	 	   msg = new ChatMsg(UserName, "4", "2 call");
-       		   msg2 = new ChatMsg(UserName, "5", "2 call");
+      	 	   msg = new ChatMsg(UserName, "4", "2 bbing");
+       		   msg2 = new ChatMsg(UserName, "5", "2 bbing");
      	   }
+     	   updateMymoney(property-=10000);
            SendObject(msg);
            SendObject(msg2);
        }
@@ -114,6 +116,7 @@ public class JavaObjClientView extends JFrame {
      		  msg = new ChatMsg(UserName, "4", "2 half");
      		  msg2 = new ChatMsg(UserName, "5", "2 half");
      	   }
+     	   updateMymoney(property-=15000);
            SendObject(msg);
            SendObject(msg2);
        }
@@ -133,6 +136,7 @@ public class JavaObjClientView extends JFrame {
       		 msg = new ChatMsg(UserName, "4", "2 ddadang");
       		 msg2 = new ChatMsg(UserName, "5", "2 ddadang");
       	  }
+      	  updateMymoney(property-=20000);
           SendObject(msg);
           SendObject(msg2);
       }
@@ -190,10 +194,18 @@ public class JavaObjClientView extends JFrame {
       /*화투 패*/
       
       /*판돈*/
-      money = new JLabel(Integer.toString(amount));
-      money.setBounds(650, 416, 55, 15);
-      contentPane.add(money);
+      panmoney = new JLabel(Integer.toString(amount));
+      panmoney.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 24));
+      panmoney.setBounds(524, 324, 150, 50);
+      contentPane.add(panmoney);
       /*판돈*/
+      
+      /*내돈*/  
+      mymoney = new JLabel("100000");
+      mymoney.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 24));
+      mymoney.setBounds(686, 324, 150, 50);
+      contentPane.add(mymoney);
+      /*내돈*/
       
       /*시작 버튼*/
       img = new ImageIcon("src/images/start.png").getImage();
@@ -213,21 +225,25 @@ public class JavaObjClientView extends JFrame {
       /*시작 버튼*/
       
       /*배팅 버튼*/
-      call= new JButton("삥 / 콜");
-      call.setBounds(524, 475, 150, 50);
-      contentPane.add(call);
+      bbing= new JButton("삥");
+      bbing.setBounds(524, 384, 150, 50);
+      contentPane.add(bbing);
       
       half = new JButton("하프");
-      half.setBounds(686, 475, 150, 50);
+      half.setBounds(686, 384, 150, 50);
       contentPane.add(half);
       
       ddadang = new JButton("따당");
-      ddadang.setBounds(524, 535, 150, 50);
+      ddadang.setBounds(524, 444, 150, 50);
       contentPane.add(ddadang);
       
       die = new JButton("다이");
-      die.setBounds(686, 535, 150, 50);
+      die.setBounds(686, 444, 150, 50);
       contentPane.add(die);
+      
+      call = new JButton("콜");
+      call.setBounds(524, 505, 312, 50);
+      contentPane.add(call);
       /*배팅 버튼*/
       
       JScrollPane scrollPane = new JScrollPane();
@@ -238,22 +254,12 @@ public class JavaObjClientView extends JFrame {
       textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
       scrollPane.setViewportView(textArea);
 
-      txtInput = new JTextField();
-      txtInput.setBounds(586, 257, 209, 40);
-      contentPane.add(txtInput);
-      txtInput.setColumns(10);
-
-      btnSend = new JButton("Send");
-      btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-      btnSend.setBounds(807, 257, 69, 40);
-      contentPane.add(btnSend);
-
       lblUserName = new JLabel("Name");
       lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(524, 311, 62, 40);
+      lblUserName.setBounds(524, 256, 62, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
@@ -270,14 +276,13 @@ public class JavaObjClientView extends JFrame {
             System.exit(0);
          }
       });
-      btnNewButton.setBounds(807, 311, 69, 40);
+      btnNewButton.setBounds(598, 256, 69, 40);
       contentPane.add(btnNewButton);
       Background = new JLabel("");
       Background.setIcon(backIcon);
       Background.setBounds(0, 0, 900, 595);
       contentPane.add(Background);
       
-    
       try {
          socket = new Socket(ip_addr, Integer.parseInt(port_no));
 
@@ -290,10 +295,6 @@ public class JavaObjClientView extends JFrame {
          
          ListenNetwork net = new ListenNetwork();
          net.start();
-         TextSendAction action = new TextSendAction();
-         btnSend.addActionListener(action);
-         txtInput.addActionListener(action);
-         txtInput.requestFocus();
 
       } catch (NumberFormatException | IOException e) {
          e.printStackTrace();
@@ -391,18 +392,18 @@ public class JavaObjClientView extends JFrame {
             	   break;
                case "5":
             	   AppendText(msg);
-            	   if(cm.getData().equals("1 call"))
-            		   updateMoney(amount+=10000);
-            	   else if(cm.getData().equals("2 call"))
-            		   updateMoney(amount+=10000);
+            	   if(cm.getData().equals("1 bbing"))
+            		   updatePanmoney(amount+=10000);
+            	   else if(cm.getData().equals("2 bbing"))
+            		   updatePanmoney(amount+=10000);
             	   else if(cm.getData().equals("1 half"))
-            			   updateMoney(amount+=15000);
+            		   updatePanmoney(amount+=15000);
             	   else if(cm.getData().equals("2 half"))
-        			   updateMoney(amount+=15000);
+        			   updatePanmoney(amount+=15000);
             	   else if(cm.getData().equals("1 ddadang"))
-        			   updateMoney(amount+=20000);
+        			   updatePanmoney(amount+=20000);
             	   else if(cm.getData().equals("2 ddadang"))
-        			   updateMoney(amount+=20000);
+        			   updatePanmoney(amount+=20000);
             	   break;
                }
             } catch (IOException e) {
@@ -420,23 +421,6 @@ public class JavaObjClientView extends JFrame {
             // TODO Auto-generated catch block
             e.printStackTrace();
             }
-         }
-      }
-   }
-
-   // keyboard enter key 치면 서버로 전송
-   class TextSendAction implements ActionListener {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-         // Send button을 누르거나 메시지 입력하고 Enter key 치면
-         if (e.getSource() == btnSend || e.getSource() == txtInput) {
-            String msg = null;
-            msg = txtInput.getText();
-            SendMessage(msg);
-            txtInput.setText(""); // 메세지를 보내고 나면 메세지 쓰는창을 비운다.
-            txtInput.requestFocus(); // 메세지를 보내고 커서를 다시 텍스트 필드로 위치시킨다
-            if (msg.contains("/exit")) // 종료 처리
-               System.exit(0);
          }
       }
    }
@@ -751,20 +735,24 @@ public class JavaObjClientView extends JFrame {
    }
    
    public void batting() {
-	   call.addMouseListener(callpressed);
+	   bbing.addMouseListener(bbingpressed);
 	   half.addMouseListener(halfpressed);
 	   ddadang.addMouseListener(ddadangpressed);
 	   die.addMouseListener(diepressed);
    }
    
    public void waitbatting() {
-	   call.removeMouseListener(callpressed);
+	   bbing.removeMouseListener(bbingpressed);
 	   half.removeMouseListener(halfpressed);
 	   ddadang.removeMouseListener(ddadangpressed);
 	   die.removeMouseListener(diepressed);
    }
    
-   public void updateMoney(int updatedAmount) {
-	   money.setText(Integer.toString(updatedAmount));
+   public void updatePanmoney(int updatedAmount) {
+	   panmoney.setText(Integer.toString(updatedAmount));
+   }
+   
+   public void updateMymoney(int updatedAmount) {
+	   mymoney.setText(Integer.toString(updatedAmount));
    }
 }

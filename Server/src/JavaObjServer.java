@@ -28,7 +28,6 @@ public class JavaObjServer extends JFrame {
 	private JPanel contentPane;
 	JTextArea textArea;
 	private JTextField txtPortNumber;
-
 	private ServerSocket socket; // 서버소켓
 	private Socket client_socket; // accept() 에서 생성된 client 소켓
 	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
