@@ -399,20 +399,26 @@ public class JavaObjClientView extends JFrame {
             	   else if(cm.getData().equals("1 half")) {
             		   updatePanmoney(amount+=15000);
             		   bbing.removeMouseListener(bbingpressed);
+            		   bbing.setBackground(new Color(100,100,100));
             	   }
             	   else if(cm.getData().equals("2 half")) {
         			   updatePanmoney(amount+=15000);
         			   bbing.removeMouseListener(bbingpressed);
+        			   bbing.setBackground(new Color(100,100,100));
             	   }
             	   else if(cm.getData().equals("1 ddadang")) {
         			   updatePanmoney(amount+=20000);
         			   bbing.removeMouseListener(bbingpressed);
+        			   bbing.setBackground(new Color(100,100,100));
         			   half.removeMouseListener(halfpressed);
+        			   half.setBackground(new Color(100,100,100));
             	   }
             	   else if(cm.getData().equals("2 ddadang")) {
         			   updatePanmoney(amount+=20000);
         			   bbing.removeMouseListener(bbingpressed);
+        			   bbing.setBackground(new Color(100,100,100));
         			   half.removeMouseListener(halfpressed);
+        			   half.setBackground(new Color(100,100,100));
             	   }
             	   break;
                }
@@ -763,6 +769,29 @@ public class JavaObjClientView extends JFrame {
    }
    
    public void updateMymoney(int updatedAmount) {
-	   mymoney.setText(Integer.toString(updatedAmount));
+	   //mymoney.setText(Integer.toString(updatedAmount));
+	   if(updatedAmount<10000) {
+		   bbing.removeMouseListener(bbingpressed);
+		   bbing.setBackground(new Color(100,100,100));
+		   half.removeMouseListener(halfpressed);
+		   half.setBackground(new Color(100,100,100));
+		   ddadang.removeMouseListener(ddadangpressed);
+		   ddadang.setBackground(new Color(100,100,100));
+		   mymoney.setText(Integer.toString(updatedAmount));
+	   }
+	   else if(updatedAmount<15000) {
+		   half.removeMouseListener(halfpressed);
+		   half.setBackground(new Color(100,100,100));
+		   ddadang.removeMouseListener(ddadangpressed);
+		   ddadang.setBackground(new Color(100,100,100));
+		   mymoney.setText(Integer.toString(updatedAmount));
+	   }
+	   else if(updatedAmount<20000) {
+		   ddadang.removeMouseListener(ddadangpressed);
+		   ddadang.setBackground(new Color(100,100,100));
+		   mymoney.setText(Integer.toString(updatedAmount));
+	   }
+	   else 
+		   mymoney.setText(Integer.toString(updatedAmount));
    }
 }
