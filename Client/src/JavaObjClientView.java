@@ -41,12 +41,12 @@ public class JavaObjClientView extends JFrame {
    private JButton bbing;
    private JButton half;
    private JButton ddadang;
+   private JButton die;
    private JButton call;
    private JLabel panmoney;
    private JLabel mymoney;
    private Image img;
    private Image updateimg;
-   private JButton die;
    private String backSrc;
    private ImageIcon backIcon;
    private Card myLeft;
@@ -56,7 +56,7 @@ public class JavaObjClientView extends JFrame {
    private String array[];
    private Jokbo jokbo;
    private int count=0;
-   private int amount=10000;
+   private int amount=0;
    private int property=100000;
    private boolean toggle=true;
    
@@ -159,6 +159,24 @@ public class JavaObjClientView extends JFrame {
            SendObject(msg2);
        }
    };
+   
+   private MouseAdapter callpressed = new MouseAdapter() {
+       @Override
+       public void mouseClicked(MouseEvent e) {
+       	   ChatMsg msg;
+       	   ChatMsg msg2;
+       	   if(uID.equals("1")) {
+       	 	  msg = new ChatMsg(UserName, "4", "1 call");
+       		  msg2 = new ChatMsg(UserName, "5", "1 call");
+       	   }
+       	   else {
+       		  msg = new ChatMsg(UserName, "4", "2 call");
+       		  msg2 = new ChatMsg(UserName, "5", "2 call");
+       	   }
+           SendObject(msg);
+           SendObject(msg2);
+       }
+   };
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
    public JavaObjClientView(String username, String ip_addr, String port_no) {
@@ -225,23 +243,23 @@ public class JavaObjClientView extends JFrame {
       /*시작 버튼*/
       
       /*배팅 버튼*/
-      bbing= new JButton("삥");
-      bbing.setBounds(524, 384, 150, 50);
+      bbing= new JButton(new ImageIcon("src/images/bbing1.png"));
+      bbing.setBounds(524, 384, 130, 50);
       contentPane.add(bbing);
       
-      half = new JButton("하프");
-      half.setBounds(686, 384, 150, 50);
+      half = new JButton(new ImageIcon("src/images/half1.png"));
+      half.setBounds(686, 384, 130, 50);
       contentPane.add(half);
       
-      ddadang = new JButton("따당");
-      ddadang.setBounds(524, 444, 150, 50);
+      ddadang = new JButton(new ImageIcon("src/images/ddadang1.png"));
+      ddadang.setBounds(524, 444, 130, 50);
       contentPane.add(ddadang);
       
-      die = new JButton("다이");
-      die.setBounds(686, 444, 150, 50);
+      die = new JButton(new ImageIcon("src/images/die1.png"));
+      die.setBounds(686, 444, 130, 50);
       contentPane.add(die);
       
-      call = new JButton("콜");
+      call = new JButton(new ImageIcon("src/images/call1.png"));
       call.setBounds(524, 505, 312, 50);
       contentPane.add(call);
       /*배팅 버튼*/
@@ -335,6 +353,10 @@ public class JavaObjClientView extends JFrame {
                   AppendText(msg);
                   array = cm.getData().split(" ");
                   shuffle.setVisible(false);
+                  myLeft.getCard().setVisible(true);
+                  myRight.getCard().setVisible(true);
+                  otherLeft.getCard().setVisible(true);
+                  otherRight.getCard().setVisible(true);
                   myLeft.backside();
                   myRight.backside();
                   otherLeft.backside();
@@ -350,6 +372,9 @@ public class JavaObjClientView extends JFrame {
                   
                   myLeft.getCard().addMouseListener(leftcardpressed);
                   myRight.getCard().addMouseListener(rightcardpressed);
+                  
+                  updateMymoney(property-=10000);
+                  updatePanmoney(amount+=20000);
                   break;
                case "2":
             	   AppendText(msg);
@@ -399,26 +424,38 @@ public class JavaObjClientView extends JFrame {
             	   else if(cm.getData().equals("1 half")) {
             		   updatePanmoney(amount+=15000);
             		   bbing.removeMouseListener(bbingpressed);
-            		   bbing.setBackground(new Color(100,100,100));
+            		   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
             	   }
             	   else if(cm.getData().equals("2 half")) {
         			   updatePanmoney(amount+=15000);
         			   bbing.removeMouseListener(bbingpressed);
-        			   bbing.setBackground(new Color(100,100,100));
+        			   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
             	   }
             	   else if(cm.getData().equals("1 ddadang")) {
         			   updatePanmoney(amount+=20000);
         			   bbing.removeMouseListener(bbingpressed);
-        			   bbing.setBackground(new Color(100,100,100));
+        			   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
         			   half.removeMouseListener(halfpressed);
-        			   half.setBackground(new Color(100,100,100));
+        			   half.setIcon(new ImageIcon("src/images/half2.png"));
             	   }
             	   else if(cm.getData().equals("2 ddadang")) {
         			   updatePanmoney(amount+=20000);
         			   bbing.removeMouseListener(bbingpressed);
-        			   bbing.setBackground(new Color(100,100,100));
+        			   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
         			   half.removeMouseListener(halfpressed);
-        			   half.setBackground(new Color(100,100,100));
+        			   half.setIcon(new ImageIcon("src/images/half2.png"));
+            	   }
+            	   else if(cm.getData().equals("1 die")) {
+            		   updatePanmoney(0);
+            		   if(uID.equals("2"))
+            			   updateMymoney(property+=amount);
+            		   resetExceptMoney();
+            	   }
+            	   else if(cm.getData().equals("2 die")) {
+            		   updatePanmoney(0);
+            		   if(uID.equals("1"))
+            			   updateMymoney(property+=amount);
+            		   resetExceptMoney();
             	   }
             	   break;
                }
@@ -769,29 +806,49 @@ public class JavaObjClientView extends JFrame {
    }
    
    public void updateMymoney(int updatedAmount) {
-	   //mymoney.setText(Integer.toString(updatedAmount));
 	   if(updatedAmount<10000) {
 		   bbing.removeMouseListener(bbingpressed);
-		   bbing.setBackground(new Color(100,100,100));
 		   half.removeMouseListener(halfpressed);
-		   half.setBackground(new Color(100,100,100));
 		   ddadang.removeMouseListener(ddadangpressed);
 		   ddadang.setBackground(new Color(100,100,100));
 		   mymoney.setText(Integer.toString(updatedAmount));
 	   }
 	   else if(updatedAmount<15000) {
 		   half.removeMouseListener(halfpressed);
-		   half.setBackground(new Color(100,100,100));
 		   ddadang.removeMouseListener(ddadangpressed);
-		   ddadang.setBackground(new Color(100,100,100));
 		   mymoney.setText(Integer.toString(updatedAmount));
 	   }
 	   else if(updatedAmount<20000) {
 		   ddadang.removeMouseListener(ddadangpressed);
-		   ddadang.setBackground(new Color(100,100,100));
 		   mymoney.setText(Integer.toString(updatedAmount));
 	   }
 	   else 
 		   mymoney.setText(Integer.toString(updatedAmount));
+   }
+   
+   public void resetExceptMoney() {
+	   amount=0;
+	   
+	   myLeft.setX(200);
+	   myLeft.setY(250);
+	   myLeft.setCardBounds();
+	   myLeft.getCard().setVisible(false);
+	   myRight.setX(200);
+	   myRight.setY(250);
+	   myRight.setCardBounds();
+	   myRight.getCard().setVisible(false);
+	   otherLeft.setX(200);
+	   otherLeft.setY(250);
+	   otherLeft.setCardBounds();
+	   otherLeft.getCard().setVisible(false);
+	   otherRight.setX(200);
+	   otherRight.setY(250);
+	   otherRight.setCardBounds();
+	   otherRight.getCard().setVisible(false);
+	   
+	   bbing.setIcon(new ImageIcon("src/images/bbing1.png"));
+	   half.setIcon(new ImageIcon("src/images/half1.png"));
+	   
+	   shuffle.setVisible(true);
    }
 }
