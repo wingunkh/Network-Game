@@ -788,9 +788,12 @@ public class JavaObjClientView extends JFrame {
    }
    
    public void batting() {
-	   bbing.addMouseListener(bbingpressed);
-	   half.addMouseListener(halfpressed);
-	   ddadang.addMouseListener(ddadangpressed);
+	   if(property>=10000)
+		   bbing.addMouseListener(bbingpressed);
+	   if(property>=15000)
+		   half.addMouseListener(halfpressed);
+	   if(property>=20000)
+		   ddadang.addMouseListener(ddadangpressed);
 	   die.addMouseListener(diepressed);
    }
    
@@ -808,18 +811,23 @@ public class JavaObjClientView extends JFrame {
    public void updateMymoney(int updatedAmount) {
 	   if(updatedAmount<10000) {
 		   bbing.removeMouseListener(bbingpressed);
+		   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
 		   half.removeMouseListener(halfpressed);
+		   half.setIcon(new ImageIcon("src/images/half2.png"));
 		   ddadang.removeMouseListener(ddadangpressed);
-		   ddadang.setBackground(new Color(100,100,100));
+		   ddadang.setIcon(new ImageIcon("src/images/ddadang2.png"));
 		   mymoney.setText(Integer.toString(updatedAmount));
 	   }
 	   else if(updatedAmount<15000) {
 		   half.removeMouseListener(halfpressed);
+		   half.setIcon(new ImageIcon("src/images/half2.png"));
 		   ddadang.removeMouseListener(ddadangpressed);
+		   ddadang.setIcon(new ImageIcon("src/images/ddadang2.png"));
 		   mymoney.setText(Integer.toString(updatedAmount));
 	   }
 	   else if(updatedAmount<20000) {
 		   ddadang.removeMouseListener(ddadangpressed);
+		   ddadang.setIcon(new ImageIcon("src/images/ddadang2.png"));
 		   mymoney.setText(Integer.toString(updatedAmount));
 	   }
 	   else 
@@ -848,6 +856,7 @@ public class JavaObjClientView extends JFrame {
 	   
 	   bbing.setIcon(new ImageIcon("src/images/bbing1.png"));
 	   half.setIcon(new ImageIcon("src/images/half1.png"));
+	   ddadang.setIcon(new ImageIcon("src/images/ddadang1.png"));
 	   
 	   shuffle.setVisible(true);
    }
