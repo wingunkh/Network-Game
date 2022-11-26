@@ -271,11 +271,6 @@ public class JavaObjServer extends JFrame {
 						msg = String.format("%s", cm.getData());
 						AppendText(msg); // server 화면에 출력
 						WriteAllObject(cm);
-					} else if(cm.getCode().matches("6")) {
-						cm.setData(cm.getData());
-						msg = String.format("%s", cm.getData());
-						AppendText(msg); // server 화면에 출력
-						WriteAllObject(cm);			
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");

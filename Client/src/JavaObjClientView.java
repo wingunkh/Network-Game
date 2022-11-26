@@ -463,32 +463,12 @@ public class JavaObjClientView extends JFrame {
             		   reGame();
             	   }
             	   else if(cm.getData().equals("1 call")) {
-            		   ChatMsg chatmsg = new ChatMsg(UserName, "6", "½ÂÆÐ °è»ê");
-                       SendObject(chatmsg);
+            		   battle();
             	   }
             	   else if(cm.getData().equals("2 call")) {
-            		   ChatMsg chatmsg = new ChatMsg(UserName, "6", "½ÂÆÐ °è»ê");
-                       SendObject(chatmsg);
+            		   battle();
             	   }
             	   break;
-               case "6":
-            	   if(uID.equals("1"))
-                       result = new JokboMatch(new Jokbo(myLeft, myRight).calculateJokbo()+" "+new Jokbo(otherLeft, otherRight).calculateJokbo());
-                   else
-                       result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
-                   AppendText(result.selectWinner());
-                   updatePanmoney(0);
-                   if(result.selectWinner().equals("A")) {
-                      if(uID.equals("1"))
-                         updateMymoney(property+=amount);
-                   }
-
-                   else if(result.selectWinner().equals("B")) {
-                      if(uID.equals("2"))
-                         updateMymoney(property+=amount);
-                   }
-                   reGame();
-                   break;
                }
             } catch (IOException e) {
                AppendText("ois.readObject() error");
@@ -900,5 +880,24 @@ public class JavaObjClientView extends JFrame {
 	   call.removeMouseListener(callpressed);
 	   
 	   shuffle.setVisible(true);
+   }
+   
+   public void battle() {
+	   if(uID.equals("1"))
+           result = new JokboMatch(new Jokbo(myLeft, myRight).calculateJokbo()+" "+new Jokbo(otherLeft, otherRight).calculateJokbo());
+       else
+           result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
+       AppendText(result.selectWinner());
+       updatePanmoney(0);
+       if(result.selectWinner().equals("A")) {
+          if(uID.equals("1"))
+             updateMymoney(property+=amount);
+       }
+
+       else if(result.selectWinner().equals("B")) {
+          if(uID.equals("2"))
+             updateMymoney(property+=amount);
+       }
+       reGame();
    }
 }
