@@ -22,6 +22,7 @@ import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.Icon;
 
 public class JavaObjClientView extends JFrame {
    private static final long serialVersionUID = 1L;
@@ -45,6 +46,8 @@ public class JavaObjClientView extends JFrame {
    private JButton call;
    private JLabel panmoney;
    private JLabel mymoney;
+   private JLabel myMessage;
+   private JLabel otherMessage;
    private Image img;
    private Image updateimg;
    private String backSrc;
@@ -211,7 +214,7 @@ public class JavaObjClientView extends JFrame {
       contentPane.add(otherRight.getCard());
       /*È­Åõ ÆÐ*/
       
-      /*ÆÇµ·*/
+      /*ÆÇµ·*/     
       panmoney = new JLabel(Integer.toString(amount));
       panmoney.setFont(new Font("ÇÑÄÄ ¸»¶û¸»¶û Bold", Font.PLAIN, 24));
       panmoney.setBounds(524, 324, 150, 50);
@@ -224,6 +227,16 @@ public class JavaObjClientView extends JFrame {
       mymoney.setBounds(686, 324, 150, 50);
       contentPane.add(mymoney);
       /*³»µ·*/
+      
+      /*¸»Ç³¼±*/
+      otherMessage = new JLabel();
+      otherMessage.setBounds(180, 110, 130, 50);
+      contentPane.add(otherMessage);
+      
+      myMessage = new JLabel();
+      myMessage.setBounds(180, 435, 130, 50);
+      contentPane.add(myMessage);
+      /*¸»Ç³¼±*/
       
       /*½ÃÀÛ ¹öÆ°*/
       img = new ImageIcon("src/images/start.png").getImage();
@@ -243,23 +256,23 @@ public class JavaObjClientView extends JFrame {
       /*½ÃÀÛ ¹öÆ°*/
       
       /*¹èÆÃ ¹öÆ°*/
-      bbing= new JButton(new ImageIcon("src/images/bbing1.png"));
+      bbing= new JButton(new ImageIcon("src/images/bbing2.png"));
       bbing.setBounds(524, 384, 130, 50);
       contentPane.add(bbing);
       
-      half = new JButton(new ImageIcon("src/images/half1.png"));
+      half = new JButton(new ImageIcon("src/images/half2.png"));
       half.setBounds(686, 384, 130, 50);
       contentPane.add(half);
       
-      ddadang = new JButton(new ImageIcon("src/images/ddadang1.png"));
+      ddadang = new JButton(new ImageIcon("src/images/ddadang2.png"));
       ddadang.setBounds(524, 444, 130, 50);
       contentPane.add(ddadang);
       
-      die = new JButton(new ImageIcon("src/images/die1.png"));
+      die = new JButton(new ImageIcon("src/images/die2.png"));
       die.setBounds(686, 444, 130, 50);
       contentPane.add(die);
       
-      call = new JButton(new ImageIcon("src/images/call1.png"));
+      call = new JButton(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
       call.setBounds(524, 505, 312, 50);
       contentPane.add(call);
       /*¹èÆÃ ¹öÆ°*/
@@ -446,16 +459,18 @@ public class JavaObjClientView extends JFrame {
         			   half.setIcon(new ImageIcon("src/images/half2.png"));
             	   }
             	   else if(cm.getData().equals("1 die")) {
+            		   Thread.sleep(1000);
             		   updatePanmoney(0);
             		   if(uID.equals("2"))
             			   updateMymoney(property+=amount);
-            		   resetExceptMoney();
+            		   reGame();
             	   }
             	   else if(cm.getData().equals("2 die")) {
+            		   Thread.sleep(1000);
             		   updatePanmoney(0);
             		   if(uID.equals("1"))
             			   updateMymoney(property+=amount);
-            		   resetExceptMoney();
+            		   reGame();
             	   }
             	   break;
                }
@@ -788,13 +803,21 @@ public class JavaObjClientView extends JFrame {
    }
    
    public void batting() {
-	   if(property>=10000)
+	   if(property>=10000) {
 		   bbing.addMouseListener(bbingpressed);
-	   if(property>=15000)
+		   bbing.setIcon(new ImageIcon("src/images/bbing1.png"));
+	   }
+		   
+	   if(property>=15000) {
 		   half.addMouseListener(halfpressed);
-	   if(property>=20000)
+		   half.setIcon(new ImageIcon("src/images/half1.png"));
+	   }
+	   if(property>=20000) {
 		   ddadang.addMouseListener(ddadangpressed);
+		   ddadang.setIcon(new ImageIcon("src/images/ddadang1.png"));
+	   }
 	   die.addMouseListener(diepressed);
+	   die.setIcon(new ImageIcon("src/images/die1.png"));
    }
    
    public void waitbatting() {
@@ -834,8 +857,9 @@ public class JavaObjClientView extends JFrame {
 		   mymoney.setText(Integer.toString(updatedAmount));
    }
    
-   public void resetExceptMoney() {
+   public void reGame() {
 	   amount=0;
+	   count=0;
 	   
 	   myLeft.setX(200);
 	   myLeft.setY(250);
@@ -854,9 +878,15 @@ public class JavaObjClientView extends JFrame {
 	   otherRight.setCardBounds();
 	   otherRight.getCard().setVisible(false);
 	   
-	   bbing.setIcon(new ImageIcon("src/images/bbing1.png"));
-	   half.setIcon(new ImageIcon("src/images/half1.png"));
-	   ddadang.setIcon(new ImageIcon("src/images/ddadang1.png"));
+	   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
+	   half.setIcon(new ImageIcon("src/images/half2.png"));
+	   ddadang.setIcon(new ImageIcon("src/images/ddadang2.png"));
+	   die.setIcon(new ImageIcon("src/images/die2.png"));
+	   
+	   bbing.removeMouseListener(bbingpressed);
+	   half.removeMouseListener(halfpressed);
+	   ddadang.removeMouseListener(ddadangpressed);
+	   die.removeMouseListener(diepressed);
 	   
 	   shuffle.setVisible(true);
    }
