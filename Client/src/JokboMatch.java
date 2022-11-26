@@ -1,15 +1,12 @@
 public class JokboMatch {
-    private Jokbo A; // 유저 A
-    private Jokbo B; // 유저 B
     private String AJokbo; // 유저 A 의 족보
     private String BJokbo; // 유저 B 의 족보
 
 
-    public JokboMatch(Jokbo a, Jokbo b) { // 생성자
-        this.A = a;
-        this.B = b;
-        this.AJokbo = a.calculateJokbo();
-        this.BJokbo = b.calculateJokbo();
+    public JokboMatch(String str) { // 생성자
+    	String array[] = str.split(" ");
+        this.AJokbo = array[0];
+        this.BJokbo = array[1];
     }
 
     public String selectWinner() {

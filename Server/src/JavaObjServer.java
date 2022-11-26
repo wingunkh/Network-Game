@@ -203,36 +203,6 @@ public class JavaObjServer extends JFrame {
 				Logout();
 			}
 		}
-		
-		// UserService Thread가 담당하는 Client 에게 1:1 전송
-		public void WriteOne(String msg) {
-			try {
-				ChatMsg obcm = new ChatMsg("SERVER", "200", msg);
-				oos.writeObject(obcm);
-			} catch (IOException e) {
-				AppendText("dos.writeObject() error");
-				try {
-					ois.close();
-					oos.close();
-					client_socket.close();
-					client_socket = null;
-					ois = null;
-					oos = null;
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				Logout(); // 에러가난 현재 객체를 벡터에서 지운다
-			}
-		}
-
-		// 나를 제외한 User들에게 방송. 각각의 UserService Thread의 WriteONe() 을 호출한다.
-		public void WriteOthers(String str) {
-			for (int i = 0; i < user_vc.size(); i++) {
-				UserService user = (UserService) user_vc.elementAt(i);
-				if (user != this)
-					user.WriteOne(str);
-			}
-		}
 
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
@@ -261,10 +231,6 @@ public class JavaObjServer extends JFrame {
 						msg = String.format("[%s] %s", cm.getId(),cm.getData());
 						AppendText(msg); // server 화면에 출력
 						WriteOneObject(cm);
-					} else if (cm.getCode().matches("200")) {
-						msg = String.format("[%s] %s", cm.getId(), cm.getData());
-						AppendText(msg); // server 화면에 출력
-						WriteAllObject(cm);
 					} else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;
@@ -305,6 +271,11 @@ public class JavaObjServer extends JFrame {
 						msg = String.format("%s", cm.getData());
 						AppendText(msg); // server 화면에 출력
 						WriteAllObject(cm);
+					} else if(cm.getCode().matches("6")) {
+						cm.setData(cm.getData());
+						msg = String.format("%s", cm.getData());
+						AppendText(msg); // server 화면에 출력
+						WriteAllObject(cm);			
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");

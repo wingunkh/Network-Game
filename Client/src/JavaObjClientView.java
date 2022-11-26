@@ -58,6 +58,7 @@ public class JavaObjClientView extends JFrame {
    private Card otherRight;
    private String array[];
    private Jokbo jokbo;
+   private JokboMatch result;
    private int count=0;
    private int amount=0;
    private int property=100000;
@@ -149,17 +150,13 @@ public class JavaObjClientView extends JFrame {
        @Override
        public void mouseClicked(MouseEvent e) {
        	   ChatMsg msg;
-       	   ChatMsg msg2;
        	   if(uID.equals("1")) {
-       	 	  msg = new ChatMsg(UserName, "4", "1 die");
-       		  msg2 = new ChatMsg(UserName, "5", "1 die");
+       		  msg = new ChatMsg(UserName, "5", "1 die");
        	   }
        	   else {
-       		  msg = new ChatMsg(UserName, "4", "2 die");
-       		  msg2 = new ChatMsg(UserName, "5", "2 die");
+       		  msg = new ChatMsg(UserName, "5", "2 die");
        	   }
            SendObject(msg);
-           SendObject(msg2);
        }
    };
    
@@ -167,17 +164,13 @@ public class JavaObjClientView extends JFrame {
        @Override
        public void mouseClicked(MouseEvent e) {
        	   ChatMsg msg;
-       	   ChatMsg msg2;
        	   if(uID.equals("1")) {
-       	 	  msg = new ChatMsg(UserName, "4", "1 call");
-       		  msg2 = new ChatMsg(UserName, "5", "1 call");
+       		  msg = new ChatMsg(UserName, "5", "1 call");
        	   }
        	   else {
-       		  msg = new ChatMsg(UserName, "4", "2 call");
-       		  msg2 = new ChatMsg(UserName, "5", "2 call");
+       		  msg = new ChatMsg(UserName, "5", "2 call");
        	   }
            SendObject(msg);
-           SendObject(msg2);
        }
    };
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
@@ -359,9 +352,6 @@ public class JavaObjClientView extends JFrame {
                case "100":
                   uID=cm.getData();
                   break;
-               case "200":
-                  AppendText(msg);
-                   break;
                case "1":
                   AppendText(msg);
                   array = cm.getData().split(" ");
@@ -458,21 +448,47 @@ public class JavaObjClientView extends JFrame {
         			   half.removeMouseListener(halfpressed);
         			   half.setIcon(new ImageIcon("src/images/half2.png"));
             	   }
-            	   else if(cm.getData().equals("1 die")) {
-            		   Thread.sleep(1000);
+            	   else if(cm.getData().equals("1 die")) {    		   
             		   updatePanmoney(0);
+            		   Thread.sleep(1000);
             		   if(uID.equals("2"))
             			   updateMymoney(property+=amount);
             		   reGame();
             	   }
             	   else if(cm.getData().equals("2 die")) {
-            		   Thread.sleep(1000);
             		   updatePanmoney(0);
+            		   Thread.sleep(1000);
             		   if(uID.equals("1"))
             			   updateMymoney(property+=amount);
             		   reGame();
             	   }
+            	   else if(cm.getData().equals("1 call")) {
+            		   ChatMsg chatmsg = new ChatMsg(UserName, "6", "승패 계산");
+                       SendObject(chatmsg);
+            	   }
+            	   else if(cm.getData().equals("2 call")) {
+            		   ChatMsg chatmsg = new ChatMsg(UserName, "6", "승패 계산");
+                       SendObject(chatmsg);
+            	   }
             	   break;
+               case "6":
+            	   if(uID.equals("1"))
+                       result = new JokboMatch(new Jokbo(myLeft, myRight).calculateJokbo()+" "+new Jokbo(otherLeft, otherRight).calculateJokbo());
+                   else
+                       result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
+                   AppendText(result.selectWinner());
+                   updatePanmoney(0);
+                   if(result.selectWinner().equals("A")) {
+                      if(uID.equals("1"))
+                         updateMymoney(property+=amount);
+                   }
+
+                   else if(result.selectWinner().equals("B")) {
+                      if(uID.equals("2"))
+                         updateMymoney(property+=amount);
+                   }
+                   reGame();
+                   break;
                }
             } catch (IOException e) {
                AppendText("ois.readObject() error");
@@ -520,24 +536,6 @@ public class JavaObjClientView extends JFrame {
       return packet;
    }
 
-   // Server에게 network으로 전송
-   public void SendMessage(String msg) {
-      try {
-         ChatMsg obcm = new ChatMsg(UserName, "200", msg);
-         oos.writeObject(obcm);
-      } catch (IOException e) {
-         AppendText("oos.writeObject() error");
-         try {
-            ois.close();
-            oos.close();
-            socket.close();
-         } catch (IOException e1) {
-            e1.printStackTrace();
-            System.exit(0);
-         }
-      }
-   }
-
    // Server에게 메세지를 보내는 메소드
    public void SendObject(Object ob) {
       try {
@@ -572,7 +570,8 @@ public class JavaObjClientView extends JFrame {
                    Thread.sleep(10);
                 }
              case 2 :
-                otherLeft.backside();
+            	otherLeft.setCardSrc(array[i]);
+                //otherLeft.backside();
                 while(otherLeft.getX() > 100 || otherLeft.getY() > 10 ) {
                    if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
                    if (otherLeft.getY() > 10) otherLeft.setY(otherLeft.getY() - 12);
@@ -581,7 +580,8 @@ public class JavaObjClientView extends JFrame {
                    Thread.sleep(10);
                 }
              case 3 :
-                otherRight.backside();
+            	otherRight.setCardSrc(array[i]);
+                //otherRight.backside();
                 while(otherRight.getX() < 300 || otherRight.getY() > 10 ) {
                    if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
                    if (otherRight.getY() > 10) otherRight.setY(otherRight.getY() - 12);
@@ -598,7 +598,7 @@ public class JavaObjClientView extends JFrame {
          for(int i=0;i<4;i++) {
             switch(i) {
             case 0 :
-                otherLeft.backside();
+            	otherLeft.setCardSrc(array[i]);
                 while(otherLeft.getX() > 100 || otherLeft.getY() > 10 ) {
                    if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
                    if (otherLeft.getY() > 10) otherLeft.setY(otherLeft.getY() - 12);
@@ -607,7 +607,7 @@ public class JavaObjClientView extends JFrame {
                    Thread.sleep(10);
                 }
              case 1 :
-                otherRight.backside();
+            	otherRight.setCardSrc(array[i]);
                 while(otherRight.getX() < 300 || otherRight.getY() > 10 ) {
                    if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
                    if (otherRight.getY() > 10) otherRight.setY(otherRight.getY() - 12);
@@ -818,6 +818,8 @@ public class JavaObjClientView extends JFrame {
 	   }
 	   die.addMouseListener(diepressed);
 	   die.setIcon(new ImageIcon("src/images/die1.png"));
+	   call.addMouseListener(callpressed);
+	   call.setIcon(new ImageIcon("src/images/call1.png"));
    }
    
    public void waitbatting() {
@@ -825,6 +827,13 @@ public class JavaObjClientView extends JFrame {
 	   half.removeMouseListener(halfpressed);
 	   ddadang.removeMouseListener(ddadangpressed);
 	   die.removeMouseListener(diepressed);
+	   call.removeMouseListener(callpressed);
+	   
+	   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
+	   half.setIcon(new ImageIcon("src/images/half2.png"));
+	   ddadang.setIcon(new ImageIcon("src/images/ddadang2.png"));
+	   die.setIcon(new ImageIcon("src/images/die2.png"));
+	   call.setIcon(new ImageIcon("src/images/call2.png"));
    }
    
    public void updatePanmoney(int updatedAmount) {
@@ -882,11 +891,13 @@ public class JavaObjClientView extends JFrame {
 	   half.setIcon(new ImageIcon("src/images/half2.png"));
 	   ddadang.setIcon(new ImageIcon("src/images/ddadang2.png"));
 	   die.setIcon(new ImageIcon("src/images/die2.png"));
+	   call.setIcon(new ImageIcon("src/images/call2.png"));
 	   
 	   bbing.removeMouseListener(bbingpressed);
 	   half.removeMouseListener(halfpressed);
 	   ddadang.removeMouseListener(ddadangpressed);
 	   die.removeMouseListener(diepressed);
+	   call.removeMouseListener(callpressed);
 	   
 	   shuffle.setVisible(true);
    }

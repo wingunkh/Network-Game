@@ -1,8 +1,8 @@
 public class Jokbo {
    private String card1;
    private String card2;
-   private int level;
-   private int sum;
+   private String card3;
+   private String card4;
    
    public Jokbo(Card card1, Card card2) {
       this.card1 = card1.getCardSrc().substring(10,12);
@@ -371,7 +371,7 @@ public class Jokbo {
          break;
          case "09": x = "¿À¶¯"; // 5¿ù
          break;
-         case "10": x = "ÇÑ²à"; // 6¿ù
+         case "10": x = "ÇÑ²ý"; // 6¿ù
          break;
          case "11": x = "ÇÑ²ý"; // 6¿ù
          break;
@@ -413,7 +413,7 @@ public class Jokbo {
          break;
          case "08": x = "¿À¶¯"; // 5¿ù
          break;
-         case "10": x = "ÇÑ²à"; // 6¿ù
+         case "10": x = "ÇÑ²ý"; // 6¿ù
          break;
          case "11": x = "ÇÑ²ý"; // 6¿ù
          break;
@@ -615,7 +615,7 @@ public class Jokbo {
          break;
          case "04": x = "»ïÆÈ±¤¶¯"; // 3±¤
          break;
-         case "05": x = "ÇÑ²à"; // 3¿ù
+         case "05": x = "ÇÑ²ý"; // 3¿ù
          break;
          case "06": x = "µÎ²ý"; // 4¿ù
          break;
@@ -657,7 +657,7 @@ public class Jokbo {
          break;
          case "04": x = "ÇÑ²ý"; // 3±¤
          break;
-         case "05": x = "ÇÑ²à"; // 3¿ù
+         case "05": x = "ÇÑ²ý"; // 3¿ù
          break;
          case "06": x = "µÎ²ý"; // 4¿ù
          break;
