@@ -185,8 +185,9 @@ public class JavaObjClientView extends JFrame {
       contentPane.setLayout(null);
       
       /*게임 배경*/
-      backSrc = "src/images/background.jpg";
-      backIcon = new ImageIcon(backSrc);
+      backSrc = "src/images/background.png";
+      backIcon = new ImageIcon(new ImageIcon(backSrc).getImage().getScaledInstance(900, 600, java.awt.Image.SCALE_SMOOTH));
+      
       /*게임 배경*/
 
       /*화투 패*/
