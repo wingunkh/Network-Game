@@ -59,6 +59,7 @@ public class JavaObjClientView extends JFrame {
    private String array[];
    private Jokbo jokbo;
    private JokboMatch result;
+   private String previous = "none";
    private int count=0;
    private int amount=0;
    private int property=100000;
@@ -421,6 +422,13 @@ public class JavaObjClientView extends JFrame {
             	   break;
                case "5":
             	   AppendText(msg);
+            	   previous = cm.getData().split(" ")[1];
+            	   AppendText(previous);
+            	   if(!previous.equals("none")) {
+            		   call.addMouseListener(callpressed);
+            		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            	   }
+            	   AppendText(previous);
             	   if(cm.getData().equals("1 bbing"))
             		   updatePanmoney(amount+=10000);
             	   else if(cm.getData().equals("2 bbing"))
@@ -464,6 +472,10 @@ public class JavaObjClientView extends JFrame {
             		   reGame();
             	   }
             	   else if(cm.getData().equals("1 call")) {
+            		   //전에 상대가 건 만큼 개인돈이 빠져나가 줘야됨
+            		   switch (previous) {
+            		   
+            		   }
             		   battle();
             	   }
             	   else if(cm.getData().equals("2 call")) {
@@ -799,8 +811,6 @@ public class JavaObjClientView extends JFrame {
 	   }
 	   die.addMouseListener(diepressed);
 	   die.setIcon(new ImageIcon("src/images/die1.png"));
-	   call.addMouseListener(callpressed);
-	   call.setIcon(new ImageIcon("src/images/call1.png"));
    }
    
    public void waitbatting() {
@@ -848,6 +858,7 @@ public class JavaObjClientView extends JFrame {
    }
    
    public void reGame() {
+	   previous="none";
 	   amount=0;
 	   count=0;
 	   
