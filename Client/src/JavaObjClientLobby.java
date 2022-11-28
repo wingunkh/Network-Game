@@ -196,20 +196,20 @@ public class JavaObjClientLobby extends JFrame{
                   break;
                if (obcm instanceof ChatMsg) {
                   cm = (ChatMsg) obcm;
-                  msg = String.format("[%s] %s", cm.getId(), cm.getData());
+                  msg = String.format("[%s] %s %s", cm.getId(), cm.getCode(), cm.getData());
+                  System.out.println(msg);
                } else
                   continue;
                switch (cm.getCode()) {
 	               case "100":
 	                  uID=cm.getData();
 	                  break;
-	               case "101": // 방 생성 프로토콜
+	               case "101": // 로비 입장 프로토콜
 	            	  currentRoomSize = Integer.parseInt(cm.getData());
-	            	  for (int i = 0; i < currentRoomSize; i++) {
-	            		  int roomNumber = Integer.parseInt(port_no) + (i+1);
-	            		  room.addElement(Integer.toString(roomNumber));
+	            	  if (currentRoomSize > 0) {
+	            		  cm.setCode("103");
+	            		  SendObject(cm);
 	            	  }
-	            	  lobbyList.setListData(room);
 	            	  break;
 	               case "102": // 방 입장 프로토콜
 	            	   String[] code = cm.getData().split(" ");
@@ -219,8 +219,18 @@ public class JavaObjClientLobby extends JFrame{
 	            		  JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, code[0]);
 	            	  }
 	            	  else if (code[1].equals("full")) AppendText("입장 실패 : 최대 인원수");
+	            	  else if (code[1].equals("empty")) AppendText("입장 실패 : 종료된 방");
 	            	  else AppendText("입장 실패");
 	            	  break;
+	               case "103":
+	            	   String[] data = cm.getData().split(" ");
+	            	   String roomNumber = data[0];
+	            	   room.addElement(roomNumber);
+	            	   if (data[1].matches("last"))
+	            		   lobbyList.setListData(room);
+	            	   else
+	            		   SendObject(cm);
+	            	   break;	
 	               case "200":
 	                  AppendText(msg);
 	                  break;
@@ -309,6 +319,8 @@ public class JavaObjClientLobby extends JFrame{
    // Server에게 메세지를 보내는 메소드
    public void SendObject(Object ob) {
       try {
+    	 ChatMsg msg = (ChatMsg)ob;
+    	 System.out.println(String.format("SendObject %s %s", msg.getCode(), msg.getData()));
          oos.writeObject(ob);
       } catch (IOException e) {
          AppendText("SendObj ect Error");

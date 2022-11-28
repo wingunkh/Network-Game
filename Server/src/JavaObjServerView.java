@@ -35,7 +35,7 @@ public class JavaObjServerView extends JFrame {
 	private Socket client_socket; // accept() 에서 생성된 client 소켓
 	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
-	private List<RoomThread> Room = new ArrayList<RoomThread>();
+	private Vector Room = new Vector();
 	
 	private int[] dupCheck = new int[4];
 	private int cnt=0;
@@ -115,6 +115,17 @@ public class JavaObjServerView extends JFrame {
 					UserVec.add(new_user); // 새로운 참가자 배열에 추가
 					new_user.start(); // 만든 객체의 스레드 실행
 					AppendText("현재 참가자 수 " + UserVec.size());
+					if (Room.size() >= 1) {
+						for (int i = 0; i < Room.size(); i++) {
+							RoomThread rt = (RoomThread)Room.get(i);
+							if (rt.getUserCount() == 0) {
+								System.out.println(String.format("%d room ended", rt.getServerPort()));
+								rt.interrupt();
+								if (Room.removeElement(rt));
+								AppendText(String.format("인터럽티드 룸 삭제 완료"));
+							}
+						}
+					}
 				} catch (IOException e) {
 					AppendText("accept() error");
 				}
@@ -176,7 +187,6 @@ public class JavaObjServerView extends JFrame {
 		public void Logout() {
 			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
-			WriteAllObject(msg); // 나를 제외한 다른 User들에게 전송
 			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
 		}
 
@@ -190,6 +200,8 @@ public class JavaObjServerView extends JFrame {
 		
 		public void WriteOneObject(Object ob) {
 			try {
+				ChatMsg msg = (ChatMsg) ob;
+			    System.out.println(String.format("WriteOneObject %s", msg.getCode()));
 			    oos.writeObject(ob);
 			} 
 			catch (IOException e) {
@@ -310,39 +322,48 @@ public class JavaObjServerView extends JFrame {
 						AppendText(msg); // server 화면에 출력
 						WriteAllObject(cm);
 					} else if (cm.getCode().matches("101")){ // 로비 입장 프로토콜
-						System.out.println("101 Entered");
+						cnt = 0;
+						System.out.println("101 Lobby Enter Protocol");
 						System.out.println(Room.size());
-						if (Room.size() >= 1) {
-							for (RoomThread rt:Room) {
-							if (rt.isInterrupted()) {
-								System.out.println("rt Interrupted");
-								if (Room.remove(rt))
-								AppendText(String.format("인터럽티드 룸 삭제 완료"));
-								}
-							}
-						}
 						cm.setData(Integer.toString(Room.size()));
 						AppendText(msg);
 						WriteOneObject(cm);
 					} else if (cm.getCode().matches("102")) { // 클라이언트 방 입장 요청 프로토콜
 						String port_number = cm.getData();
 						String roomAccess = "";
-						for (RoomThread rt : Room) {
+						for (int i = 0; i < Room.size(); i++) {
+							RoomThread rt = (RoomThread)Room.get(i);
 							if (port_number.equals(Integer.toString(rt.getServerPort()))) {
-								if (rt.getUserCount() < 2) {
-									if (rt.isInterrupted()) roomAccess = "ended";
-									else roomAccess = "true";}
+								if (rt.getUserCount() == 1) roomAccess = "true";
+								else if (rt.getUserCount() == 0) roomAccess = "empty";
 								else if (rt.getUserCount() >= 2) roomAccess = "full";
 								else roomAccess = "Error";
 							}
 						}
 						cm.setData(String.format("%s %s", port_number, roomAccess));
 						WriteOneObject(cm);
-					} else if(cm.getCode().matches("999")) { // 방 생성 프로토콜
+					} else if (cm.getCode().matches("103")) {
+						RoomThread rt = (RoomThread)Room.get(cnt);
+						System.out.println(cnt);
+						System.out.println(Room.size());
+						if (cnt == (Room.size() - 1)) 
+							cm.setData(String.format("%d last", rt.getServerPort()));
+						else
+							cm.setData(String.format("%d yet",  rt.getServerPort()));
+						WriteOneObject(cm);
+						cnt++;
+					} else if (cm.getCode().matches("999")) { // 방 생성 프로토콜
 						msg = String.format("%s",  cm.getData());
 						AppendText(msg);
 						try {
-							msg = String.format("%d", Integer.parseInt(txtPortNumber.getText())+(Room.size()+1));
+							int thisPortNumber = Integer.parseInt(txtPortNumber.getText());
+							int emptyPortNumber = 0;
+							if (Room.size() > 0) {
+								RoomThread lastRoom = (RoomThread)Room.get(Room.size()-1);
+								emptyPortNumber = lastRoom.getServerPort()+1;
+							}
+							else emptyPortNumber = thisPortNumber + 1;
+							msg = String.format("%d", emptyPortNumber);
 							ServerSocket newRoomSocket = new ServerSocket(Integer.parseInt(msg));
 							cm.setData(msg);
 							AppendText(cm.getData());

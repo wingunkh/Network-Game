@@ -518,6 +518,7 @@ public class Jokbo {
 			case "19": x = "¿©¼¸²ý"; // 10¿ù
 			break;
 			}
+		break;
 		case "12" : // 7¿ù
 			switch(card2) {
 			case "00": x = "¿©´ü²ý"; // 1±¤
@@ -559,6 +560,7 @@ public class Jokbo {
 			case "19": x = "ÀÏ°ö²ý"; // 10¿ù
 			break;
 			}
+		break;
 		case "13" : // 7¿ù
 			switch(card2) {
 			case "00": x = "¿©´ü²ý"; // 1±¤
@@ -600,6 +602,7 @@ public class Jokbo {
 			case "19": x = "ÀÏ°ö²ý"; // 10¿ù
 			break;
 			}
+		break;
 		case "14" : // 8±¤
 			switch(card2) {
 			case "00": x = "ÀÏÆÈ±¤¶¯"; // 1±¤
@@ -641,6 +644,7 @@ public class Jokbo {
 			case "19": x = "¿©´ü²ý"; // 10¿ù
 			break;
 			}
+		break;
 		case "15" : // 8¿ù
 			switch(card2) {
 			case "00": x = "°©¿À"; // 1±¤
@@ -682,6 +686,7 @@ public class Jokbo {
 			case "19": x = "¿©´ü²ý"; // 10¿ù
 			break;
 			}
+		break;
 		case "16" : // 9¿ù
 			switch(card2) {
 			case "00": x = "±¸»æ"; // 1±¤
@@ -723,6 +728,7 @@ public class Jokbo {
 			case "19": x = "¾ÆÈ©²ý"; // 10¿ù
 			break;
 			}
+		break;
 		case "17" : // 9¿ù
 			switch(card2) {
 			case "00": x = "±¸»æ"; // 1±¤
@@ -764,6 +770,7 @@ public class Jokbo {
 			case "19": x = "¾ÆÈ©²ý"; // 10¿ù
 			break;
 			}
+		break;
 		case "18" : // 10¿ù
 			switch(card2) {
 			case "00": x = "Àå»æ"; // 1±¤
@@ -782,7 +789,7 @@ public class Jokbo {
 			break;
 			case "07": x = "±¸»ç"; // 4¿ù
 			break;
-			case "08": x = "³×²ý"; // 5¿ù	
+			case "08": x = "³×²ý"; // 5¿ù		
 			break;
 			case "09": x = "³×²ý"; // 5¿ù
 			break;
@@ -805,6 +812,7 @@ public class Jokbo {
 			case "19": x = "Àå¶¯"; // 10¿ù
 			break;
 			}
+		break;
 		case "19" : // 10¿ù
 			switch(card2) {
 			case "00": x = "Àå»æ"; // 1±¤
@@ -846,6 +854,7 @@ public class Jokbo {
 			case "18": x = "Àå¶¯"; // 10¿ù
 			break;
 			}
+		break;
 		}
 		return x;
 	} // calculateJokbo ³¡

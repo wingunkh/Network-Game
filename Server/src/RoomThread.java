@@ -56,7 +56,6 @@ public class RoomThread extends Thread{
 
 	// 새로운 참가자 accept() 하고 user thread를 새로 생성한다.
 	class AcceptServer extends Thread {
-		@SuppressWarnings("unchecked")
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
@@ -113,7 +112,14 @@ public class RoomThread extends Thread{
 			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			WriteAllObject(msg); // 나를 제외한 다른 User들에게 전송
-			System.out.println(UserVec.size());
+			if(UserVec.size() == 0) {
+				try {
+					serverSocket.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 
 		// 모든 User들에게 Object를 방송. 채팅 message와 image object를 보낼 수 있다

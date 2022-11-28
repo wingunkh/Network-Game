@@ -342,6 +342,10 @@ public class JavaObjClientGame extends JFrame {
                   Thread.sleep(1500);
                  
                   Placing(uID);
+                  
+                  AppendText(String.format(
+                 		 "myLeft : %s, myRight : %s, otherLeft : %s, otherRight : %s",
+                 		 myLeft.getCardSrc().substring(10, 12), myRight.getCardSrc().substring(10, 12), otherLeft.getCardSrc().substring(10, 12), otherRight.getCardSrc().substring(10, 12)));
                     
                   myLeft.flip();
                   myRight.flip();
@@ -350,6 +354,8 @@ public class JavaObjClientGame extends JFrame {
                   
                   myLeft.getCard().addMouseListener(leftcardpressed);
                   myRight.getCard().addMouseListener(rightcardpressed);
+                  
+                  
                   break;
                case "2":
             	   AppendText(msg);
