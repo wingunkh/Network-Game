@@ -39,38 +39,38 @@ import javax.swing.JList;
 //JavaObjClientMain 에서 넘어와 로비 화면 띄우는 코드
 
 public class JavaObjClientLobby extends JFrame{
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField txtInput;
-	private String UserName;
-	private JButton btnSend;
-	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
-	private Socket socket; // 연결소켓
-	private ObjectInputStream ois;
-	private ObjectOutputStream oos;
-	private JLabel lblUserName;
-	private JTextPane textArea;
-	
-	private String uID;
-	private String backSrc;
-	private ImageIcon backIcon;
-	
-	private JScrollPane lobbyPane;
-	DefaultListModel model;
-	private JList lobbyList;
-	private String username;
-	private String ip_addr;
-	private String port_no;
-	private Vector room;
-	int currentRoomSize;
+   private static final long serialVersionUID = 1L;
+   private JPanel contentPane;
+   private JTextField txtInput;
+   private String UserName;
+   private JButton btnSend;
+   private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
+   private Socket socket; // 연결소켓
+   private ObjectInputStream ois;
+   private ObjectOutputStream oos;
+   private JLabel lblUserName;
+   private JTextPane textArea;
+   
+   private String uID;
+   private String backSrc;
+   private ImageIcon backIcon;
+   
+   private JScrollPane lobbyPane;
+   DefaultListModel model;
+   private JList lobbyList;
+   private String username;
+   private String ip_addr;
+   private String port_no;
+   private Vector room;
+   int currentRoomSize;
     Object obcm = null;
     String msg = null;
     ChatMsg cm;
-	
-	public JavaObjClientLobby(String username, String ip_addr, String port_no) {
-	  this.username = username;
-	  this.ip_addr = ip_addr;
-	  this.port_no = port_no;
+   
+   public JavaObjClientLobby(String username, String ip_addr, String port_no) {
+     this.username = username;
+     this.ip_addr = ip_addr;
+     this.port_no = port_no;
       contentPane = new JPanel();
       setBounds(100, 100, 900, 630);
       contentPane.setBackground(new Color(255, 255, 255));
@@ -101,7 +101,7 @@ public class JavaObjClientLobby extends JFrame{
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(492, 545, 94, 40);
+      lblUserName.setBounds(492, 491, 87, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
@@ -135,30 +135,43 @@ public class JavaObjClientLobby extends JFrame{
       lobbyPane.setViewportView(lobbyList);
       lobbyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       lobbyList.addMouseListener(new MouseAdapter() {
-		public void mouseClicked(MouseEvent e) {
-    		 String port_number = lobbyList.getSelectedValue().toString();
-    		 AppendText(port_number);
-    		 ChatMsg msg = new ChatMsg(UserName, "102", port_number);
-    		 SendObject(msg);
-    	 }
+      public void mouseClicked(MouseEvent e) {
+           String port_number = lobbyList.getSelectedValue().toString();
+           AppendText(port_number);
+           ChatMsg msg = new ChatMsg(UserName, "102", port_number);
+           SendObject(msg);
+        }
       });
       
       /* 방 생성 버튼*/ 
       JButton createRoomBtn = new JButton("\uBC29 \uC0DD\uC131");
       createRoomBtn.addMouseListener(new MouseAdapter() {
-      	@Override
-      	public void mouseClicked(MouseEvent e) {
-      		ChatMsg msg = new ChatMsg(UserName, "999", "방 만들기 버튼 클릭");
-      		AppendText(msg.getData());
-      		SendObject(msg);
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            ChatMsg msg = new ChatMsg(UserName, "999", "방 만들기 버튼 클릭");
+            AppendText(msg.getData());
+            SendObject(msg);
       }});
       createRoomBtn.addActionListener(new ActionListener() {
-      	public void actionPerformed(ActionEvent e) {
-      	}
+         public void actionPerformed(ActionEvent e) {
+         }
       });
-      createRoomBtn.setBounds(492, 491, 87, 40);
+      createRoomBtn.setBounds(492, 545, 87, 40);
       contentPane.add(createRoomBtn);
  
+      
+      /* 로비 새로고침 버튼 */
+      JButton refreshBtn = new JButton("새로고침");
+      refreshBtn.setBounds(586, 545, 84, 40);
+      refreshBtn.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            ChatMsg msg = new ChatMsg(UserName, "998", "로비 새로고침 버튼 클릭");
+            AppendText(msg.getData());
+            SendObject(msg);
+         }
+      });
+      contentPane.add(refreshBtn);
+      
       try {
          socket = new Socket(ip_addr, Integer.parseInt(port_no));
 
@@ -179,8 +192,8 @@ public class JavaObjClientLobby extends JFrame{
          e.printStackTrace();
          AppendText("connect error");
       }
-	}
-	   // Server Message를 수신해서 화면에 표시
+   }
+      // Server Message를 수신해서 화면에 표시
    class ListenNetwork extends Thread {
       public void run() {
          while (true) {
@@ -201,60 +214,68 @@ public class JavaObjClientLobby extends JFrame{
                } else
                   continue;
                switch (cm.getCode()) {
-	               case "100":
-	                  uID=cm.getData();
-	                  break;
-	               case "101": // 로비 입장 프로토콜
-	            	  currentRoomSize = Integer.parseInt(cm.getData());
-	            	  if (currentRoomSize > 0) {
-	            		  cm.setCode("103");
-	            		  SendObject(cm);
-	            	  }
-	            	  break;
-	               case "102": // 방 입장 프로토콜
-	            	   String[] code = cm.getData().split(" ");
-	            	   AppendText(msg);
-	            	  if (code[1].equals("true")) {	
-	            		  setVisible(false);
-	            		  JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, code[0]);
-	            	  }
-	            	  else if (code[1].equals("full")) AppendText("입장 실패 : 최대 인원수");
-	            	  else if (code[1].equals("empty")) AppendText("입장 실패 : 종료된 방");
-	            	  else AppendText("입장 실패");
-	            	  break;
-	               case "103":
-	            	   String[] data = cm.getData().split(" ");
-	            	   String roomNumber = data[0];
-	            	   room.addElement(roomNumber);
-	            	   if (data[1].matches("last"))
-	            		   lobbyList.setListData(room);
-	            	   else
-	            		   SendObject(cm);
-	            	   break;	
-	               case "200":
-	                  AppendText(msg);
-	                  break;
-	               case "999":
-	            	   AppendText(msg);
-	            	   setVisible(false);
-	            	   JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, cm.getData());
-	            	   break;
-	            }
+                  case "100":
+                     uID=cm.getData();
+                     break;
+                  case "101": // 로비 입장 프로토콜
+                    currentRoomSize = Integer.parseInt(cm.getData());
+                    if (currentRoomSize > 0) {
+                       cm.setCode("103");
+                       SendObject(cm);
+                    }
+                    break;
+                  case "102": // 방 입장 프로토콜
+                     String[] code = cm.getData().split(" ");
+                     AppendText(msg);
+                    if (code[1].equals("true")) {   
+                       setVisible(false);
+                       JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, code[0]);
+                    }
+                    else if (code[1].equals("full")) AppendText("입장 실패 : 최대 인원수");
+                    else if (code[1].equals("empty")) AppendText("입장 실패 : 종료된 방");
+                    else AppendText("입장 실패");
+                    break;
+                  case "103":
+                     String[] data = cm.getData().split(" ");
+                     String roomNumber = data[0];
+                     room.addElement(roomNumber);
+                     if (data[1].matches("last"))
+                        lobbyList.setListData(room);
+                     else
+                        SendObject(cm);
+                     break;   
+                  case "200":
+                     AppendText(msg);
+                     break;
+                  case "999":
+                     AppendText(msg);
+                     setVisible(false);
+                     JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, cm.getData());
+                     break;
+                  case "998":
+                     int currentRoomSize = Integer.parseInt(cm.getData());
+                     room.clear();
+                     if (currentRoomSize > 0) {
+                        cm.setCode("101");
+                        SendObject(cm);
+                     }
+                     break;
+               }
             } catch (IOException e) {
-            	AppendText("ois.readObject() error");
-           		try {
+               AppendText("ois.readObject() error");
+                 try {
                   ois.close();
                   oos.close();
                   socket.close();
                   break;
-           		} catch (Exception ee) {
+                 } catch (Exception ee) {
                   break;
                } // catch문 끝
             } // 바깥 catch문끝
         }
      }
   }
-	   // keyboard enter key 치면 서버로 전송
+      // keyboard enter key 치면 서버로 전송
    class TextSendAction implements ActionListener {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -319,12 +340,11 @@ public class JavaObjClientLobby extends JFrame{
    // Server에게 메세지를 보내는 메소드
    public void SendObject(Object ob) {
       try {
-    	 ChatMsg msg = (ChatMsg)ob;
-    	 System.out.println(String.format("SendObject %s %s", msg.getCode(), msg.getData()));
+        ChatMsg msg = (ChatMsg)ob;
+        System.out.println(String.format("SendObject %s %s", msg.getCode(), msg.getData()));
          oos.writeObject(ob);
       } catch (IOException e) {
          AppendText("SendObj ect Error");
-	  }
+     }
    } 
-}	   
-
+}      
