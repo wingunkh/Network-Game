@@ -166,32 +166,10 @@ public class JavaObjClientGame extends JFrame {
        public void mouseClicked(MouseEvent e) {
        	   ChatMsg msg;
        	   if(uID.equals("1")) {
-       		  msg = new ChatMsg(UserName, "5", "1 call");
-	   		  switch (previous) {
-	   		  case "bbing":
-	   			  updateMymoney(property-=10000);
-	   			  break;
-	   		  case "half":
-	   			  updateMymoney(property-=15000);
-	   			  break;
-	   		  case "ddadang":
-	   			  updateMymoney(property-=20000);
-	   			  break;
-	   		  } 		    
+       		  msg = new ChatMsg(UserName, "5", "1 call");		    
        	   }
        	   else {
-       		  msg = new ChatMsg(UserName, "5", "2 call");
-       		  switch (previous) {
-	   		  case "bbing":
-	   			  updateMymoney(property-=10000);
-	   			  break;
-	   		  case "half":
-	   			  updateMymoney(property-=15000);
-	   			  break;
-	   		  case "ddadang":
-	   			  updateMymoney(property-=20000);
-	   			  break;
-	   		  } 		    
+       		  msg = new ChatMsg(UserName, "5", "2 call"); 		    
        	   }
            SendObject(msg);
        }
@@ -447,7 +425,7 @@ public class JavaObjClientGame extends JFrame {
             	   if(!(cm.getData().split(" ")[1].equals("call")))
                 	   previous = cm.getData().split(" ")[1];
             	   AppendText(previous);
-            	   if(!previous.equals("none")) {
+            	   if(!previous.equals("none")&&(!(cm.getData().split(" ")[0].equals(uID)))) {
             		   call.addMouseListener(callpressed);
             		   call.setIcon(new ImageIcon("src/images/call1.png"));
             	   }
@@ -495,6 +473,19 @@ public class JavaObjClientGame extends JFrame {
             		   reGame();
             	   }
             	   else if(cm.getData().equals("1 call")) {
+            		   if(uID.equals("1")) {
+                		   switch (previous) {
+            	   		   case "bbing":
+            	   			   updateMymoney(property-=10000);
+            	   			   break;
+            	   		   case "half":
+            	   			   updateMymoney(property-=15000);
+            	   			   break;
+            	   		   case "ddadang":
+            	   			   updateMymoney(property-=20000);
+            	   			   break;
+            	   		   }   
+            		   }
          	   		   AppendText("°³¾¾¹ß"+previous);
             		   switch (previous) {
         	   		   case "bbing":
@@ -510,6 +501,19 @@ public class JavaObjClientGame extends JFrame {
             		   battle();
             	   }
             	   else if(cm.getData().equals("2 call")) {
+            		   if(uID.equals("2")) {
+                		   switch (previous) {
+            	   		   case "bbing":
+            	   			   updateMymoney(property-=10000);
+            	   			   break;
+            	   		   case "half":
+            	   			   updateMymoney(property-=15000);
+            	   			   break;
+            	   		   case "ddadang":
+            	   			   updateMymoney(property-=20000);
+            	   			   break;
+            	   		   }   
+            		   }
         	   		   AppendText("°³¾¾¹ß"+previous);
          	   		   switch (previous) {
         	   		   case "bbing":
