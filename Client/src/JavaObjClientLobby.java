@@ -101,7 +101,7 @@ public class JavaObjClientLobby extends JFrame{
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(492, 545, 94, 40);
+      lblUserName.setBounds(492, 491, 87, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
@@ -156,9 +156,22 @@ public class JavaObjClientLobby extends JFrame{
       	public void actionPerformed(ActionEvent e) {
       	}
       });
-      createRoomBtn.setBounds(492, 491, 87, 40);
+      createRoomBtn.setBounds(492, 545, 87, 40);
       contentPane.add(createRoomBtn);
  
+      
+      /* 로비 새로고침 버튼 */
+      JButton refreshBtn = new JButton("새로고침");
+      refreshBtn.setBounds(586, 545, 84, 40);
+      refreshBtn.addActionListener(new ActionListener() {
+    	  public void actionPerformed(ActionEvent e) {
+    		  ChatMsg msg = new ChatMsg(UserName, "998", "로비 새로고침 버튼 클릭");
+    		  AppendText(msg.getData());
+    		  SendObject(msg);
+    	  }
+      });
+      contentPane.add(refreshBtn);
+      
       try {
          socket = new Socket(ip_addr, Integer.parseInt(port_no));
 
@@ -238,6 +251,14 @@ public class JavaObjClientLobby extends JFrame{
 	            	   AppendText(msg);
 	            	   setVisible(false);
 	            	   JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, cm.getData());
+	            	   break;
+	               case "998":
+	            	   int currentRoomSize = Integer.parseInt(cm.getData());
+	            	   room.clear();
+	            	   if (currentRoomSize > 0) {
+	            		   cm.setCode("101");
+	            		   SendObject(cm);
+	            	   }
 	            	   break;
 	            }
             } catch (IOException e) {

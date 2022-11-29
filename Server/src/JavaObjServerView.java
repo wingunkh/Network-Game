@@ -249,6 +249,15 @@ public class JavaObjServerView extends JFrame {
 					user.WriteOne(str);
 			}
 		}
+		
+		public void WriteOthersObject(Object ob) {
+			ChatMsg msg = (ChatMsg)ob;
+			for (int i = 0; i < user_vc.size(); i++) {
+				UserService user = (UserService) user_vc.elementAt(i);
+				if (user != this)
+					user.WriteOneObject(msg);
+			}
+		}
 
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
@@ -372,6 +381,11 @@ public class JavaObjServerView extends JFrame {
 						} catch (NumberFormatException | IOException e1) {
 							e1.printStackTrace();
 						}
+					} else if (cm.getCode().matches("998")) {
+						msg = String.format("%s",  cm.getData());
+						AppendText(msg);
+						cm.setData(Integer.toString(Room.size()));
+						WriteOneObject(cm);
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
