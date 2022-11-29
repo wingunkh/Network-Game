@@ -203,9 +203,6 @@ public class RoomThread extends Thread{
 						cm.setData(Integer.toString(user_vc.size()));
 						msg = String.format("[%s] %s", cm.getId(),cm.getData());
 						WriteOneObject(cm);
-					} else if (cm.getCode().matches("200")) {
-						msg = String.format("[%s] %s", cm.getId(), cm.getData());
-						WriteAllObject(cm);
 					} else if (cm.getCode().matches("400")) { // logout message Ã³¸®
 						Logout();
 						break;

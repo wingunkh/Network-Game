@@ -166,10 +166,10 @@ public class JavaObjClientGame extends JFrame {
        public void mouseClicked(MouseEvent e) {
        	   ChatMsg msg;
        	   if(uID.equals("1")) {
-       		  msg = new ChatMsg(UserName, "5", "1 call");
+       		  msg = new ChatMsg(UserName, "5", "1 call");		    
        	   }
        	   else {
-       		  msg = new ChatMsg(UserName, "5", "2 call");
+       		  msg = new ChatMsg(UserName, "5", "2 call"); 		    
        	   }
            SendObject(msg);
        }
@@ -422,9 +422,10 @@ public class JavaObjClientGame extends JFrame {
             	   break;
                case "5":
             	   AppendText(msg);
-            	   previous = cm.getData().split(" ")[1];
+            	   if(!(cm.getData().split(" ")[1].equals("call")))
+                	   previous = cm.getData().split(" ")[1];
             	   AppendText(previous);
-            	   if(!previous.equals("none")) {
+            	   if(!previous.equals("none")&&(!(cm.getData().split(" ")[0].equals(uID)))) {
             		   call.addMouseListener(callpressed);
             		   call.setIcon(new ImageIcon("src/images/call1.png"));
             	   }
@@ -472,13 +473,59 @@ public class JavaObjClientGame extends JFrame {
             		   reGame();
             	   }
             	   else if(cm.getData().equals("1 call")) {
-            		   //Àü¿¡ »ó´ë°¡ °Ç ¸¸Å­ °³ÀÎµ·ÀÌ ºüÁ®³ª°¡ Áà¾ßµÊ
-            		   switch (previous) {
-            		   
+            		   if(uID.equals("1")) {
+                		   switch (previous) {
+            	   		   case "bbing":
+            	   			   updateMymoney(property-=10000);
+            	   			   break;
+            	   		   case "half":
+            	   			   updateMymoney(property-=15000);
+            	   			   break;
+            	   		   case "ddadang":
+            	   			   updateMymoney(property-=20000);
+            	   			   break;
+            	   		   }   
             		   }
+         	   		   AppendText("°³¾¾¹ß"+previous);
+            		   switch (previous) {
+        	   		   case "bbing":
+        	   			   updatePanmoney(amount+=10000);
+        	   			   break;
+        	   		   case "half":
+        	   			   updatePanmoney(amount+=15000);
+        	   			   break;
+        	   		   case "ddadang":
+        	   			   updatePanmoney(amount+=20000);
+        	   			   break;
+        	   		   } 	
             		   battle();
             	   }
             	   else if(cm.getData().equals("2 call")) {
+            		   if(uID.equals("2")) {
+                		   switch (previous) {
+            	   		   case "bbing":
+            	   			   updateMymoney(property-=10000);
+            	   			   break;
+            	   		   case "half":
+            	   			   updateMymoney(property-=15000);
+            	   			   break;
+            	   		   case "ddadang":
+            	   			   updateMymoney(property-=20000);
+            	   			   break;
+            	   		   }   
+            		   }
+        	   		   AppendText("°³¾¾¹ß"+previous);
+         	   		   switch (previous) {
+        	   		   case "bbing":
+        	   			   updatePanmoney(amount+=10000);
+        	   			   break;
+        	   		   case "half":
+        	   			   updatePanmoney(amount+=15000);
+        	   			   break;
+        	   		   case "ddadang":
+        	   			   updatePanmoney(amount+=20000);
+        	   			   break;
+        	   		   } 	
             		   battle();
             	   }
             	   break;
