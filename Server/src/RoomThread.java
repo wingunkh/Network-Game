@@ -229,18 +229,22 @@ public class RoomThread extends Thread{
 					} else if(cm.getCode().matches("2")) {
 						cm.setData(cm.getData());
 						msg = String.format("%s", cm.getData());
+						
 						WriteAllObject(cm);
 					} else if(cm.getCode().matches("3")) {
 						cm.setData(cm.getData());
 						msg = String.format("%s", cm.getData());
+						 // server 화면에 출력
 						WriteAllObject(cm);
 					} else if(cm.getCode().matches("4")) {
 						cm.setData(cm.getData());
 						msg = String.format("%s", cm.getData());
+						 // server 화면에 출력
 						WriteAllObject(cm);
 					} else if(cm.getCode().matches("5")) {
 						cm.setData(cm.getData());
 						msg = String.format("%s", cm.getData());
+						 // server 화면에 출력
 						WriteAllObject(cm);
 					}
 				} catch (IOException e) {
