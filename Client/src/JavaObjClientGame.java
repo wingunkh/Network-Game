@@ -478,14 +478,14 @@ public class JavaObjClientGame extends JFrame {
             	   }
             	   else if(cm.getData().equals("1 die")) {    		   
             		   updatePanmoney(0);
-            		   Thread.sleep(1000);
+            		   showResult("2");
             		   if(uID.equals("2"))
             			   updateMymoney(property+=amount);
             		   reGame();
             	   }
             	   else if(cm.getData().equals("2 die")) {
             		   updatePanmoney(0);
-            		   Thread.sleep(1000);
+            		   showResult("1");
             		   if(uID.equals("1"))
             			   updateMymoney(property+=amount);
             		   reGame();
@@ -973,15 +973,14 @@ public class JavaObjClientGame extends JFrame {
        AppendText(result.selectWinner());
        updatePanmoney(0);
        if(result.selectWinner().equals("A")) {
-          if(uID.equals("1"))
-             updateMymoney(property+=amount);
-          showResult("1");
+    	   showResult("1");
+           if(uID.equals("1"))
+              updateMymoney(property+=amount);
        }
-
        else if(result.selectWinner().equals("B")) {
-          if(uID.equals("2"))
-             updateMymoney(property+=amount);
-          showResult("2");
+           showResult("1");
+           if(uID.equals("2"))
+              updateMymoney(property+=amount);
        }
        reGame();
    }
