@@ -426,8 +426,22 @@ public class JavaObjClientGame extends JFrame {
                 	   previous = cm.getData().split(" ")[1];
             	   AppendText(previous);
             	   if(!previous.equals("none")&&(!(cm.getData().split(" ")[0].equals(uID)))) {
-            		   call.addMouseListener(callpressed);
-            		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            		   //1. 첫 베팅이 아닐 때
+            		   //2. 자신의 차례일 때
+            		   //3. 상대가 베팅한 금액만큼 베팅할 수 있을 때
+            		   if(previous.equals("bbing")&&(property>10000)) {
+                		   call.addMouseListener(callpressed);
+                		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            		   }
+            		   else if(previous.equals("half")&&(property>15000)) {
+                		   call.addMouseListener(callpressed);
+                		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            		   }
+            		   else if(previous.equals("ddadang")&&(property>20000)) {
+                		   call.addMouseListener(callpressed);
+                		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            		   }
+            		   //만 콜 버튼이 활성화 되어야한다.
             	   }
             	   AppendText(previous);
             	   if(cm.getData().equals("1 bbing"))
@@ -486,7 +500,7 @@ public class JavaObjClientGame extends JFrame {
             	   			   break;
             	   		   }   
             		   }
-         	   		   AppendText("개씨발"+previous);
+         	   		   AppendText("콜했을 때 프리비어스"+previous);
             		   switch (previous) {
         	   		   case "bbing":
         	   			   updatePanmoney(amount+=10000);
@@ -514,7 +528,7 @@ public class JavaObjClientGame extends JFrame {
             	   			   break;
             	   		   }   
             		   }
-        	   		   AppendText("개씨발"+previous);
+        	   		   AppendText("콜했을 때 프리비어스"+previous);
          	   		   switch (previous) {
         	   		   case "bbing":
         	   			   updatePanmoney(amount+=10000);
@@ -611,7 +625,6 @@ public class JavaObjClientGame extends JFrame {
                 }
              case 2 :
             	otherLeft.setCardSrc(array[i]);
-                //otherLeft.backside();
                 while(otherLeft.getX() > 100 || otherLeft.getY() > 10 ) {
                    if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
                    if (otherLeft.getY() > 10) otherLeft.setY(otherLeft.getY() - 12);
@@ -621,7 +634,6 @@ public class JavaObjClientGame extends JFrame {
                 }
              case 3 :
             	otherRight.setCardSrc(array[i]);
-                //otherRight.backside();
                 while(otherRight.getX() < 300 || otherRight.getY() > 10 ) {
                    if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
                    if (otherRight.getY() > 10) otherRight.setY(otherRight.getY() - 12);
@@ -843,16 +855,16 @@ public class JavaObjClientGame extends JFrame {
    }
    
    public void batting() {
-	   if(property>=10000) {
+	   if(property>10000) {
 		   bbing.addMouseListener(bbingpressed);
 		   bbing.setIcon(new ImageIcon("src/images/bbing1.png"));
 	   }
 		   
-	   if(property>=15000) {
+	   if(property>15000) {
 		   half.addMouseListener(halfpressed);
 		   half.setIcon(new ImageIcon("src/images/half1.png"));
 	   }
-	   if(property>=20000) {
+	   if(property>20000) {
 		   ddadang.addMouseListener(ddadangpressed);
 		   ddadang.setIcon(new ImageIcon("src/images/ddadang1.png"));
 	   }
