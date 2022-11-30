@@ -890,7 +890,7 @@ public class JavaObjClientGame extends JFrame {
 	   panmoney.setText(Integer.toString(updatedAmount));
    }
    
-   public void updateMymoney(int updatedAmount) {
+   public void updateMymoney(int updatedAmount) {	   
 	   if(updatedAmount<10000) {
 		   bbing.removeMouseListener(bbingpressed);
 		   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
@@ -914,6 +914,14 @@ public class JavaObjClientGame extends JFrame {
 	   }
 	   else 
 		   mymoney.setText(Integer.toString(updatedAmount));
+	   if(property==0) {
+		   try {
+			Thread.sleep(1500);
+			System.exit(0);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	   }
    }
    
    public void reGame() {
