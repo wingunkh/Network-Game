@@ -355,9 +355,9 @@ public class JavaObjServerView extends JFrame {
                   System.out.println(cnt);
                   System.out.println(Room.size());
                   if (cnt == (Room.size() - 1)) 
-                     cm.setData(String.format("%d last", rt.getServerPort()));
+                     cm.setData(String.format("%d last %s %d", rt.getServerPort(), rt.getCreator(), rt.getUserCount()));
                   else
-                     cm.setData(String.format("%d yet",  rt.getServerPort()));
+                     cm.setData(String.format("%d yet ",  rt.getServerPort()));
                   WriteOneObject(cm);
                   cnt++;
                } else if (cm.getCode().matches("999")) { // 방 생성 프로토콜
@@ -376,7 +376,7 @@ public class JavaObjServerView extends JFrame {
                      cm.setData(msg);
                      AppendText(cm.getData());
                      WriteOneObject(cm);
-                     Room.add(new RoomThread(newRoomSocket, client_socket));
+                     Room.add(new RoomThread(newRoomSocket, client_socket, cm.getId()));
                   } catch (NumberFormatException | IOException e1) {
                      e1.printStackTrace();
                   }

@@ -23,13 +23,16 @@ public class RoomThread extends Thread{
 	private Socket socket; // accept() 에서 생성된 client 소켓
 	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
-	
+	private String creator;
 	private int[] dupCheck = new int[4];
 	public int getUserCount() {
 		return UserVec.size();
 	}
 	public int getServerPort() {
 		return this.serverSocket.getLocalPort();
+	}
+	public String getCreator() {
+		return this.creator;
 	}
 	private Random rand = new Random();
 	public static void main(String[] args) {
@@ -45,11 +48,11 @@ public class RoomThread extends Thread{
 		});
 	}
 
-	public RoomThread(ServerSocket serverSocket, Socket socket) {
+	public RoomThread(ServerSocket serverSocket, Socket socket, String creator) {
 		super();
 		this.serverSocket = serverSocket;
 		this.socket= socket;
-		
+		this.creator = creator;
 		AcceptServer accept_server = new AcceptServer();
 		accept_server.start();
 	}

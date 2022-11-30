@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,10 +33,14 @@ import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
+import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JTable;
 import javax.swing.JList;
+import javax.swing.UIManager;
 //JavaObjClientMain 에서 넘어와 로비 화면 띄우는 코드
 
 public class JavaObjClientLobby extends JFrame{
@@ -79,7 +84,7 @@ public class JavaObjClientLobby extends JFrame{
       contentPane.setLayout(null);
 
       JScrollPane scrollPane = new JScrollPane();
-      scrollPane.setBounds(494, 10, 382, 471);
+      scrollPane.setBounds(494, 100, 382, 430);
       contentPane.add(scrollPane);
       textArea = new JTextPane();
       textArea.setEditable(true);
@@ -87,13 +92,13 @@ public class JavaObjClientLobby extends JFrame{
       scrollPane.setViewportView(textArea);
 
       txtInput = new JTextField();
-      txtInput.setBounds(586, 491, 209, 40);
+      txtInput.setBounds(584, 541, 219, 40);
       contentPane.add(txtInput);
       txtInput.setColumns(10);
 
       btnSend = new JButton("Send");
       btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-      btnSend.setBounds(807, 491, 69, 40);
+      btnSend.setBounds(807, 541, 69, 40);
       contentPane.add(btnSend);
 
       lblUserName = new JLabel("Name");
@@ -101,7 +106,7 @@ public class JavaObjClientLobby extends JFrame{
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(492, 491, 87, 40);
+      lblUserName.setBounds(494, 541, 87, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
@@ -118,30 +123,31 @@ public class JavaObjClientLobby extends JFrame{
             System.exit(0);
          }
       });
-      btnNewButton.setBounds(807, 545, 69, 40);
+      btnNewButton.setBounds(791, 21, 85, 69);
       contentPane.add(btnNewButton);
       backSrc = "src/images/background.jpg";
       backIcon = new ImageIcon(backSrc);
       
       /* 로비 스크롤팬 내용 */
       lobbyPane = new JScrollPane();
-      lobbyPane.setBorder(new LineBorder(new Color(130, 135, 144), 0));
-      lobbyPane.setBounds(12, 10, 456, 555);
+      lobbyPane.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+      lobbyPane.setBounds(26, 100, 456, 481);
       contentPane.add(lobbyPane);
       
-      room = new Vector();
-      
       lobbyList = new JList();
+      lobbyList.setFont(new Font("맑은 고딕 Semilight", Font.BOLD, 18));
       lobbyPane.setViewportView(lobbyList);
       lobbyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       lobbyList.addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent e) {
-           String port_number = lobbyList.getSelectedValue().toString();
+           String port_number = lobbyList.getSelectedValue().toString().split(" ")[0];
            AppendText(port_number);
            ChatMsg msg = new ChatMsg(UserName, "102", port_number);
            SendObject(msg);
         }
       });
+      
+      room = new Vector();
       
       /* 방 생성 버튼*/ 
       JButton createRoomBtn = new JButton("\uBC29 \uC0DD\uC131");
@@ -156,13 +162,13 @@ public class JavaObjClientLobby extends JFrame{
          public void actionPerformed(ActionEvent e) {
          }
       });
-      createRoomBtn.setBounds(492, 545, 87, 40);
+      createRoomBtn.setBounds(492, 21, 140, 69);
       contentPane.add(createRoomBtn);
  
       
       /* 로비 새로고침 버튼 */
       JButton refreshBtn = new JButton("새로고침");
-      refreshBtn.setBounds(586, 545, 84, 40);
+      refreshBtn.setBounds(639, 21, 140, 69);
       refreshBtn.addActionListener(new ActionListener() {
     	  public void actionPerformed(ActionEvent e) {
     		  ChatMsg msg = new ChatMsg(UserName, "998", "로비 새로고침 버튼 클릭");
@@ -237,10 +243,12 @@ public class JavaObjClientLobby extends JFrame{
 	            	  break;
 	               case "103":
 	            	   String[] data = cm.getData().split(" ");
-	            	   String roomNumber = data[0];
-	            	   room.addElement(roomNumber);
-	            	   if (data[1].matches("last"))
+	            	   String roomData = String.format("%s   ||    %s님의 방입니다.                            ||   %s/2", data[0], data[2], data[3]);
+	            	   room.addElement(roomData);
+	            	   if (data[1].matches("last")) {
 	            		   lobbyList.setListData(room);
+	            		   lobbyList.setCellRenderer(getRenderer());
+	            	   }
 	            	   else
 	            		   SendObject(cm);
 	            	   break;	
@@ -276,6 +284,17 @@ public class JavaObjClientLobby extends JFrame{
         }
      }
   }
+   
+   private ListCellRenderer<? super String> getRenderer() {
+	   return new DefaultListCellRenderer() {
+		   @Override
+		   public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean CellHasFocus ) {
+			   JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, CellHasFocus);
+			   listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.BLACK));
+			   return listCellRendererComponent;
+		   }
+	   };
+   }
       // keyboard enter key 치면 서버로 전송
    class TextSendAction implements ActionListener {
       @Override
