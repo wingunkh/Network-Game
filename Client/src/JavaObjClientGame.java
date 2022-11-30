@@ -60,6 +60,8 @@ public class JavaObjClientGame extends JFrame {
    private Jokbo jokbo;
    private JokboMatch result;
    private String previous = "none";
+   private Image winimg = new ImageIcon("src/images/win.png").getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+   private Image loseimg = new ImageIcon("src/images/lose.png").getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
    private int count=0;
    private int amount=0;
    private int property=100000;
@@ -224,13 +226,15 @@ public class JavaObjClientGame extends JFrame {
       /*≥ªµ∑*/
       
       /*∏ª«≥º±*/
-      otherMessage = new JLabel();
-      otherMessage.setBounds(180, 110, 130, 50);
-      contentPane.add(otherMessage);
-      
-      myMessage = new JLabel();
-      myMessage.setBounds(180, 435, 130, 50);
+      myMessage = new JLabel("");
+      myMessage.setBounds(180, 400, 130, 50);
+      myMessage.setVisible(false);
       contentPane.add(myMessage);
+      
+      otherMessage = new JLabel("");
+      otherMessage.setBounds(180, 145, 130, 50);
+      otherMessage.setVisible(false);
+      contentPane.add(otherMessage);
       /*∏ª«≥º±*/
       
       /*Ω√¿€ πˆ∆∞*/
@@ -961,7 +965,7 @@ public class JavaObjClientGame extends JFrame {
 	   shuffle.setVisible(true);
    }
    
-   public void battle() {
+   public void battle() throws InterruptedException {
 	   if(uID.equals("1"))
            result = new JokboMatch(new Jokbo(myLeft, myRight).calculateJokbo()+" "+new Jokbo(otherLeft, otherRight).calculateJokbo());
        else
@@ -971,12 +975,57 @@ public class JavaObjClientGame extends JFrame {
        if(result.selectWinner().equals("A")) {
           if(uID.equals("1"))
              updateMymoney(property+=amount);
+          showResult("1");
        }
 
        else if(result.selectWinner().equals("B")) {
           if(uID.equals("2"))
              updateMymoney(property+=amount);
+          showResult("2");
        }
        reGame();
+   }
+   
+   public void showResult(String winner) throws InterruptedException {
+	   if(winner.equals("1")) {
+		   if(uID.equals("1")) {
+			   myMessage.setIcon(new ImageIcon(winimg));
+			   otherMessage.setIcon(new ImageIcon(loseimg));
+			   myMessage.setVisible(true);
+			   otherMessage.setVisible(true);
+			   Thread.sleep(2500);
+			   myMessage.setVisible(false);
+			   otherMessage.setVisible(false);  
+		   }
+		   else {
+			   myMessage.setIcon(new ImageIcon(loseimg));
+			   otherMessage.setIcon(new ImageIcon(winimg));
+			   myMessage.setVisible(true);
+			   otherMessage.setVisible(true);
+			   Thread.sleep(2500);
+			   myMessage.setVisible(false);
+			   otherMessage.setVisible(false);  
+		   }   
+	   }
+	   else {
+		   if(uID.equals("1")) {
+			   myMessage.setIcon(new ImageIcon(loseimg));
+			   otherMessage.setIcon(new ImageIcon(winimg));
+			   myMessage.setVisible(true);
+			   otherMessage.setVisible(true);
+			   Thread.sleep(2500);
+			   myMessage.setVisible(false);
+			   otherMessage.setVisible(false);  
+		   }
+		   else {
+			   myMessage.setIcon(new ImageIcon(winimg));
+			   otherMessage.setIcon(new ImageIcon(loseimg));
+			   myMessage.setVisible(true);
+			   otherMessage.setVisible(true);
+			   Thread.sleep(2500);
+			   myMessage.setVisible(false);
+			   otherMessage.setVisible(false);  
+		   }   
+	   }
    }
 }
