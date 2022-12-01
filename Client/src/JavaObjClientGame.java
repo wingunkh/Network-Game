@@ -33,17 +33,19 @@ public class JavaObjClientGame extends JFrame {
    private ObjectInputStream ois;
    private ObjectOutputStream oos;
    private JLabel lblUserName;
-   private JLabel textArea;
    
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
    private String uID;
    private JLabel Background;
    private JButton shuffle;
+   private JLabel durumari;
    private JButton bbing;
    private JButton half;
    private JButton ddadang;
    private JButton die;
    private JButton call;
+   private JLabel myJokbo;
+   private JLabel myJokboBg;
    private JLabel panmoney;
    private JLabel mymoney;
    private JLabel myMessage;
@@ -189,8 +191,7 @@ public class JavaObjClientGame extends JFrame {
       
       /*게임 배경*/
       backSrc = "src/images/background.png";
-      backIcon = new ImageIcon(new ImageIcon(backSrc).getImage().getScaledInstance(900, 600, java.awt.Image.SCALE_SMOOTH));
-      
+      backIcon = new ImageIcon(new ImageIcon(backSrc).getImage().getScaledInstance(900, 600, java.awt.Image.SCALE_SMOOTH));     
       /*게임 배경*/
 
       /*화투 패*/
@@ -205,27 +206,36 @@ public class JavaObjClientGame extends JFrame {
       otherLeft = new Card(200, 250);
       otherLeft.setCardBounds();
       contentPane.add(otherLeft.getCard());
-          
       otherRight = new Card(200, 250);
       otherRight.setCardBounds();
       contentPane.add(otherRight.getCard());
+      /*화투 패*/
       
-      textArea = new JLabel();
-      textArea.setLocation(686, 504);
-      textArea.setSize(130, 50);
-      //textArea.setEditable(true);
-      textArea.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 32));
-      contentPane.add(textArea);
+      /*내 족보*/
+      myJokbo = new JLabel();
+      myJokbo.setLocation(706, 504);
+      myJokbo.setSize(110, 50);
+      myJokbo.setFont(new Font("한컴 울주 반구대 암각화체", Font.PLAIN, 32));
+      contentPane.add(myJokbo);
+      
+      myJokboBg = new JLabel();
+      myJokboBg.setLocation(686, 504);
+      myJokboBg.setSize(130, 50);
+      myJokboBg.setIcon(new ImageIcon("src/images/flower.png"));
+      contentPane.add(myJokboBg);
+      /*내 족보*/
+      
+      /*판돈*/
       panmoney = new JLabel(Integer.toString(amount));
       panmoney.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 24));
-      panmoney.setBounds(524, 324, 150, 50);
+      panmoney.setBounds(524, 145, 150, 50);
       contentPane.add(panmoney);
       /*판돈*/
       
       /*내돈*/  
       mymoney = new JLabel("100000");
       mymoney.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 24));
-      mymoney.setBounds(686, 324, 150, 50);
+      mymoney.setBounds(686, 145, 150, 50);
       contentPane.add(mymoney);
       /*내돈*/
       
@@ -259,26 +269,32 @@ public class JavaObjClientGame extends JFrame {
       /*시작 버튼*/
       
       /*배팅 버튼*/
-      bbing= new JButton(new ImageIcon("src/images/bbing2.png"));
-      bbing.setBounds(524, 384, 130, 50);
-      contentPane.add(bbing);
-      
-      half = new JButton(new ImageIcon("src/images/half2.png"));
-      half.setBounds(686, 384, 130, 50);
-      contentPane.add(half);
-      
-      ddadang = new JButton(new ImageIcon("src/images/ddadang2.png"));
-      ddadang.setBounds(524, 444, 130, 50);
-      contentPane.add(ddadang);
+      call = new JButton(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      call.setBounds(524, 504, 130, 50);
+      contentPane.add(call);
       
       die = new JButton(new ImageIcon("src/images/die2.png"));
       die.setBounds(686, 444, 130, 50);
       contentPane.add(die);
       
-      call = new JButton(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-      call.setBounds(524, 504, 130, 50);
-      contentPane.add(call);
+      ddadang = new JButton(new ImageIcon("src/images/ddadang2.png"));
+      ddadang.setBounds(524, 444, 130, 50);
+      contentPane.add(ddadang);
+      
+      half = new JButton(new ImageIcon("src/images/half2.png"));
+      half.setBounds(686, 384, 130, 50);
+      contentPane.add(half);
+      
+      bbing= new JButton(new ImageIcon("src/images/bbing2.png"));
+      bbing.setBounds(524, 384, 130, 50);
+      contentPane.add(bbing);
       /*배팅 버튼*/
+      
+      /*두루마리*/
+      durumari = new JLabel(new ImageIcon(new ImageIcon("src/images/durumari.png").getImage().getScaledInstance(400, 240, java.awt.Image.SCALE_SMOOTH)));
+      durumari.setBounds(476, 345, 400, 240);
+      contentPane.add(durumari);
+      /*두루마리*/
 
       lblUserName = new JLabel("Name");
       lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -556,7 +572,7 @@ public class JavaObjClientGame extends JFrame {
    // 화면에 출력
    public void AppendText(String msg) {
       msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
-      textArea.setText(msg);
+      myJokbo.setText(msg);
    }
 
    // Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수

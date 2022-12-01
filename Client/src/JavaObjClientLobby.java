@@ -29,7 +29,9 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.Panel;
+import java.awt.Point;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -60,6 +62,8 @@ public class JavaObjClientLobby extends JFrame{
    private String backSrc;
    private ImageIcon backIcon;
    
+   private int mHoveredJListIndex = -1;
+   
    private JScrollPane lobbyPane;
    DefaultListModel model;
    private JList lobbyList;
@@ -71,6 +75,16 @@ public class JavaObjClientLobby extends JFrame{
     Object obcm = null;
     String msg = null;
     ChatMsg cm;
+    
+   /* 버튼 소스 */
+   private String roomMakeSrc = "src/buttons/RoomMake";
+   private String refreshSrc = "src/buttons/Refresh";
+   private String exitSrc = "src/buttons/Power";
+   private String sendSrc = "src/buttons/Send";
+   
+   private JLabel roomMakeBtn;
+   private JLabel refreshBtn;
+   private JLabel exitBtn;
    
    public JavaObjClientLobby(String username, String ip_addr, String port_no) {
      this.username = username;
@@ -96,11 +110,6 @@ public class JavaObjClientLobby extends JFrame{
       contentPane.add(txtInput);
       txtInput.setColumns(10);
 
-      btnSend = new JButton("Send");
-      btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-      btnSend.setBounds(807, 541, 69, 40);
-      contentPane.add(btnSend);
-
       lblUserName = new JLabel("Name");
       lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
       lblUserName.setBackground(Color.WHITE);
@@ -113,19 +122,7 @@ public class JavaObjClientLobby extends JFrame{
       AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
       UserName = username;
       lblUserName.setText(username);
-      
-      JButton btnNewButton = new JButton("종 료");
-      btnNewButton.setFont(new Font("굴림", Font.PLAIN, 14));
-      btnNewButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
-            SendObject(msg);
-            System.exit(0);
-         }
-      });
-      btnNewButton.setBounds(791, 21, 85, 69);
-      contentPane.add(btnNewButton);
-      backSrc = "src/images/background.jpg";
+      backSrc = "src/images/background.jpg";   
       backIcon = new ImageIcon(backSrc);
       
       /* 로비 스크롤팬 내용 */
@@ -147,36 +144,86 @@ public class JavaObjClientLobby extends JFrame{
         }
       });
       
-      room = new Vector();
+      ImageIcon RoomMake1 = new ImageIcon(new ImageIcon(roomMakeSrc+"1.png").getImage().getScaledInstance(140, 69, java.awt.Image.SCALE_SMOOTH));
+      ImageIcon RoomMake2 = new ImageIcon(new ImageIcon(roomMakeSrc+"2.png").getImage().getScaledInstance(140, 69, java.awt.Image.SCALE_SMOOTH));
+      ImageIcon Refresh1 = new ImageIcon(new ImageIcon(refreshSrc+"1.png").getImage().getScaledInstance(140, 69, java.awt.Image.SCALE_SMOOTH));
+      ImageIcon Refresh2 = new ImageIcon(new ImageIcon(refreshSrc+"2.png").getImage().getScaledInstance(140, 69, java.awt.Image.SCALE_SMOOTH));
+      ImageIcon Exit1 = new ImageIcon(new ImageIcon(exitSrc+"1.png").getImage().getScaledInstance(140, 69, java.awt.Image.SCALE_SMOOTH));
+      ImageIcon Exit2 = new ImageIcon(new ImageIcon(exitSrc+"2.png").getImage().getScaledInstance(140, 69, java.awt.Image.SCALE_SMOOTH));
+      ImageIcon Send1 = new ImageIcon(new ImageIcon(sendSrc+"1.png").getImage().getScaledInstance(69, 40, java.awt.Image.SCALE_SMOOTH));
+      ImageIcon Send2 = new ImageIcon(new ImageIcon(sendSrc+"2.png").getImage().getScaledInstance(69, 40, java.awt.Image.SCALE_SMOOTH));
       
-      /* 방 생성 버튼*/ 
-      JButton createRoomBtn = new JButton("\uBC29 \uC0DD\uC131");
-      createRoomBtn.addMouseListener(new MouseAdapter() {
-         @Override
-         public void mouseClicked(MouseEvent e) {
-            ChatMsg msg = new ChatMsg(UserName, "999", "방 만들기 버튼 클릭");
-            AppendText(msg.getData());
-            SendObject(msg);
-      }});
-      createRoomBtn.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-         }
-      });
-      createRoomBtn.setBounds(492, 21, 140, 69);
-      contentPane.add(createRoomBtn);
- 
+      roomMakeBtn = new JLabel("New label");
+      roomMakeBtn.setIcon(RoomMake1);
+      roomMakeBtn.setBounds(342, 21, 140, 69);
+      roomMakeBtn.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+             ChatMsg msg = new ChatMsg(UserName, "999", "방 만들기 버튼 클릭");
+             AppendText(msg.getData());
+             SendObject(msg);
+          }
+          public void mouseEntered(MouseEvent e) {
+           roomMakeBtn.setIcon(RoomMake2);
+          }
+          public void mouseExited(MouseEvent e) {
+             roomMakeBtn.setIcon(RoomMake1);
+          }
+       });
+      contentPane.add(roomMakeBtn);
       
-      /* 로비 새로고침 버튼 */
-      JButton refreshBtn = new JButton("새로고침");
-      refreshBtn.setBounds(639, 21, 140, 69);
-      refreshBtn.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            ChatMsg msg = new ChatMsg(UserName, "998", "로비 새로고침 버튼 클릭");
-            AppendText(msg.getData());
-            SendObject(msg);
-         }
+      /* 새로고침 버튼 */
+      refreshBtn = new JLabel("New label");
+      refreshBtn.setIcon(Refresh1);
+      refreshBtn.setBounds(494, 21, 140, 69);
+      refreshBtn.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+           ChatMsg msg = new ChatMsg(UserName, "998", "로비 새로고침 버튼 클릭");
+           AppendText(msg.getData());
+           SendObject(msg);
+        }
+        public void mouseEntered(MouseEvent e) {
+           refreshBtn.setIcon(Refresh2);
+        }
+        public void mouseExited(MouseEvent e) {
+           refreshBtn.setIcon(Refresh1);
+        }
       });
       contentPane.add(refreshBtn);
+      
+      /* 종료 버튼 */
+      exitBtn = new JLabel("New label");
+      exitBtn.setBounds(736, 21, 140, 69);
+      exitBtn.setIcon(Exit1);
+      exitBtn.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
+              SendObject(msg);
+              System.exit(0);
+         }
+         public void mouseEntered(MouseEvent e) {
+            exitBtn.setIcon(Exit2);
+         }
+         public void mouseExited(MouseEvent e) {
+            exitBtn.setIcon(Exit1);
+         }
+      });
+      contentPane.add(exitBtn);
+      
+      /* 전송 버튼 */
+      btnSend = new JButton(Send1);
+      btnSend.setBounds(807, 541, 69, 40);
+      btnSend.setRolloverIcon(Send2);
+      btnSend.setFocusPainted(false);
+      btnSend.setBorderPainted(false);
+      contentPane.add(btnSend);
+
+
+      
+      room = new Vector();
+      
       
       try {
          socket = new Socket(ip_addr, Integer.parseInt(port_no));
@@ -293,6 +340,7 @@ public class JavaObjClientLobby extends JFrame{
             listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.BLACK));
             return listCellRendererComponent;
          }
+         
       };
    }
       // keyboard enter key 치면 서버로 전송
