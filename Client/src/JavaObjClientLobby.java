@@ -138,12 +138,12 @@ public class JavaObjClientLobby extends JFrame{
       lobbyPane.setViewportView(lobbyList);
       lobbyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       lobbyList.addMouseListener(new MouseAdapter() {
-	      public void mouseClicked(MouseEvent e) {
-	           String port_number = lobbyList.getSelectedValue().toString().split(" ")[0];
-	           AppendText(port_number);
-	           ChatMsg msg = new ChatMsg(UserName, "102", port_number);
-	           SendObject(msg);
-	        }
+      public void mouseClicked(MouseEvent e) {
+           String port_number = lobbyList.getSelectedValue().toString().split(" ")[0];
+           AppendText(port_number);
+           ChatMsg msg = new ChatMsg(UserName, "102", port_number);
+           SendObject(msg);
+        }
       });
       
       ImageIcon RoomMake1 = new ImageIcon(new ImageIcon(roomMakeSrc+"1.png").getImage().getScaledInstance(140, 69, java.awt.Image.SCALE_SMOOTH));
@@ -227,7 +227,6 @@ public class JavaObjClientLobby extends JFrame{
       Logo.setIcon(new ImageIcon(new ImageIcon("src/images/start.png").getImage().getScaledInstance(69, 69, java.awt.Image.SCALE_SMOOTH)));
       contentPane.add(Logo);
 
-
       
       room = new Vector();
       
@@ -274,56 +273,55 @@ public class JavaObjClientLobby extends JFrame{
                } else
                   continue;
                switch (cm.getCode()) {
-	               case "100":
-	                  uID=cm.getData();
-	                  break;
-	               case "101": // 로비 입장 프로토콜
-	            	  currentRoomSize = Integer.parseInt(cm.getData());
-	            	  if (currentRoomSize > 0) {
-	            		  cm.setCode("103");
-	            		  SendObject(cm);
-	            	  }
-	            	  break;
-	               case "102": // 방 입장 프로토콜
-	            	   String[] code = cm.getData().split(" ");
-	            	   AppendText(msg);
-	            	  if (code[1].equals("true")) {	
-	            		  setVisible(false);
-	            		  JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, code[0]);
-	            	  }
-	            	  else if (code[1].equals("full")) AppendText("입장 실패 : 최대 인원수");
-	            	  else if (code[1].equals("empty")) AppendText("입장 실패 : 종료된 방");
-	            	  else AppendText("입장 실패");
-	            	  break;
-	               case "103":
-	            	   String[] data = cm.getData().split(" ");
-	            	   String roomData = String.format("%s   ||    %s님의 방입니다.                            ||   %s/2", data[0], data[2], data[3]);
-	            	   room.addElement(roomData);
-	            	   if (data[1].matches("last")) {
-	            		   lobbyList.setListData(room);
-	            		   lobbyList.setCellRenderer(getRenderer());
-	            	   }
-	            	   else
-	            		   SendObject(cm);
-	            	   break;	
-	               case "200":
-	                  AppendText(msg);
-	                  break;
-	               case "999":
-	            	   AppendText(msg);
-	            	   setVisible(false);
-	            	   JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, cm.getData());
-	            	   break;
-	               case "998":
-	            	   int currentRoomSize = Integer.parseInt(cm.getData());
-	            	   room.clear();
-	            	   if (currentRoomSize > 0) {
-	            		   cm.setCode("101");
-	            		   SendObject(cm);
-	            	   }
-	            	   break;
-	            }
-
+                  case "100":
+                     uID=cm.getData();
+                     break;
+                  case "101": // 로비 입장 프로토콜
+                    currentRoomSize = Integer.parseInt(cm.getData());
+                    if (currentRoomSize > 0) {
+                       cm.setCode("103");
+                       SendObject(cm);
+                    }
+                    break;
+                  case "102": // 방 입장 프로토콜
+                     String[] code = cm.getData().split(" ");
+                     AppendText(msg);
+                    if (code[1].equals("true")) {   
+                       setVisible(false);
+                       JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, code[0]);
+                    }
+                    else if (code[1].equals("full")) AppendText("입장 실패 : 최대 인원수");
+                    else if (code[1].equals("empty")) AppendText("입장 실패 : 종료된 방");
+                    else AppendText("입장 실패");
+                    break;
+                  case "103":
+                     String[] data = cm.getData().split(" ");
+                     String roomData = String.format("%s   ||    %s님의 방입니다.                            ||   %s/2", data[0], data[2], data[3]);
+                     room.addElement(roomData);
+                     if (data[1].matches("last")) {
+                        lobbyList.setListData(room);
+                        lobbyList.setCellRenderer(getRenderer());
+                     }
+                     else
+                        SendObject(cm);
+                     break;   
+                  case "200":
+                     AppendText(msg);
+                     break;
+                  case "999":
+                     AppendText(msg);
+                     setVisible(false);
+                     JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, cm.getData());
+                     break;
+                  case "998":
+                     int currentRoomSize = Integer.parseInt(cm.getData());
+                     room.clear();
+                     if (currentRoomSize > 0) {
+                        cm.setCode("101");
+                        SendObject(cm);
+                     }
+                     break;
+               }
             } catch (IOException e) {
                AppendText("ois.readObject() error");
                  try {
@@ -340,14 +338,14 @@ public class JavaObjClientLobby extends JFrame{
   }
    
    private ListCellRenderer<? super String> getRenderer() {
-	   return new DefaultListCellRenderer() {
-		   @Override
-		   public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean CellHasFocus ) {
-			   JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, CellHasFocus);
-			   listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.BLACK));
-			   return listCellRendererComponent;
-		   }
-	   };
+      return new DefaultListCellRenderer() {
+         @Override
+         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean CellHasFocus ) {
+            JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, CellHasFocus);
+            listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.BLACK));
+            return listCellRendererComponent;
+         }
+      };
    }
       // keyboard enter key 치면 서버로 전송
    class TextSendAction implements ActionListener {

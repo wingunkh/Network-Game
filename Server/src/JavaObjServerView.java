@@ -258,6 +258,7 @@ public class JavaObjServerView extends JFrame {
 					user.WriteOneObject(msg);
 			}
 		}
+
       public void run() {
          while (true) { // 사용자 접속을 계속해서 받기 위해 while문
             try {

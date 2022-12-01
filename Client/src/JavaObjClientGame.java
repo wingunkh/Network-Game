@@ -33,17 +33,19 @@ public class JavaObjClientGame extends JFrame {
    private ObjectInputStream ois;
    private ObjectOutputStream oos;
    private JLabel lblUserName;
-   private JTextPane textArea;
    
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
    private String uID;
    private JLabel Background;
    private JButton shuffle;
+   private JLabel durumari;
    private JButton bbing;
    private JButton half;
    private JButton ddadang;
    private JButton die;
    private JButton call;
+   private JLabel myJokbo;
+   private JLabel myJokboBg;
    private JLabel panmoney;
    private JLabel mymoney;
    private JLabel myMessage;
@@ -60,6 +62,8 @@ public class JavaObjClientGame extends JFrame {
    private Jokbo jokbo;
    private JokboMatch result;
    private String previous = "none";
+   private Image winimg = new ImageIcon("src/images/win.png").getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+   private Image loseimg = new ImageIcon("src/images/lose.png").getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
    private int count=0;
    private int amount=0;
    private int property=100000;
@@ -187,8 +191,7 @@ public class JavaObjClientGame extends JFrame {
       
       /*게임 배경*/
       backSrc = "src/images/background.png";
-      backIcon = new ImageIcon(new ImageIcon(backSrc).getImage().getScaledInstance(900, 600, java.awt.Image.SCALE_SMOOTH));
-      
+      backIcon = new ImageIcon(new ImageIcon(backSrc).getImage().getScaledInstance(900, 600, java.awt.Image.SCALE_SMOOTH));     
       /*게임 배경*/
 
       /*화투 패*/
@@ -203,34 +206,49 @@ public class JavaObjClientGame extends JFrame {
       otherLeft = new Card(200, 250);
       otherLeft.setCardBounds();
       contentPane.add(otherLeft.getCard());
-          
       otherRight = new Card(200, 250);
       otherRight.setCardBounds();
       contentPane.add(otherRight.getCard());
       /*화투 패*/
       
-      /*판돈*/     
+      /*내 족보*/
+      myJokbo = new JLabel();
+      myJokbo.setLocation(706, 504);
+      myJokbo.setSize(110, 50);
+      myJokbo.setFont(new Font("한컴 울주 반구대 암각화체", Font.PLAIN, 32));
+      contentPane.add(myJokbo);
+      
+      myJokboBg = new JLabel();
+      myJokboBg.setLocation(686, 504);
+      myJokboBg.setSize(130, 50);
+      myJokboBg.setIcon(new ImageIcon("src/images/flower.png"));
+      contentPane.add(myJokboBg);
+      /*내 족보*/
+      
+      /*판돈*/
       panmoney = new JLabel(Integer.toString(amount));
       panmoney.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 24));
-      panmoney.setBounds(524, 324, 150, 50);
+      panmoney.setBounds(524, 145, 150, 50);
       contentPane.add(panmoney);
       /*판돈*/
       
       /*내돈*/  
       mymoney = new JLabel("100000");
       mymoney.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 24));
-      mymoney.setBounds(686, 324, 150, 50);
+      mymoney.setBounds(686, 145, 150, 50);
       contentPane.add(mymoney);
       /*내돈*/
       
       /*말풍선*/
-      otherMessage = new JLabel();
-      otherMessage.setBounds(180, 110, 130, 50);
-      contentPane.add(otherMessage);
-      
-      myMessage = new JLabel();
-      myMessage.setBounds(180, 435, 130, 50);
+      myMessage = new JLabel("");
+      myMessage.setBounds(180, 400, 130, 50);
+      myMessage.setVisible(false);
       contentPane.add(myMessage);
+      
+      otherMessage = new JLabel("");
+      otherMessage.setBounds(180, 145, 130, 50);
+      otherMessage.setVisible(false);
+      contentPane.add(otherMessage);
       /*말풍선*/
       
       /*시작 버튼*/
@@ -251,45 +269,42 @@ public class JavaObjClientGame extends JFrame {
       /*시작 버튼*/
       
       /*배팅 버튼*/
-      bbing= new JButton(new ImageIcon("src/images/bbing2.png"));
-      bbing.setBounds(524, 384, 130, 50);
-      contentPane.add(bbing);
-      
-      half = new JButton(new ImageIcon("src/images/half2.png"));
-      half.setBounds(686, 384, 130, 50);
-      contentPane.add(half);
-      
-      ddadang = new JButton(new ImageIcon("src/images/ddadang2.png"));
-      ddadang.setBounds(524, 444, 130, 50);
-      contentPane.add(ddadang);
+      call = new JButton(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      call.setBounds(524, 504, 130, 50);
+      contentPane.add(call);
       
       die = new JButton(new ImageIcon("src/images/die2.png"));
       die.setBounds(686, 444, 130, 50);
       contentPane.add(die);
       
-      call = new JButton(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-      call.setBounds(524, 505, 312, 50);
-      contentPane.add(call);
+      ddadang = new JButton(new ImageIcon("src/images/ddadang2.png"));
+      ddadang.setBounds(524, 444, 130, 50);
+      contentPane.add(ddadang);
+      
+      half = new JButton(new ImageIcon("src/images/half2.png"));
+      half.setBounds(686, 384, 130, 50);
+      contentPane.add(half);
+      
+      bbing= new JButton(new ImageIcon("src/images/bbing2.png"));
+      bbing.setBounds(524, 384, 130, 50);
+      contentPane.add(bbing);
       /*배팅 버튼*/
       
-      JScrollPane scrollPane = new JScrollPane();
-      scrollPane.setBounds(524, 10, 352, 237);
-      contentPane.add(scrollPane);
-      textArea = new JTextPane();
-      textArea.setEditable(true);
-      textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
-      scrollPane.setViewportView(textArea);
+      /*두루마리*/
+      durumari = new JLabel(new ImageIcon(new ImageIcon("src/images/durumari.png").getImage().getScaledInstance(400, 240, java.awt.Image.SCALE_SMOOTH)));
+      durumari.setBounds(476, 345, 400, 240);
+      contentPane.add(durumari);
+      /*두루마리*/
 
       lblUserName = new JLabel("Name");
       lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(524, 256, 62, 40);
+      lblUserName.setBounds(733, 10, 62, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
-      AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
       UserName = username;
       lblUserName.setText(username);
       
@@ -302,7 +317,7 @@ public class JavaObjClientGame extends JFrame {
             System.exit(0);
          }
       });
-      btnNewButton.setBounds(598, 256, 69, 40);
+      btnNewButton.setBounds(807, 10, 69, 40);
       contentPane.add(btnNewButton);
       Background = new JLabel("");
       Background.setIcon(backIcon);
@@ -355,7 +370,6 @@ public class JavaObjClientGame extends JFrame {
                   uID=cm.getData();
                   break;
                case "1":
-                  AppendText(msg);
                   array = cm.getData().split(" ");
                   shuffle.setVisible(false);
                   myLeft.getCard().setVisible(true);
@@ -382,7 +396,6 @@ public class JavaObjClientGame extends JFrame {
                   updatePanmoney(amount+=20000);
                   break;
                case "2":
-            	   AppendText(msg);
             	   if(cm.getData().equals("1 myLeft")) {
             		   Opening(cm.getData());
             	   }
@@ -397,14 +410,12 @@ public class JavaObjClientGame extends JFrame {
             	   }
             	   break;
                case "3":
-            	   AppendText(msg);
             	   if(uID.equals("1")) {
                 	   ChatMsg chatmsg = new ChatMsg(UserName, "4", "배팅 시작!");
                        SendObject(chatmsg);
             	   }
             	   break;
                case "4":
-            	   AppendText(msg);
             	   if(toggle) {
             		   if(uID.equals("1"))
                 		   batting();
@@ -421,15 +432,26 @@ public class JavaObjClientGame extends JFrame {
             	   }
             	   break;
                case "5":
-            	   AppendText(msg);
             	   if(!(cm.getData().split(" ")[1].equals("call")))
                 	   previous = cm.getData().split(" ")[1];
-            	   AppendText(previous);
             	   if(!previous.equals("none")&&(!(cm.getData().split(" ")[0].equals(uID)))) {
-            		   call.addMouseListener(callpressed);
-            		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            		   //1. 첫 베팅이 아닐 때
+            		   //2. 자신의 차례일 때
+            		   //3. 상대가 베팅한 금액만큼 베팅할 수 있을 때
+            		   if(previous.equals("bbing")&&(property>10000)) {
+                		   call.addMouseListener(callpressed);
+                		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            		   }
+            		   else if(previous.equals("half")&&(property>15000)) {
+                		   call.addMouseListener(callpressed);
+                		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            		   }
+            		   else if(previous.equals("ddadang")&&(property>20000)) {
+                		   call.addMouseListener(callpressed);
+                		   call.setIcon(new ImageIcon("src/images/call1.png"));
+            		   }
+            		   //만 콜 버튼이 활성화 되어야한다.
             	   }
-            	   AppendText(previous);
             	   if(cm.getData().equals("1 bbing"))
             		   updatePanmoney(amount+=10000);
             	   else if(cm.getData().equals("2 bbing"))
@@ -460,14 +482,14 @@ public class JavaObjClientGame extends JFrame {
             	   }
             	   else if(cm.getData().equals("1 die")) {    		   
             		   updatePanmoney(0);
-            		   Thread.sleep(1000);
+            		   showResult("2");
             		   if(uID.equals("2"))
             			   updateMymoney(property+=amount);
             		   reGame();
             	   }
             	   else if(cm.getData().equals("2 die")) {
             		   updatePanmoney(0);
-            		   Thread.sleep(1000);
+            		   showResult("1");
             		   if(uID.equals("1"))
             			   updateMymoney(property+=amount);
             		   reGame();
@@ -486,7 +508,6 @@ public class JavaObjClientGame extends JFrame {
             	   			   break;
             	   		   }   
             		   }
-         	   		   AppendText("개씨발"+previous);
             		   switch (previous) {
         	   		   case "bbing":
         	   			   updatePanmoney(amount+=10000);
@@ -514,7 +535,6 @@ public class JavaObjClientGame extends JFrame {
             	   			   break;
             	   		   }   
             		   }
-        	   		   AppendText("개씨발"+previous);
          	   		   switch (previous) {
         	   		   case "bbing":
         	   			   updatePanmoney(amount+=10000);
@@ -552,10 +572,7 @@ public class JavaObjClientGame extends JFrame {
    // 화면에 출력
    public void AppendText(String msg) {
       msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
-      int len = textArea.getDocument().getLength();
-      // 끝으로 이동
-      textArea.setCaretPosition(len);
-      textArea.replaceSelection(msg + "\n");
+      myJokbo.setText(msg);
    }
 
    // Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
@@ -611,7 +628,6 @@ public class JavaObjClientGame extends JFrame {
                 }
              case 2 :
             	otherLeft.setCardSrc(array[i]);
-                //otherLeft.backside();
                 while(otherLeft.getX() > 100 || otherLeft.getY() > 10 ) {
                    if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
                    if (otherLeft.getY() > 10) otherLeft.setY(otherLeft.getY() - 12);
@@ -621,7 +637,6 @@ public class JavaObjClientGame extends JFrame {
                 }
              case 3 :
             	otherRight.setCardSrc(array[i]);
-                //otherRight.backside();
                 while(otherRight.getX() < 300 || otherRight.getY() > 10 ) {
                    if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
                    if (otherRight.getY() > 10) otherRight.setY(otherRight.getY() - 12);
@@ -843,16 +858,16 @@ public class JavaObjClientGame extends JFrame {
    }
    
    public void batting() {
-	   if(property>=10000) {
+	   if(property>10000) {
 		   bbing.addMouseListener(bbingpressed);
 		   bbing.setIcon(new ImageIcon("src/images/bbing1.png"));
 	   }
 		   
-	   if(property>=15000) {
+	   if(property>15000) {
 		   half.addMouseListener(halfpressed);
 		   half.setIcon(new ImageIcon("src/images/half1.png"));
 	   }
-	   if(property>=20000) {
+	   if(property>20000) {
 		   ddadang.addMouseListener(ddadangpressed);
 		   ddadang.setIcon(new ImageIcon("src/images/ddadang1.png"));
 	   }
@@ -878,7 +893,7 @@ public class JavaObjClientGame extends JFrame {
 	   panmoney.setText(Integer.toString(updatedAmount));
    }
    
-   public void updateMymoney(int updatedAmount) {
+   public void updateMymoney(int updatedAmount) {	   
 	   if(updatedAmount<10000) {
 		   bbing.removeMouseListener(bbingpressed);
 		   bbing.setIcon(new ImageIcon("src/images/bbing2.png"));
@@ -902,6 +917,14 @@ public class JavaObjClientGame extends JFrame {
 	   }
 	   else 
 		   mymoney.setText(Integer.toString(updatedAmount));
+	   if(property==0) {
+		   try {
+			Thread.sleep(1500);
+			System.exit(0);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	   }
    }
    
    public void reGame() {
@@ -941,22 +964,65 @@ public class JavaObjClientGame extends JFrame {
 	   shuffle.setVisible(true);
    }
    
-   public void battle() {
+   public void battle() throws InterruptedException {
 	   if(uID.equals("1"))
            result = new JokboMatch(new Jokbo(myLeft, myRight).calculateJokbo()+" "+new Jokbo(otherLeft, otherRight).calculateJokbo());
        else
            result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
-       AppendText(result.selectWinner());
        updatePanmoney(0);
        if(result.selectWinner().equals("A")) {
-          if(uID.equals("1"))
-             updateMymoney(property+=amount);
+    	   showResult("1");
+           if(uID.equals("1"))
+              updateMymoney(property+=amount);
        }
-
        else if(result.selectWinner().equals("B")) {
-          if(uID.equals("2"))
-             updateMymoney(property+=amount);
+           showResult("2");
+           if(uID.equals("2"))
+              updateMymoney(property+=amount);
        }
        reGame();
+   }
+   
+   public void showResult(String winner) throws InterruptedException {
+	   if(winner.equals("1")) {
+		   if(uID.equals("1")) {
+			   myMessage.setIcon(new ImageIcon(winimg));
+			   otherMessage.setIcon(new ImageIcon(loseimg));
+			   myMessage.setVisible(true);
+			   otherMessage.setVisible(true);
+			   Thread.sleep(2500);
+			   myMessage.setVisible(false);
+			   otherMessage.setVisible(false);  
+		   }
+		   else {
+			   myMessage.setIcon(new ImageIcon(loseimg));
+			   otherMessage.setIcon(new ImageIcon(winimg));
+			   myMessage.setVisible(true);
+			   otherMessage.setVisible(true);
+			   Thread.sleep(2500);
+			   myMessage.setVisible(false);
+			   otherMessage.setVisible(false);  
+		   }   
+	   }
+	   else {
+		   if(uID.equals("1")) {
+			   myMessage.setIcon(new ImageIcon(loseimg));
+			   otherMessage.setIcon(new ImageIcon(winimg));
+			   myMessage.setVisible(true);
+			   otherMessage.setVisible(true);
+			   Thread.sleep(2500);
+			   myMessage.setVisible(false);
+			   otherMessage.setVisible(false);  
+		   }
+		   else {
+			   myMessage.setIcon(new ImageIcon(winimg));
+			   otherMessage.setIcon(new ImageIcon(loseimg));
+			   myMessage.setVisible(true);
+			   otherMessage.setVisible(true);
+			   Thread.sleep(2500);
+			   myMessage.setVisible(false);
+			   otherMessage.setVisible(false);  
+		   }   
+	   }
    }
 }
