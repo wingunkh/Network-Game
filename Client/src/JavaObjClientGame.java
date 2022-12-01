@@ -33,7 +33,7 @@ public class JavaObjClientGame extends JFrame {
    private ObjectInputStream ois;
    private ObjectOutputStream oos;
    private JLabel lblUserName;
-   private JTextPane textArea;
+   private JLabel textArea;
    
    /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
    private String uID;
@@ -209,9 +209,13 @@ public class JavaObjClientGame extends JFrame {
       otherRight = new Card(200, 250);
       otherRight.setCardBounds();
       contentPane.add(otherRight.getCard());
-      /*화투 패*/
       
-      /*판돈*/     
+      textArea = new JLabel();
+      textArea.setLocation(686, 504);
+      textArea.setSize(130, 50);
+      //textArea.setEditable(true);
+      textArea.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 32));
+      contentPane.add(textArea);
       panmoney = new JLabel(Integer.toString(amount));
       panmoney.setFont(new Font("한컴 말랑말랑 Bold", Font.PLAIN, 24));
       panmoney.setBounds(524, 324, 150, 50);
@@ -272,28 +276,19 @@ public class JavaObjClientGame extends JFrame {
       contentPane.add(die);
       
       call = new JButton(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-      call.setBounds(524, 505, 312, 50);
+      call.setBounds(524, 504, 130, 50);
       contentPane.add(call);
       /*배팅 버튼*/
-      
-      JScrollPane scrollPane = new JScrollPane();
-      scrollPane.setBounds(524, 10, 352, 237);
-      contentPane.add(scrollPane);
-      textArea = new JTextPane();
-      textArea.setEditable(true);
-      textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
-      scrollPane.setViewportView(textArea);
 
       lblUserName = new JLabel("Name");
       lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(524, 256, 62, 40);
+      lblUserName.setBounds(733, 10, 62, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
-      AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
       UserName = username;
       lblUserName.setText(username);
       
@@ -306,7 +301,7 @@ public class JavaObjClientGame extends JFrame {
             System.exit(0);
          }
       });
-      btnNewButton.setBounds(598, 256, 69, 40);
+      btnNewButton.setBounds(807, 10, 69, 40);
       contentPane.add(btnNewButton);
       Background = new JLabel("");
       Background.setIcon(backIcon);
@@ -359,7 +354,6 @@ public class JavaObjClientGame extends JFrame {
                   uID=cm.getData();
                   break;
                case "1":
-                  AppendText(msg);
                   array = cm.getData().split(" ");
                   shuffle.setVisible(false);
                   myLeft.getCard().setVisible(true);
@@ -386,7 +380,6 @@ public class JavaObjClientGame extends JFrame {
                   updatePanmoney(amount+=20000);
                   break;
                case "2":
-            	   AppendText(msg);
             	   if(cm.getData().equals("1 myLeft")) {
             		   Opening(cm.getData());
             	   }
@@ -401,14 +394,12 @@ public class JavaObjClientGame extends JFrame {
             	   }
             	   break;
                case "3":
-            	   AppendText(msg);
             	   if(uID.equals("1")) {
                 	   ChatMsg chatmsg = new ChatMsg(UserName, "4", "배팅 시작!");
                        SendObject(chatmsg);
             	   }
             	   break;
                case "4":
-            	   AppendText(msg);
             	   if(toggle) {
             		   if(uID.equals("1"))
                 		   batting();
@@ -425,10 +416,8 @@ public class JavaObjClientGame extends JFrame {
             	   }
             	   break;
                case "5":
-            	   AppendText(msg);
             	   if(!(cm.getData().split(" ")[1].equals("call")))
                 	   previous = cm.getData().split(" ")[1];
-            	   AppendText(previous);
             	   if(!previous.equals("none")&&(!(cm.getData().split(" ")[0].equals(uID)))) {
             		   //1. 첫 베팅이 아닐 때
             		   //2. 자신의 차례일 때
@@ -447,7 +436,6 @@ public class JavaObjClientGame extends JFrame {
             		   }
             		   //만 콜 버튼이 활성화 되어야한다.
             	   }
-            	   AppendText(previous);
             	   if(cm.getData().equals("1 bbing"))
             		   updatePanmoney(amount+=10000);
             	   else if(cm.getData().equals("2 bbing"))
@@ -504,7 +492,6 @@ public class JavaObjClientGame extends JFrame {
             	   			   break;
             	   		   }   
             		   }
-         	   		   AppendText("콜했을 때 프리비어스"+previous);
             		   switch (previous) {
         	   		   case "bbing":
         	   			   updatePanmoney(amount+=10000);
@@ -532,7 +519,6 @@ public class JavaObjClientGame extends JFrame {
             	   			   break;
             	   		   }   
             		   }
-        	   		   AppendText("콜했을 때 프리비어스"+previous);
          	   		   switch (previous) {
         	   		   case "bbing":
         	   			   updatePanmoney(amount+=10000);
@@ -570,10 +556,7 @@ public class JavaObjClientGame extends JFrame {
    // 화면에 출력
    public void AppendText(String msg) {
       msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
-      int len = textArea.getDocument().getLength();
-      // 끝으로 이동
-      textArea.setCaretPosition(len);
-      textArea.replaceSelection(msg + "\n");
+      textArea.setText(msg);
    }
 
    // Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
@@ -970,7 +953,6 @@ public class JavaObjClientGame extends JFrame {
            result = new JokboMatch(new Jokbo(myLeft, myRight).calculateJokbo()+" "+new Jokbo(otherLeft, otherRight).calculateJokbo());
        else
            result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
-       AppendText(result.selectWinner());
        updatePanmoney(0);
        if(result.selectWinner().equals("A")) {
     	   showResult("1");
@@ -978,7 +960,7 @@ public class JavaObjClientGame extends JFrame {
               updateMymoney(property+=amount);
        }
        else if(result.selectWinner().equals("B")) {
-           showResult("1");
+           showResult("2");
            if(uID.equals("2"))
               updateMymoney(property+=amount);
        }
