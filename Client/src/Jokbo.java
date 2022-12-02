@@ -211,7 +211,7 @@ public class Jokbo {
 	         break;
 	         case "13": x = "¸ÁÅë"; // 7¿ù
 	         break;
-	         case "14": x = "ÇÑ²ý"; // 8±¤
+	         case "14": x = "»ïÆÈ±¤¶¯"; // 8±¤
 	         break;
 	         case "15": x = "ÇÑ²ý"; // 8¿ù
 	         break;

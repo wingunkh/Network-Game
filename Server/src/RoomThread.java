@@ -246,6 +246,14 @@ public class RoomThread extends Thread{
                   msg = String.format("%s", cm.getData());
                    // server 화면에 출력
                   WriteAllObject(cm);
+               } else if(cm.getCode().matches("6")) {
+             	  cm.setData(cm.getData());
+             	  msg = String.format("%s",  cm.getData());
+             	  WriteAllObject(cm);
+                } else if(cm.getCode().matches("7")) {
+            	  cm.setData(cm.getData());
+            	  msg = String.format("%s",  cm.getData());
+            	  WriteAllObject(cm);
                }
             } catch (IOException e) {
                try {
