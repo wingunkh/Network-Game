@@ -23,6 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.Icon;
+import java.awt.Component;
 
 public class JavaObjClientGame extends JFrame {
    private static final long serialVersionUID = 1L;
@@ -184,6 +185,8 @@ public class JavaObjClientGame extends JFrame {
            SendObject(msg2);
        }
    };
+   private JLabel userBoard;
+   private JLabel exitBtn;
    /*¿ì¸®°¡ ¸¸µç JavaObjectClientView Å¬·¡½º ³» Áö¿ªº¯¼ö ¼±¾ðÇÏ´Â °ø°£*/
 
    public JavaObjClientGame(String username, String ip_addr, String port_no) {
@@ -345,16 +348,18 @@ public class JavaObjClientGame extends JFrame {
       /*³» Á·º¸*/
       
       /*ÆÇµ·*/
-      panmoney = new JLabel(Integer.toString(amount));
-      panmoney.setFont(new Font("ÇÑÄÄ ¸»¶û¸»¶û Bold", Font.PLAIN, 24));
-      panmoney.setBounds(114, 235, 150, 50);
+      panmoney = new JLabel(Integer.toString(amount), SwingConstants.RIGHT);
+      panmoney.setForeground(new Color(255, 255, 255));
+      panmoney.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 15));
+      panmoney.setBounds(542, 246, 110, 28);
       contentPane.add(panmoney);
       /*ÆÇµ·*/
       
       /*³»µ·*/  
-      mymoney = new JLabel("100000");
-      mymoney.setFont(new Font("ÇÑÄÄ ¸»¶û¸»¶û Bold", Font.PLAIN, 24));
-      mymoney.setBounds(524, 131, 150, 50);
+      mymoney = new JLabel("100000", SwingConstants.RIGHT);
+      mymoney.setForeground(new Color(255, 255, 255));
+      mymoney.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 13));
+      mymoney.setBounds(552, 286, 100, 19);
       contentPane.add(mymoney);
       /*³»µ·*/
       
@@ -385,10 +390,12 @@ public class JavaObjClientGame extends JFrame {
        });
       /* ¹èÆÃ ¹öÆ° */
       half = new JLabel(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      half.setToolTipText("\"1.5\uB9CC\uC6D0\"");
       half.setBounds(686, 384, 130, 50);
       contentPane.add(half);
       
       ddadang = new JLabel(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      ddadang.setToolTipText("\"2\uB9CC\uC6D0\"");
       ddadang.setBounds(524, 444, 130, 50);
       contentPane.add(ddadang);
       
@@ -400,6 +407,7 @@ public class JavaObjClientGame extends JFrame {
       contentPane.add(call);
       
       bbing= new JLabel(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      bbing.setToolTipText("\"1\uB9CC\uC6D0\"");
       bbing.setBounds(524, 384, 130, 50);
       contentPane.add(bbing);
       shuffle.setBorderPainted(false);
@@ -419,27 +427,45 @@ public class JavaObjClientGame extends JFrame {
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("±¼¸²", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-      lblUserName.setBounds(524, 95, 62, 40);
+      lblUserName.setBounds(746, 17, 62, 40);
       contentPane.add(lblUserName);
       setVisible(true);
 
       UserName = username;
       lblUserName.setText(username);
       
-      JButton btnNewButton = new JButton("Á¾ ·á");
-      btnNewButton.setFont(new Font("±¼¸²", Font.PLAIN, 14));
-      btnNewButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
-            SendObject(msg);
-            System.exit(0);
-         }
-      });
-      btnNewButton.setBounds(807, 10, 69, 40);
-      contentPane.add(btnNewButton);
+      JLabel moneyBoard = new JLabel("New label");
+      moneyBoard.setIcon(new ImageIcon("src/images/moneyboard.png"));
+      moneyBoard.setBounds(484, 246, 213, 64);
+      contentPane.add(moneyBoard);
+      
+      userBoard = new JLabel("New label");
+      userBoard.setIcon(new ImageIcon("src/images/userboard.png"));
+      userBoard.setBounds(743, 10, 70, 54);
+      contentPane.add(userBoard);
+      
+      exitBtn = new JLabel("New label");
+      exitBtn.setIcon(new ImageIcon("src/buttons/Exit1.png"));
+      exitBtn.setBounds(813, 10, 63, 54);
+      exitBtn.addMouseListener(new MouseAdapter() {
+          public void mouseClicked(MouseEvent e) {
+             ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
+             SendObject(msg);
+             System.exit(0);
+          }
+          public void mouseEntered(MouseEvent e) {
+        	  exitBtn.setIcon(new ImageIcon("src/buttons/Exit2.png"));
+          }
+          public void mouseExited(MouseEvent e) {
+        	  exitBtn.setIcon(new ImageIcon("src/buttons/Exit1.png"));
+          }
+       });
+      contentPane.add(exitBtn);
+      
       Background = new JLabel("");
+      Background.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 15));
       Background.setIcon(backIcon);
-      Background.setBounds(0, 0, 900, 595);
+      Background.setBounds(0, 0, 884, 595);
       contentPane.add(Background);
       
       try {
@@ -600,14 +626,14 @@ public class JavaObjClientGame extends JFrame {
             	   }
             	   else if(cm.getData().equals("1 die")) {    		   
             		   updatePanmoney(0);
-            		   showResult("2");
+//            		   showResult("2");
             		   if(uID.equals("2"))
             			   updateMymoney(property+=amount);
             		   reGame();
             	   }
             	   else if(cm.getData().equals("2 die")) {
             		   updatePanmoney(0);
-            		   showResult("1");
+//            		   showResult("1");
             		   if(uID.equals("1"))
             			   updateMymoney(property+=amount);
             		   reGame();
@@ -1117,12 +1143,12 @@ public class JavaObjClientGame extends JFrame {
            result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
        updatePanmoney(0);
        if(result.selectWinner().equals("A")) {
-    	   showResult("1");
+//    	   showResult("1");
            if(uID.equals("1"))
               updateMymoney(property+=amount);
        }
        else if(result.selectWinner().equals("B")) {
-           showResult("2");
+//           showResult("2");
            if(uID.equals("2"))
               updateMymoney(property+=amount);
        }
@@ -1331,5 +1357,4 @@ public class JavaObjClientGame extends JFrame {
 		   break;
 	   }
    }
-   
 }
