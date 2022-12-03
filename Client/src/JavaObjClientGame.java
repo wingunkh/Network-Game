@@ -59,6 +59,7 @@ public class JavaObjClientGame extends JFrame {
    private JLabel otherEmotionIcon;
    private JLabel myBettingIcon;
    private JLabel otherBettingIcon;
+   private JLabel battleResult;
    private Image img;
    private Image updateimg;
    private String backSrc;
@@ -71,8 +72,8 @@ public class JavaObjClientGame extends JFrame {
    private Jokbo jokbo;
    private JokboMatch result;
    private String previous = "none";
-   private Image winimg = new ImageIcon("src/images/win.png").getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-   private Image loseimg = new ImageIcon("src/images/lose.png").getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+   private Image winimg = new ImageIcon("src/images/win.png").getImage().getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH);
+   private Image loseimg = new ImageIcon("src/images/lose.png").getImage().getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH);
    private int count=0;
    private int amount=0;
    private int property=100000;
@@ -253,9 +254,9 @@ public class JavaObjClientGame extends JFrame {
          public void mouseClicked(MouseEvent e) {
          ChatMsg msg;
          if(uID.equals("1"))
-            msg = new ChatMsg(UserName, "6", "1 angry");
+            msg = new ChatMsg(UserName, "7", "1 angry");
          else 
-            msg = new ChatMsg(UserName, "6", "2 angry");
+            msg = new ChatMsg(UserName, "7", "2 angry");
          SendObject(msg);
         }
       });
@@ -270,9 +271,9 @@ public class JavaObjClientGame extends JFrame {
          public void mouseClicked(MouseEvent e) {
            ChatMsg msg;
            if(uID.equals("1"))
-              msg = new ChatMsg(UserName, "6", "1 sorry");
+              msg = new ChatMsg(UserName, "7", "1 sorry");
            else 
-              msg = new ChatMsg(UserName, "6", "2 sorry");
+              msg = new ChatMsg(UserName, "7", "2 sorry");
            SendObject(msg);
           }
       });
@@ -287,9 +288,9 @@ public class JavaObjClientGame extends JFrame {
          public void mouseClicked(MouseEvent e) {
            ChatMsg msg;
            if(uID.equals("1"))
-              msg = new ChatMsg(UserName, "6", "1 thank");
+              msg = new ChatMsg(UserName, "7", "1 thank");
            else 
-              msg = new ChatMsg(UserName, "6", "2 thank");
+              msg = new ChatMsg(UserName, "7", "2 thank");
            SendObject(msg);
           }
       });
@@ -304,9 +305,9 @@ public class JavaObjClientGame extends JFrame {
          public void mouseClicked(MouseEvent e) {
            ChatMsg msg;
            if(uID.equals("1"))
-              msg = new ChatMsg(UserName, "6", "1 sad");
+              msg = new ChatMsg(UserName, "7", "1 sad");
            else 
-              msg = new ChatMsg(UserName, "6", "2 sad");
+              msg = new ChatMsg(UserName, "7", "2 sad");
            SendObject(msg);
           }
       });
@@ -321,6 +322,7 @@ public class JavaObjClientGame extends JFrame {
       otherEmotionIcon.setVisible(false);
       contentPane.add(otherEmotionIcon);
       /* 감정 표현 */
+      
       /* 베팅 표현 */
       myBettingIcon = new JLabel("myBettingIcon");
       myBettingIcon.setLocation(192, 360);
@@ -333,6 +335,7 @@ public class JavaObjClientGame extends JFrame {
       otherBettingIcon.setVisible(false);
       contentPane.add(otherBettingIcon);
       /* 베팅 표현 */
+      
       /* 내 족보 */
       myJokbo = new JLabel();
       myJokbo.setLocation(706, 504);
@@ -415,6 +418,7 @@ public class JavaObjClientGame extends JFrame {
       shuffle.setBounds(210, 210, 100, 100);
       contentPane.add(shuffle);
       /* 배팅 버튼 */
+      
       /*시작 버튼*/
 
       /*두루마리*/
@@ -422,6 +426,12 @@ public class JavaObjClientGame extends JFrame {
       durumari.setBounds(476, 345, 400, 240);
       contentPane.add(durumari);
       /*두루마리*/
+      
+      /*배틀 결과*/
+      battleResult = new JLabel("");
+      battleResult.setBounds(157, 222, 150, 150);
+      contentPane.add(battleResult);
+      /*배틀 결과*/
 
       lblUserName = new JLabel("Name");
       lblUserName.setBackground(Color.WHITE);
@@ -626,14 +636,14 @@ public class JavaObjClientGame extends JFrame {
                   }
                   else if(cm.getData().equals("1 die")) {             
                      updatePanmoney(0);
-//                     showResult("2");
+                     showResult("2");
                      if(uID.equals("2"))
                         updateMymoney(property+=amount);
                      reGame();
                   }
                   else if(cm.getData().equals("2 die")) {
                      updatePanmoney(0);
-//                     showResult("1");
+                     showResult("1");
                      if(uID.equals("1"))
                         updateMymoney(property+=amount);
                      reGame();
@@ -1143,12 +1153,12 @@ public class JavaObjClientGame extends JFrame {
            result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
        updatePanmoney(0);
        if(result.selectWinner().equals("A")) {
-//          showResult("1");
+          showResult("1");
            if(uID.equals("1"))
               updateMymoney(property+=amount);
        }
        else if(result.selectWinner().equals("B")) {
-//           showResult("2");
+           showResult("2");
            if(uID.equals("2"))
               updateMymoney(property+=amount);
        }
@@ -1158,42 +1168,30 @@ public class JavaObjClientGame extends JFrame {
    public void showResult(String winner) throws InterruptedException {
       if(winner.equals("1")) {
          if(uID.equals("1")) {
-            myMessage.setIcon(new ImageIcon(winimg));
-            otherMessage.setIcon(new ImageIcon(loseimg));
-            myMessage.setVisible(true);
-            otherMessage.setVisible(true);
+            battleResult.setIcon(new ImageIcon(winimg));
+            battleResult.setVisible(true);
             Thread.sleep(2500);
-            myMessage.setVisible(false);
-            otherMessage.setVisible(false);  
+            battleResult.setVisible(false);
          }
          else {
-            myMessage.setIcon(new ImageIcon(loseimg));
-            otherMessage.setIcon(new ImageIcon(winimg));
-            myMessage.setVisible(true);
-            otherMessage.setVisible(true);
+            battleResult.setIcon(new ImageIcon(loseimg));
+            battleResult.setVisible(true);
             Thread.sleep(2500);
-            myMessage.setVisible(false);
-            otherMessage.setVisible(false);  
+            battleResult.setVisible(false);
          }   
       }
       else {
          if(uID.equals("1")) {
-            myMessage.setIcon(new ImageIcon(loseimg));
-            otherMessage.setIcon(new ImageIcon(winimg));
-            myMessage.setVisible(true);
-            otherMessage.setVisible(true);
+            battleResult.setIcon(new ImageIcon(loseimg));
+            battleResult.setVisible(true);
             Thread.sleep(2500);
-            myMessage.setVisible(false);
-            otherMessage.setVisible(false);  
+            battleResult.setVisible(false);
          }
          else {
-            myMessage.setIcon(new ImageIcon(winimg));
-            otherMessage.setIcon(new ImageIcon(loseimg));
-            myMessage.setVisible(true);
-            otherMessage.setVisible(true);
+            battleResult.setIcon(new ImageIcon(winimg));
+            battleResult.setVisible(true);
             Thread.sleep(2500);
-            myMessage.setVisible(false);
-            otherMessage.setVisible(false);  
+            battleResult.setVisible(false);
          }   
       }
    }
