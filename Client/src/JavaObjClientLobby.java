@@ -53,7 +53,7 @@ public class JavaObjClientLobby extends JFrame{
    private JTextField txtInput;
    private String UserName;
    private JButton btnSend;
-   private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
+   private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의 
    private Socket socket; // 연결소켓
    private ObjectInputStream ois;
    private ObjectOutputStream oos;
