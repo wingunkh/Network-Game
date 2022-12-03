@@ -253,9 +253,9 @@ public class JavaObjClientGame extends JFrame {
     	  public void mouseClicked(MouseEvent e) {
 			ChatMsg msg;
 			if(uID.equals("1"))
-				msg = new ChatMsg(UserName, "6", "1 angry");
+				msg = new ChatMsg(UserName, "7", "1 angry");
 			else 
-				msg = new ChatMsg(UserName, "6", "2 angry");
+				msg = new ChatMsg(UserName, "7", "2 angry");
 			SendObject(msg);
     	 }
       });
@@ -270,9 +270,9 @@ public class JavaObjClientGame extends JFrame {
     	  public void mouseClicked(MouseEvent e) {
   			ChatMsg msg;
   			if(uID.equals("1"))
-  				msg = new ChatMsg(UserName, "6", "1 sorry");
+  				msg = new ChatMsg(UserName, "7", "1 sorry");
   			else 
-  				msg = new ChatMsg(UserName, "6", "2 sorry");
+  				msg = new ChatMsg(UserName, "7", "2 sorry");
   			SendObject(msg);
       	 }
       });
@@ -287,9 +287,9 @@ public class JavaObjClientGame extends JFrame {
     	  public void mouseClicked(MouseEvent e) {
   			ChatMsg msg;
   			if(uID.equals("1"))
-  				msg = new ChatMsg(UserName, "6", "1 thank");
+  				msg = new ChatMsg(UserName, "7", "1 thank");
   			else 
-  				msg = new ChatMsg(UserName, "6", "2 thank");
+  				msg = new ChatMsg(UserName, "7", "2 thank");
   			SendObject(msg);
       	 }
       });
@@ -304,9 +304,9 @@ public class JavaObjClientGame extends JFrame {
     	  public void mouseClicked(MouseEvent e) {
   			ChatMsg msg;
   			if(uID.equals("1"))
-  				msg = new ChatMsg(UserName, "6", "1 sad");
+  				msg = new ChatMsg(UserName, "7", "1 sad");
   			else 
-  				msg = new ChatMsg(UserName, "6", "2 sad");
+  				msg = new ChatMsg(UserName, "7", "2 sad");
   			SendObject(msg);
       	 }
       });
