@@ -199,7 +199,7 @@ public class JavaObjClientGame extends JFrame {
       contentPane.setLayout(null);
       
       /*°ÔÀÓ ¹è°æ*/
-      backSrc = "src/images/background.png";
+      backSrc = "src/images/background2.png";
       backIcon = new ImageIcon(new ImageIcon(backSrc).getImage().getScaledInstance(900, 600, java.awt.Image.SCALE_SMOOTH));     
       /*°ÔÀÓ ¹è°æ*/
 
@@ -311,7 +311,7 @@ public class JavaObjClientGame extends JFrame {
       	 }
       });
       myEmotionIcon = new JLabel("myEmotionIcon");
-      myEmotionIcon.setLocation(205, 365);
+      myEmotionIcon.setLocation(205, 345);
       myEmotionIcon.setVisible(false);
       myEmotionIcon.setSize(35, 35);
       contentPane.add(myEmotionIcon);
@@ -323,7 +323,7 @@ public class JavaObjClientGame extends JFrame {
       /* °¨Á¤ Ç¥Çö */
       /* º£ÆÃ Ç¥Çö */
       myBettingIcon = new JLabel("myBettingIcon");
-      myBettingIcon.setLocation(192, 360);
+      myBettingIcon.setLocation(192, 340);
       myBettingIcon.setVisible(false);
       myBettingIcon.setSize(64, 40);
       contentPane.add(myBettingIcon);
@@ -350,22 +350,22 @@ public class JavaObjClientGame extends JFrame {
       /*ÆÇµ·*/
       panmoney = new JLabel(Integer.toString(amount), SwingConstants.RIGHT);
       panmoney.setForeground(new Color(255, 255, 255));
-      panmoney.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 15));
-      panmoney.setBounds(542, 246, 110, 28);
+      panmoney.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 25));
+      panmoney.setBounds(608, 253, 110, 28);
       contentPane.add(panmoney);
       /*ÆÇµ·*/
       
       /*³»µ·*/  
       mymoney = new JLabel("100000", SwingConstants.RIGHT);
       mymoney.setForeground(new Color(255, 255, 255));
-      mymoney.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 13));
-      mymoney.setBounds(552, 286, 100, 19);
+      mymoney.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 20));
+      mymoney.setBounds(620, 299, 100, 19);
       contentPane.add(mymoney);
       /*³»µ·*/
       
       /*¸»Ç³¼±*/
       myMessage = new JLabel("");
-      myMessage.setBounds(180, 350, 90, 80);
+      myMessage.setBounds(180, 330, 90, 80);
       myMessage.setVisible(false);
       myMessage.setIcon(new ImageIcon("src/images/myBubble.png"));
       contentPane.add(myMessage);
@@ -378,16 +378,10 @@ public class JavaObjClientGame extends JFrame {
       /*¸»Ç³¼±*/
       
       /*½ÃÀÛ ¹öÆ°*/
-      img = new ImageIcon("src/images/start.png").getImage();
-      updateimg = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-      shuffle = new JButton(new ImageIcon(updateimg));
-      shuffle.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-        	  ChatMsg msg = new ChatMsg(UserName, "1", "µ¦ ºÐ¹è");
-              SendObject(msg);
-          }
-       });
+//      img = new ImageIcon("src/buttons/Start1.png").getImage();
+//      updateimg = img.getScaledInstance(140, 54, java.awt.Image.SCALE_SMOOTH);
+//      shuffle = new JButton(new ImageIcon(updateimg));
+
       /* ¹èÆÃ ¹öÆ° */
       half = new JLabel(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
       half.setToolTipText("\"1.5\uB9CC\uC6D0\"");
@@ -410,9 +404,26 @@ public class JavaObjClientGame extends JFrame {
       bbing.setToolTipText("\"1\uB9CC\uC6D0\"");
       bbing.setBounds(524, 384, 130, 50);
       contentPane.add(bbing);
+      
+      shuffle = new JButton("");
+      shuffle.setIcon(new ImageIcon("src/buttons/Start1.png"));
+      shuffle.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+        	  ChatMsg msg = new ChatMsg(UserName, "1", "µ¦ ºÐ¹è");
+              SendObject(msg);
+          }
+          public void mouseEntered(MouseEvent e) {
+        	  shuffle.setIcon(new ImageIcon("src/buttons/Start2.png"));
+          }
+          public void mouseExited(MouseEvent e) {
+        	  shuffle.setIcon(new ImageIcon("src/buttons/Start1.png"));
+          }
+       });
       shuffle.setBorderPainted(false);
       shuffle.setContentAreaFilled(false);
-      shuffle.setBounds(210, 210, 100, 100);
+      shuffle.setBounds(165, 260, 140, 54);
+      shuffle.setVisible(false);
       contentPane.add(shuffle);
       /* ¹èÆÃ ¹öÆ° */
       /*½ÃÀÛ ¹öÆ°*/
@@ -436,7 +447,7 @@ public class JavaObjClientGame extends JFrame {
       
       JLabel moneyBoard = new JLabel("New label");
       moneyBoard.setIcon(new ImageIcon("src/images/moneyboard.png"));
-      moneyBoard.setBounds(484, 246, 213, 64);
+      moneyBoard.setBounds(484, 246, 275, 83);
       contentPane.add(moneyBoard);
       
       userBoard = new JLabel("New label");
@@ -513,6 +524,10 @@ public class JavaObjClientGame extends JFrame {
                case "100":
                   uID=cm.getData();
                   break;
+               case "104":
+            	  shuffle.setVisible(true);
+            	  contentPane.repaint();
+            	  break;
                case "1":
                   array = cm.getData().split(" ");
                   shuffle.setVisible(false);
@@ -781,9 +796,9 @@ public class JavaObjClientGame extends JFrame {
              case 0 :
                 myLeft.setCardSrc(array[i]);
                 myLeft.setCardIcon(myLeft.getCardSrc());
-                while(myLeft.getX() > 100 || myLeft.getY() < 410 ) {
+                while(myLeft.getX() > 100 || myLeft.getY() < 390 ) {
                    if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
-                   if (myLeft.getY() < 410) myLeft.setY(myLeft.getY() + 10);
+                   if (myLeft.getY() < 390) myLeft.setY(myLeft.getY() + 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -791,27 +806,27 @@ public class JavaObjClientGame extends JFrame {
              case 1 :
                 myRight.setCardSrc(array[i]);
                 myRight.setCardIcon(myRight.getCardSrc());
-                while(myRight.getX() < 300 || myRight.getY() < 410 ) {
+                while(myRight.getX() < 300 || myRight.getY() < 390 ) {
                    if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
-                   if (myRight.getY() < 410) myRight.setY(myRight.getY() + 10);
+                   if (myRight.getY() < 390) myRight.setY(myRight.getY() + 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
              case 2 :
             	otherLeft.setCardSrc(array[i]);
-                while(otherLeft.getX() > 100 || otherLeft.getY() > 10 ) {
+                while(otherLeft.getX() > 100 || otherLeft.getY() > 30 ) {
                    if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
-                   if (otherLeft.getY() > 10) otherLeft.setY(otherLeft.getY() - 10);
+                   if (otherLeft.getY() > 30) otherLeft.setY(otherLeft.getY() - 9);
                    otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
              case 3 :
             	otherRight.setCardSrc(array[i]);
-                while(otherRight.getX() < 300 || otherRight.getY() > 10 ) {
+                while(otherRight.getX() < 300 || otherRight.getY() > 30 ) {
                    if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
-                   if (otherRight.getY() > 10) otherRight.setY(otherRight.getY() - 10);
+                   if (otherRight.getY() > 30) otherRight.setY(otherRight.getY() - 9);
                    otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -826,18 +841,18 @@ public class JavaObjClientGame extends JFrame {
             switch(i) {
             case 0 :
             	otherLeft.setCardSrc(array[i]);
-                while(otherLeft.getX() > 100 || otherLeft.getY() > 10 ) {
+                while(otherLeft.getX() > 100 || otherLeft.getY() > 30 ) {
                    if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
-                   if (otherLeft.getY() > 10) otherLeft.setY(otherLeft.getY() - 10);
+                   if (otherLeft.getY() > 30) otherLeft.setY(otherLeft.getY() - 9);
                    otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
              case 1 :
             	otherRight.setCardSrc(array[i]);
-                while(otherRight.getX() < 300 || otherRight.getY() > 10 ) {
+                while(otherRight.getX() < 300 || otherRight.getY() > 30 ) {
                    if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
-                   if (otherRight.getY() > 10) otherRight.setY(otherRight.getY() - 10);
+                   if (otherRight.getY() > 30) otherRight.setY(otherRight.getY() - 9);
                    otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -845,9 +860,9 @@ public class JavaObjClientGame extends JFrame {
              case 2 :
                 myLeft.setCardSrc(array[i]);
                 myLeft.setCardIcon(myLeft.getCardSrc());
-                while(myLeft.getX() > 100 || myLeft.getY() < 410 ) {
+                while(myLeft.getX() > 100 || myLeft.getY() < 390 ) {
                    if (myLeft.getX() > 100) myLeft.setX(myLeft.getX() - 5);
-                   if (myLeft.getY() < 410) myLeft.setY(myLeft.getY() + 10);
+                   if (myLeft.getY() < 390) myLeft.setY(myLeft.getY() + 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -855,9 +870,9 @@ public class JavaObjClientGame extends JFrame {
              case 3 :
                 myRight.setCardSrc(array[i]);
                 myRight.setCardIcon(myRight.getCardSrc());
-                while(myRight.getX() < 300 || myRight.getY() < 410 ) {
+                while(myRight.getX() < 300 || myRight.getY() < 390 ) {
                    if (myRight.getX() < 300) myRight.setX(myRight.getX() + 5);
-                   if (myRight.getY() < 410) myRight.setY(myRight.getY() + 10);
+                   if (myRight.getY() < 390) myRight.setY(myRight.getY() + 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -874,14 +889,14 @@ public class JavaObjClientGame extends JFrame {
 	   case "1 myLeft":
 		   if(uID.equals("1")) {
 			   while(myLeft.getY() > 300) {
-                   myLeft.setY(myLeft.getY() - 11);
+                   myLeft.setY(myLeft.getY() - 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                }
 			   Thread.sleep(1000);
-			   while(myLeft.getY() < 410) {
-                   myLeft.setY(myLeft.getY() + 11);
+			   while(myLeft.getY() < 390) {
+                   myLeft.setY(myLeft.getY() + 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -891,14 +906,14 @@ public class JavaObjClientGame extends JFrame {
 		   }
 		   else {
 			   while(otherLeft.getY() < 120) {
-				   otherLeft.setY(otherLeft.getY() + 11);
+				   otherLeft.setY(otherLeft.getY() + 9);
 				   otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
 			   Thread.sleep(1000);
-			   while(otherLeft.getY() > 10) {
-				   otherLeft.setY(otherLeft.getY() - 11);
+			   while(otherLeft.getY() > 30) {
+				   otherLeft.setY(otherLeft.getY() - 9);
 				   otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -911,14 +926,14 @@ public class JavaObjClientGame extends JFrame {
 	   case "2 myLeft":
 		   if(uID.equals("2")) {
 			   while(myLeft.getY() > 300) {
-                   myLeft.setY(myLeft.getY() - 11);
+                   myLeft.setY(myLeft.getY() - 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
 			   Thread.sleep(1000);
-			   while(myLeft.getY() < 410) {
-                   myLeft.setY(myLeft.getY() + 11);
+			   while(myLeft.getY() < 390) {
+                   myLeft.setY(myLeft.getY() + 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -928,14 +943,14 @@ public class JavaObjClientGame extends JFrame {
 		   }
 		   else {
 			   while(otherLeft.getY() < 120) {
-				   otherLeft.setY(otherLeft.getY() + 11);
+				   otherLeft.setY(otherLeft.getY() + 9);
 				   otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
 			   Thread.sleep(1000);
-			   while(otherLeft.getY() > 10) {
-				   otherLeft.setY(otherLeft.getY() - 11);
+			   while(otherLeft.getY() > 30) {
+				   otherLeft.setY(otherLeft.getY() - 9);
 				   otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -948,14 +963,14 @@ public class JavaObjClientGame extends JFrame {
 	   case "1 myRight":
 		   if(uID.equals("1")) {
 			   while(myRight.getY() > 300) {
-                   myRight.setY(myRight.getY() - 11);
+                   myRight.setY(myRight.getY() - 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
 			   Thread.sleep(1000);
-			   while(myRight.getY() < 410) {
-                   myRight.setY(myRight.getY() + 11);
+			   while(myRight.getY() < 390) {
+                   myRight.setY(myRight.getY() + 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -965,14 +980,14 @@ public class JavaObjClientGame extends JFrame {
 		   }
 		   else {
 			   while(otherRight.getY() < 120) {
-				   otherRight.setY(otherRight.getY() + 11);
+				   otherRight.setY(otherRight.getY() + 9);
 				   otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
 			   Thread.sleep(1000);
-			   while(otherRight.getY() > 10) {
-				   otherRight.setY(otherRight.getY() - 11);
+			   while(otherRight.getY() > 30) {
+				   otherRight.setY(otherRight.getY() - 9);
 				   otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -985,14 +1000,14 @@ public class JavaObjClientGame extends JFrame {
 	   case "2 myRight":
 		   if(uID.equals("2")) {
 			   while(myRight.getY() > 300) {
-                   myRight.setY(myRight.getY() - 11);
+                   myRight.setY(myRight.getY() - 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
 			   Thread.sleep(1000);
-			   while(myRight.getY() < 410) {
-                   myRight.setY(myRight.getY() + 11);
+			   while(myRight.getY() < 390) {
+                   myRight.setY(myRight.getY() + 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -1002,14 +1017,14 @@ public class JavaObjClientGame extends JFrame {
 		   }
 		   else {
 			   while(otherRight.getY() < 120) {
-				   otherRight.setY(otherRight.getY() + 11);
+				   otherRight.setY(otherRight.getY() + 9);
 				   otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
 			   Thread.sleep(1000);
-			   while(otherRight.getY() > 10) {
-				   otherRight.setY(otherRight.getY() - 11);
+			   while(otherRight.getY() > 30) {
+				   otherRight.setY(otherRight.getY() - 9);
 				   otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
@@ -1151,6 +1166,12 @@ public class JavaObjClientGame extends JFrame {
 //           showResult("2");
            if(uID.equals("2"))
               updateMymoney(property+=amount);
+       }
+       else if(result.selectWinner().equals("¹«½ÂºÎ")) {
+    	   if (uID.equals("1"))
+    		   updateMymoney(property+=amount/2);
+    	   else
+    		   updateMymoney(property+=amount/2);
        }
        reGame();
    }
