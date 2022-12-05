@@ -258,6 +258,10 @@ public class RoomThread extends Thread{
             	  cm.setData(cm.getData());
             	  msg = String.format("%s",  cm.getData());
             	  WriteAllObject(cm);
+               } else if(cm.getCode().matches("0")) {
+            	  cm.setData(cm.getData());
+            	  msg = String.format("%s", cm.getData());
+            	  WriteAllObject(cm);
                }
             } catch (IOException e) {
                try {
