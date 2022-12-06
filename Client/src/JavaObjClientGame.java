@@ -118,8 +118,8 @@ public class JavaObjClientGame extends JFrame {
      	   msg2 = new ChatMsg(UserName, "5", message);
      	   msg3 = new ChatMsg(UserName, "6", message);
      	   updateMymoney(property-=10000);
+           //SendObject(msg);
            SendObject(msg3);
-           SendObject(msg);
            SendObject(msg2);
        }
    };
@@ -135,8 +135,8 @@ public class JavaObjClientGame extends JFrame {
      	   msg2 = new ChatMsg(UserName, "5", message);
      	   msg3 = new ChatMsg(UserName, "6", message);
      	   updateMymoney(property-=15000);
+           //SendObject(msg);
            SendObject(msg3);
-           SendObject(msg);
            SendObject(msg2);
        }
    };
@@ -152,8 +152,8 @@ public class JavaObjClientGame extends JFrame {
      	   msg2 = new ChatMsg(UserName, "5", message);
      	   msg3 = new ChatMsg(UserName, "6", message);
       	  updateMymoney(property-=20000);
+          //SendObject(msg);
           SendObject(msg3);
-          SendObject(msg);
           SendObject(msg2);
       }
    };
@@ -717,15 +717,21 @@ public class JavaObjClientGame extends JFrame {
             	   }
             	   break;
                case "6": //배팅 표시 프로토콜
+            	   waitbatting();
             	   if (cm.getData().split(" ")[0].equals("1")) { //1번 client에서 배팅 누를 경우
             		   if (uID.equals("1")) //1번 client에서 출력
             			   printMyBetting(cm.getData().split(" ")[1]);
-            		   else //2번 client에서 출력
+            		   else {//2번 client에서 출력
             			   printOtherBetting(cm.getData().split(" ")[1]);
+            			   batting();
+            		   }
+            		   
             	   }
             	   else {//2번 client에서 배팅 누를 경우
-            		   if (uID.equals("1")) //1번 client에서 출력
+            		   if (uID.equals("1")) {//1번 client에서 출력
             			   printOtherBetting(cm.getData().split(" ")[1]);
+            			   batting();
+            		   }
             		   else //2번 client에서 출력
             			   printMyBetting(cm.getData().split(" ")[1]);
             	   }
@@ -1181,6 +1187,7 @@ public class JavaObjClientGame extends JFrame {
    }
    
    public void showResult(String winner) throws InterruptedException {
+	   waitbatting();
 	   if(winner.equals("1")) {
 		   if(uID.equals("1")) {
 			   panResult.setIcon(panWin);

@@ -358,7 +358,7 @@ public class JavaObjServerView extends JFrame {
                   if (cnt == (Room.size() - 1)) 
                      cm.setData(String.format("%d last %s %d", rt.getServerPort(), rt.getCreator(), rt.getUserCount()));
                   else
-                     cm.setData(String.format("%d yet ",  rt.getServerPort()));
+                     cm.setData(String.format("%d yet %s %d",  rt.getServerPort(), rt.getCreator(), rt.getUserCount()));
                   WriteOneObject(cm);
                   cnt++;
                } else if (cm.getCode().matches("999")) { // 방 생성 프로토콜
