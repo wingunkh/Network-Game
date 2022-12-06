@@ -114,9 +114,9 @@ public class JavaObjClientGame extends JFrame {
      	   ChatMsg msg2;
      	   ChatMsg msg3;
      	   String message = String.format("%s bbing", uID);
-     	   msg3 = new ChatMsg(UserName, "6", message);
      	   msg = new ChatMsg(UserName, "4", message);
      	   msg2 = new ChatMsg(UserName, "5", message);
+     	   msg3 = new ChatMsg(UserName, "6", message);
      	   updateMymoney(property-=10000);
            SendObject(msg3);
            SendObject(msg);
@@ -131,9 +131,9 @@ public class JavaObjClientGame extends JFrame {
      	   ChatMsg msg2;
      	   ChatMsg msg3;
      	   String message = String.format("%s half", uID);
-     	   msg3 = new ChatMsg(UserName, "6", message);
      	   msg = new ChatMsg(UserName, "4", message);
      	   msg2 = new ChatMsg(UserName, "5", message);
+     	   msg3 = new ChatMsg(UserName, "6", message);
      	   updateMymoney(property-=15000);
            SendObject(msg3);
            SendObject(msg);
@@ -148,9 +148,9 @@ public class JavaObjClientGame extends JFrame {
      	   ChatMsg msg2;
      	   ChatMsg msg3;
      	   String message = String.format("%s ddadang", uID);
-     	   msg3 = new ChatMsg(UserName, "6", message);
      	   msg = new ChatMsg(UserName, "4", message);
      	   msg2 = new ChatMsg(UserName, "5", message);
+     	   msg3 = new ChatMsg(UserName, "6", message);
       	  updateMymoney(property-=20000);
           SendObject(msg3);
           SendObject(msg);
@@ -584,8 +584,8 @@ public class JavaObjClientGame extends JFrame {
             	   break;
                case "4":
             	   if(toggle) {
-            		   if(uID.equals("1"))
-                		   batting();
+            		   if(uID.equals("1")) // 여기까지 정상
+            			   batting();
                 	   else
                 		   waitbatting();  
             		   toggle=!toggle;
@@ -594,7 +594,7 @@ public class JavaObjClientGame extends JFrame {
             		   if(uID.equals("1"))
                 		   waitbatting();
                 	   else
-                		   batting();  
+                		   batting();
             		   toggle=!toggle;
             	   }
             	   break;
@@ -648,17 +648,17 @@ public class JavaObjClientGame extends JFrame {
         			   half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
             	   }
             	   else if(cm.getData().equals("1 die")) {    		   
-            		   updatePanmoney(0);
             		   showResult("2");
             		   if(uID.equals("2"))
             			   updateMymoney(property+=amount);
+               		   updatePanmoney(0);
             		   reGame();
             	   }
             	   else if(cm.getData().equals("2 die")) {
-            		   updatePanmoney(0);
             		   showResult("1");
             		   if(uID.equals("1"))
             			   updateMymoney(property+=amount);
+            		   updatePanmoney(0);
             		   reGame();
             	   }
             	   else if(cm.getData().equals("1 call")) {
@@ -1177,6 +1177,7 @@ public class JavaObjClientGame extends JFrame {
     		   updateMymoney(property+=amount/2);
     	   showResult("무승부");
        }
+       reGame();
    }
    
    public void showResult(String winner) throws InterruptedException {
@@ -1217,9 +1218,6 @@ public class JavaObjClientGame extends JFrame {
 	   if(property <= 10000) {
 		   ChatMsg end = new ChatMsg(UserName, "0", String.format("%s end", uID));
 		   SendObject(end);
-	   }
-	   else {
-		   reGame();
 	   }
    }
    private void printMyEmotion(String emotion) throws InterruptedException {
