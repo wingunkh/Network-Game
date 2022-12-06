@@ -723,9 +723,9 @@ public class Jokbo {
 	         break;
 	         case "17": x = "±¸¶¯"; // 9¿ù
 	         break;
-	         case "18": x = "¾ÆÈ©²ý"; // 10¿ù
+	         case "18": x = "°©¿À"; // 10¿ù
 	         break;
-	         case "19": x = "¾ÆÈ©²ý"; // 10¿ù
+	         case "19": x = "°©¿À"; // 10¿ù
 	         break;
 	         }
 	      break;
@@ -765,9 +765,9 @@ public class Jokbo {
 	         break;
 	         case "16": x = "±¸¶¯"; // 9¿ù
 	         break;
-	         case "18": x = "¾ÆÈ©²ý"; // 10¿ù
+	         case "18": x = "°©¿À"; // 10¿ù
 	         break;
-	         case "19": x = "¾ÆÈ©²ý"; // 10¿ù
+	         case "19": x = "°©¿À"; // 10¿ù
 	         break;
 	         }
 	      break;
@@ -805,9 +805,9 @@ public class Jokbo {
 	         break;
 	         case "15": x = "ÀÏ°ö²ý"; // 8¿ù
 	         break;
-	         case "16": x = "¾ÆÈ©²ý"; // 9¿ù
+	         case "16": x = "°©¿À"; // 9¿ù
 	         break;
-	         case "17": x = "¾ÆÈ©²ý"; // 9¿ù
+	         case "17": x = "°©¿À"; // 9¿ù
 	         break;
 	         case "19": x = "Àå¶¯"; // 10¿ù
 	         break;
@@ -847,9 +847,9 @@ public class Jokbo {
 	         break;
 	         case "15": x = "ÀÏ°ö²ý"; // 8¿ù
 	         break;
-	         case "16": x = "¾ÆÈ©²ý"; // 9¿ù
+	         case "16": x = "°©¿À"; // 9¿ù
 	         break;
-	         case "17": x = "¾ÆÈ©²ý"; // 9¿ù
+	         case "17": x = "°©¿À"; // 9¿ù
 	         break;
 	         case "18": x = "Àå¶¯"; // 10¿ù
 	         break;

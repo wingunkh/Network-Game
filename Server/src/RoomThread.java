@@ -206,6 +206,10 @@ public class RoomThread extends Thread{
                   cm.setData(Integer.toString(user_vc.size()));
                   msg = String.format("[%s] %s", cm.getId(),cm.getData());
                   WriteOneObject(cm);
+                  if (UserVec.size() == 2) {
+                	  cm.setCode("104");
+                	  WriteAllObject(cm);
+                  }
                } else if (cm.getCode().matches("400")) { // logout message Ã³¸®
                   Logout();
                   break;
@@ -253,6 +257,10 @@ public class RoomThread extends Thread{
                 } else if(cm.getCode().matches("7")) {
             	  cm.setData(cm.getData());
             	  msg = String.format("%s",  cm.getData());
+            	  WriteAllObject(cm);
+               } else if(cm.getCode().matches("0")) {
+            	  cm.setData(cm.getData());
+            	  msg = String.format("%s", cm.getData());
             	  WriteAllObject(cm);
                }
             } catch (IOException e) {
