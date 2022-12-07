@@ -121,7 +121,7 @@ public class JavaObjClientLobby extends JFrame{
       contentPane.add(lblUserName);
       setVisible(true);
 
-      AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
+      AppendText(username+ "님께서 입장하셨습니다.");
       UserName = username;
       lblUserName.setText(username);
       backSrc = "src/images/background.jpg";	
@@ -140,7 +140,7 @@ public class JavaObjClientLobby extends JFrame{
       lobbyList.addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent e) {
            String port_number = lobbyList.getSelectedValue().toString().split(" ")[0];
-           AppendText(port_number);
+           AppendText(String.format("%s번 방에 입장합니다.", port_number));
            ChatMsg msg = new ChatMsg(UserName, "102", port_number);
            SendObject(msg);
         }
@@ -181,7 +181,7 @@ public class JavaObjClientLobby extends JFrame{
       refreshBtn.addMouseListener(new MouseAdapter() {
     	 @Override
     	 public void mouseClicked(MouseEvent e) {
-   		  ChatMsg msg = new ChatMsg(UserName, "998", "로비 새로고침 버튼 클릭");
+   		  ChatMsg msg = new ChatMsg(UserName, "998", "새로고침");
    		  AppendText(msg.getData());
    		  SendObject(msg);
     	 }
@@ -269,7 +269,6 @@ public class JavaObjClientLobby extends JFrame{
                if (obcm instanceof ChatMsg) {
                   cm = (ChatMsg) obcm;
                   msg = String.format("[%s] %s %s", cm.getId(), cm.getCode(), cm.getData());
-                  System.out.println(msg);
                } else
                   continue;
                switch (cm.getCode()) {
@@ -285,7 +284,6 @@ public class JavaObjClientLobby extends JFrame{
                     break;
                   case "102": // 방 입장 프로토콜
                      String[] code = cm.getData().split(" ");
-                     AppendText(msg);
                     if (code[1].equals("true")) {   
                        setVisible(false);
                        JavaObjClientGame game = new JavaObjClientGame(username, ip_addr, code[0]);
@@ -413,7 +411,6 @@ public class JavaObjClientLobby extends JFrame{
    public void SendObject(Object ob) {
       try {
         ChatMsg msg = (ChatMsg)ob;
-        System.out.println(String.format("SendObject %s %s", msg.getCode(), msg.getData()));
          oos.writeObject(ob);
       } catch (IOException e) {
          AppendText("SendObj ect Error");

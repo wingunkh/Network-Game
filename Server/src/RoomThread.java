@@ -217,9 +217,8 @@ public class RoomThread extends Thread{
                   for (int i = 0; i < 4; i++) {
                      dupCheck[i] = rand.nextInt(20);
                      for (int j = 0; j < i; j++) {
-                        if (dupCheck[i] == dupCheck[j]) {
+                        if (dupCheck[i] == dupCheck[j])
                            i--;
-                        }
                      }
                   }
                   cm.setData(
@@ -228,27 +227,22 @@ public class RoomThread extends Thread{
                         )
                   );
                   msg = String.format("[%s] %s", cm.getId(), cm.getData());
-                  
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("2")) {
                   cm.setData(cm.getData());
                   msg = String.format("%s", cm.getData());
-                  
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("3")) {
                   cm.setData(cm.getData());
                   msg = String.format("%s", cm.getData());
-                   // server 화면에 출력
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("4")) {
                   cm.setData(cm.getData());
                   msg = String.format("%s", cm.getData());
-                   // server 화면에 출력
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("5")) {
                   cm.setData(cm.getData());
                   msg = String.format("%s", cm.getData());
-                   // server 화면에 출력
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("6")) {
              	  cm.setData(cm.getData());

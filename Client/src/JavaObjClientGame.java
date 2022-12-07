@@ -60,8 +60,6 @@ public class JavaObjClientGame extends JFrame {
    private JLabel otherEmotionIcon;
    private JLabel myBettingIcon;
    private JLabel otherBettingIcon;
-   private Image img;
-   private Image updateimg;
    private String backSrc;
    private ImageIcon backIcon;
    private Card myLeft;
@@ -112,15 +110,12 @@ public class JavaObjClientGame extends JFrame {
        public void mouseClicked(MouseEvent e) {
     	   ChatMsg msg;
      	   ChatMsg msg2;
-     	   ChatMsg msg3;
      	   String message = String.format("%s bbing", uID);
-     	   msg = new ChatMsg(UserName, "4", message);
-     	   msg2 = new ChatMsg(UserName, "5", message);
-     	   msg3 = new ChatMsg(UserName, "6", message);
+     	   msg = new ChatMsg(UserName, "5", message);
+     	   msg2 = new ChatMsg(UserName, "6", message);
      	   updateMymoney(property-=10000);
-           //SendObject(msg);
-           SendObject(msg3);
            SendObject(msg2);
+           SendObject(msg);
        }
    };
    
@@ -129,15 +124,12 @@ public class JavaObjClientGame extends JFrame {
        public void mouseClicked(MouseEvent e) {
     	   ChatMsg msg;
      	   ChatMsg msg2;
-     	   ChatMsg msg3;
      	   String message = String.format("%s half", uID);
-     	   msg = new ChatMsg(UserName, "4", message);
-     	   msg2 = new ChatMsg(UserName, "5", message);
-     	   msg3 = new ChatMsg(UserName, "6", message);
+     	   msg = new ChatMsg(UserName, "5", message);
+     	   msg2 = new ChatMsg(UserName, "6", message);
      	   updateMymoney(property-=15000);
-           //SendObject(msg);
-           SendObject(msg3);
            SendObject(msg2);
+           SendObject(msg);
        }
    };
    
@@ -146,15 +138,12 @@ public class JavaObjClientGame extends JFrame {
        public void mouseClicked(MouseEvent e) {
     	   ChatMsg msg;
      	   ChatMsg msg2;
-     	   ChatMsg msg3;
      	   String message = String.format("%s ddadang", uID);
-     	   msg = new ChatMsg(UserName, "4", message);
-     	   msg2 = new ChatMsg(UserName, "5", message);
-     	   msg3 = new ChatMsg(UserName, "6", message);
+     	   msg = new ChatMsg(UserName, "5", message);
+     	   msg2 = new ChatMsg(UserName, "6", message);
       	  updateMymoney(property-=20000);
-          //SendObject(msg);
-          SendObject(msg3);
           SendObject(msg2);
+          SendObject(msg);
       }
    };
    
@@ -375,11 +364,6 @@ public class JavaObjClientGame extends JFrame {
       contentPane.add(otherMessage);
       /*말풍선*/
       
-      /*시작 버튼*/
-//      img = new ImageIcon("src/buttons/Start1.png").getImage();
-//      updateimg = img.getScaledInstance(140, 54, java.awt.Image.SCALE_SMOOTH);
-//      shuffle = new JButton(new ImageIcon(updateimg));
-
       /* 배팅 버튼 */
       half = new JLabel(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
       half.setToolTipText("\"1.5\uB9CC\uC6D0\"");
@@ -525,7 +509,7 @@ public class JavaObjClientGame extends JFrame {
                   break;
                if (obcm instanceof ChatMsg) {
                   cm = (ChatMsg) obcm;
-                     msg = String.format("[%s] %s", cm.getId(), cm.getData());
+                  msg = String.format("[%s] %s", cm.getId(), cm.getData());
                } else
                   continue;
                switch (cm.getCode()) {
@@ -1222,7 +1206,7 @@ public class JavaObjClientGame extends JFrame {
 		   Thread.sleep(2500);
 		   panResult.setVisible(false);
 	   }
-	   if(property <= 10000) {
+	   if(property < 20000) {
 		   ChatMsg end = new ChatMsg(UserName, "0", String.format("%s end", uID));
 		   SendObject(end);
 	   }
