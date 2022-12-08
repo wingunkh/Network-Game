@@ -60,8 +60,6 @@ public class JavaObjClientGame extends JFrame {
    private JLabel otherEmotionIcon;
    private JLabel myBettingIcon;
    private JLabel otherBettingIcon;
-   private Image img;
-   private Image updateimg;
    private String backSrc;
    private ImageIcon backIcon;
    private Card myLeft;
@@ -86,11 +84,11 @@ public class JavaObjClientGame extends JFrame {
    private MouseAdapter leftcardpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
-     	  ChatMsg msg;
-     	  if(uID.equals("1"))
-     		  msg = new ChatMsg(UserName, "2", "1 myLeft");
-     	  else
-     		  msg = new ChatMsg(UserName, "2", "2 myLeft");
+          ChatMsg msg;
+          if(uID.equals("1"))
+             msg = new ChatMsg(UserName, "2", "1 myLeft");
+          else
+             msg = new ChatMsg(UserName, "2", "2 myLeft");
           SendObject(msg);
        }
    };
@@ -98,11 +96,11 @@ public class JavaObjClientGame extends JFrame {
    private MouseAdapter rightcardpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
-     	  ChatMsg msg;
-     	  if(uID.equals("1"))
-     		  msg = new ChatMsg(UserName, "2", "1 myRight");
-     	  else
-     		  msg = new ChatMsg(UserName, "2", "2 myRight");
+          ChatMsg msg;
+          if(uID.equals("1"))
+             msg = new ChatMsg(UserName, "2", "1 myRight");
+          else
+             msg = new ChatMsg(UserName, "2", "2 myRight");
           SendObject(msg);
        }
    };
@@ -110,62 +108,53 @@ public class JavaObjClientGame extends JFrame {
    private MouseAdapter bbingpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
-    	   ChatMsg msg;
-     	   ChatMsg msg2;
-     	   ChatMsg msg3;
-     	   String message = String.format("%s bbing", uID);
-     	   msg = new ChatMsg(UserName, "4", message);
-     	   msg2 = new ChatMsg(UserName, "5", message);
-     	   msg3 = new ChatMsg(UserName, "6", message);
-     	   updateMymoney(property-=10000);
-           SendObject(msg3);
-           SendObject(msg);
+          ChatMsg msg;
+           ChatMsg msg2;
+           String message = String.format("%s bbing", uID);
+           msg = new ChatMsg(UserName, "5", message);
+           msg2 = new ChatMsg(UserName, "6", message);
+           updateMymoney(property-=10000);
            SendObject(msg2);
+           SendObject(msg);
        }
    };
    
    private MouseAdapter halfpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
-    	   ChatMsg msg;
-     	   ChatMsg msg2;
-     	   ChatMsg msg3;
-     	   String message = String.format("%s half", uID);
-     	   msg = new ChatMsg(UserName, "4", message);
-     	   msg2 = new ChatMsg(UserName, "5", message);
-     	   msg3 = new ChatMsg(UserName, "6", message);
-     	   updateMymoney(property-=15000);
-           SendObject(msg3);
-           SendObject(msg);
+          ChatMsg msg;
+           ChatMsg msg2;
+           String message = String.format("%s half", uID);
+           msg = new ChatMsg(UserName, "5", message);
+           msg2 = new ChatMsg(UserName, "6", message);
+           updateMymoney(property-=15000);
            SendObject(msg2);
+           SendObject(msg);
        }
    };
    
    private MouseAdapter ddadangpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
-    	   ChatMsg msg;
-     	   ChatMsg msg2;
-     	   ChatMsg msg3;
-     	   String message = String.format("%s ddadang", uID);
-     	   msg = new ChatMsg(UserName, "4", message);
-     	   msg2 = new ChatMsg(UserName, "5", message);
-     	   msg3 = new ChatMsg(UserName, "6", message);
-      	  updateMymoney(property-=20000);
-          SendObject(msg3);
-          SendObject(msg);
+          ChatMsg msg;
+           ChatMsg msg2;
+           String message = String.format("%s ddadang", uID);
+           msg = new ChatMsg(UserName, "5", message);
+           msg2 = new ChatMsg(UserName, "6", message);
+           updateMymoney(property-=20000);
           SendObject(msg2);
+          SendObject(msg);
       }
    };
    
    private MouseAdapter diepressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
-       	   ChatMsg msg;
-       	   ChatMsg msg2;
-       	   String message = String.format("%s die", uID);
-       	   msg = new ChatMsg(UserName, "5", message);
-       	   msg2 = new ChatMsg(UserName, "6", message);
+             ChatMsg msg;
+             ChatMsg msg2;
+             String message = String.format("%s die", uID);
+             msg = new ChatMsg(UserName, "5", message);
+             msg2 = new ChatMsg(UserName, "6", message);
            SendObject(msg2);
            SendObject(msg);
        }
@@ -174,11 +163,11 @@ public class JavaObjClientGame extends JFrame {
    private MouseAdapter callpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
-       	   ChatMsg msg;
-       	   ChatMsg msg2;
-       	   String message = String.format("%s call",  uID);
-       	   msg = new ChatMsg(UserName, "5", message);
-       	   msg2 = new ChatMsg(UserName, "6", message);
+             ChatMsg msg;
+             ChatMsg msg2;
+             String message = String.format("%s call",  uID);
+             msg = new ChatMsg(UserName, "5", message);
+             msg2 = new ChatMsg(UserName, "6", message);
            SendObject(msg2);
            SendObject(msg);
        }
@@ -242,71 +231,71 @@ public class JavaObjClientGame extends JFrame {
       contentPane.add(sadBtn);
       
       angryBtn.addMouseListener(new MouseAdapter() {
-    	  public void mouseEntered(MouseEvent e) {
-    		  angryBtn.setIcon(new ImageIcon("src/emotions/angry1.png"));
-    	  }
-    	  public void mouseExited(MouseEvent e) {
-    		  angryBtn.setIcon(new ImageIcon("src/emotions/angry2.png"));
-    	  }
-    	  public void mouseClicked(MouseEvent e) {
-			ChatMsg msg;
-			if(uID.equals("1"))
-				msg = new ChatMsg(UserName, "7", "1 angry");
-			else 
-				msg = new ChatMsg(UserName, "7", "2 angry");
-			SendObject(msg);
-    	 }
+         public void mouseEntered(MouseEvent e) {
+            angryBtn.setIcon(new ImageIcon("src/emotions/angry1.png"));
+         }
+         public void mouseExited(MouseEvent e) {
+            angryBtn.setIcon(new ImageIcon("src/emotions/angry2.png"));
+         }
+         public void mouseClicked(MouseEvent e) {
+         ChatMsg msg;
+         if(uID.equals("1"))
+            msg = new ChatMsg(UserName, "7", "1 angry");
+         else 
+            msg = new ChatMsg(UserName, "7", "2 angry");
+         SendObject(msg);
+        }
       });
       
       sorryBtn.addMouseListener(new MouseAdapter() {
-    	  public void mouseEntered(MouseEvent e) {
-    		  sorryBtn.setIcon(new ImageIcon("src/emotions/sorry1.png"));
-    	  }
-    	  public void mouseExited(MouseEvent e) {
-    		  sorryBtn.setIcon(new ImageIcon("src/emotions/sorry2.png"));
-    	  }
-    	  public void mouseClicked(MouseEvent e) {
-  			ChatMsg msg;
-  			if(uID.equals("1"))
-  				msg = new ChatMsg(UserName, "7", "1 sorry");
-  			else 
-  				msg = new ChatMsg(UserName, "7", "2 sorry");
-  			SendObject(msg);
-      	 }
+         public void mouseEntered(MouseEvent e) {
+            sorryBtn.setIcon(new ImageIcon("src/emotions/sorry1.png"));
+         }
+         public void mouseExited(MouseEvent e) {
+            sorryBtn.setIcon(new ImageIcon("src/emotions/sorry2.png"));
+         }
+         public void mouseClicked(MouseEvent e) {
+           ChatMsg msg;
+           if(uID.equals("1"))
+              msg = new ChatMsg(UserName, "7", "1 sorry");
+           else 
+              msg = new ChatMsg(UserName, "7", "2 sorry");
+           SendObject(msg);
+          }
       });
       
       thankBtn.addMouseListener(new MouseAdapter() {
-    	  public void mouseEntered(MouseEvent e) {
-    		  thankBtn.setIcon(new ImageIcon("src/emotions/thank1.png"));
-    	  }
-    	  public void mouseExited(MouseEvent e) {
-    		  thankBtn.setIcon(new ImageIcon("src/emotions/thank2.png"));
-    	  }
-    	  public void mouseClicked(MouseEvent e) {
-  			ChatMsg msg;
-  			if(uID.equals("1"))
-  				msg = new ChatMsg(UserName, "7", "1 thank");
-  			else 
-  				msg = new ChatMsg(UserName, "7", "2 thank");
-  			SendObject(msg);
-      	 }
+         public void mouseEntered(MouseEvent e) {
+            thankBtn.setIcon(new ImageIcon("src/emotions/thank1.png"));
+         }
+         public void mouseExited(MouseEvent e) {
+            thankBtn.setIcon(new ImageIcon("src/emotions/thank2.png"));
+         }
+         public void mouseClicked(MouseEvent e) {
+           ChatMsg msg;
+           if(uID.equals("1"))
+              msg = new ChatMsg(UserName, "7", "1 thank");
+           else 
+              msg = new ChatMsg(UserName, "7", "2 thank");
+           SendObject(msg);
+          }
       });
       
       sadBtn.addMouseListener(new MouseAdapter() {
-    	  public void mouseEntered(MouseEvent e) {
-    		  sadBtn.setIcon(new ImageIcon("src/emotions/sad1.png"));
-    	  }
-    	  public void mouseExited(MouseEvent e) {
-    		  sadBtn.setIcon(new ImageIcon("src/emotions/sad2.png"));
-    	  }
-    	  public void mouseClicked(MouseEvent e) {
-  			ChatMsg msg;
-  			if(uID.equals("1"))
-  				msg = new ChatMsg(UserName, "7", "1 sad");
-  			else 
-  				msg = new ChatMsg(UserName, "7", "2 sad");
-  			SendObject(msg);
-      	 }
+         public void mouseEntered(MouseEvent e) {
+            sadBtn.setIcon(new ImageIcon("src/emotions/sad1.png"));
+         }
+         public void mouseExited(MouseEvent e) {
+            sadBtn.setIcon(new ImageIcon("src/emotions/sad2.png"));
+         }
+         public void mouseClicked(MouseEvent e) {
+           ChatMsg msg;
+           if(uID.equals("1"))
+              msg = new ChatMsg(UserName, "7", "1 sad");
+           else 
+              msg = new ChatMsg(UserName, "7", "2 sad");
+           SendObject(msg);
+          }
       });
       myEmotionIcon = new JLabel("myEmotionIcon");
       myEmotionIcon.setLocation(205, 345);
@@ -335,7 +324,7 @@ public class JavaObjClientGame extends JFrame {
       myJokbo = new JLabel();
       myJokbo.setLocation(706, 504);
       myJokbo.setSize(110, 50);
-      myJokbo.setFont(new Font("한컴 울주 반구대 암각화체", Font.PLAIN, 32));
+      myJokbo.setFont(new Font("휴먼옛체", Font.PLAIN, 28));
       contentPane.add(myJokbo);
       
       myJokboBg = new JLabel();
@@ -375,11 +364,6 @@ public class JavaObjClientGame extends JFrame {
       contentPane.add(otherMessage);
       /*말풍선*/
       
-      /*시작 버튼*/
-//      img = new ImageIcon("src/buttons/Start1.png").getImage();
-//      updateimg = img.getScaledInstance(140, 54, java.awt.Image.SCALE_SMOOTH);
-//      shuffle = new JButton(new ImageIcon(updateimg));
-
       /* 배팅 버튼 */
       half = new JLabel(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
       half.setToolTipText("\"1.5\uB9CC\uC6D0\"");
@@ -408,14 +392,14 @@ public class JavaObjClientGame extends JFrame {
       shuffle.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
-        	  ChatMsg msg = new ChatMsg(UserName, "1", "덱 분배");
+             ChatMsg msg = new ChatMsg(UserName, "1", "덱 분배");
               SendObject(msg);
           }
           public void mouseEntered(MouseEvent e) {
-        	  shuffle.setIcon(new ImageIcon("src/buttons/Start2.png"));
+             shuffle.setIcon(new ImageIcon("src/buttons/Start2.png"));
           }
           public void mouseExited(MouseEvent e) {
-        	  shuffle.setIcon(new ImageIcon("src/buttons/Start1.png"));
+             shuffle.setIcon(new ImageIcon("src/buttons/Start1.png"));
           }
        });
       shuffle.setBorderPainted(false);
@@ -463,10 +447,10 @@ public class JavaObjClientGame extends JFrame {
              System.exit(0);
           }
           public void mouseEntered(MouseEvent e) {
-        	  exitBtn.setIcon(new ImageIcon("src/buttons/Exit2.png"));
+             exitBtn.setIcon(new ImageIcon("src/buttons/Exit2.png"));
           }
           public void mouseExited(MouseEvent e) {
-        	  exitBtn.setIcon(new ImageIcon("src/buttons/Exit1.png"));
+             exitBtn.setIcon(new ImageIcon("src/buttons/Exit1.png"));
           }
        });
       contentPane.add(exitBtn);
@@ -525,7 +509,7 @@ public class JavaObjClientGame extends JFrame {
                   break;
                if (obcm instanceof ChatMsg) {
                   cm = (ChatMsg) obcm;
-                     msg = String.format("[%s] %s", cm.getId(), cm.getData());
+                  msg = String.format("[%s] %s", cm.getId(), cm.getData());
                } else
                   continue;
                switch (cm.getCode()) {
@@ -533,9 +517,9 @@ public class JavaObjClientGame extends JFrame {
                   uID=cm.getData();
                   break;
                case "104":
-            	  shuffle.setVisible(true);
-            	  contentPane.repaint();
-            	  break;
+                 shuffle.setVisible(true);
+                 contentPane.repaint();
+                 break;
                case "1":
                   array = cm.getData().split(" ");
                   shuffle.setVisible(false);
@@ -563,190 +547,196 @@ public class JavaObjClientGame extends JFrame {
                   updatePanmoney(amount+=20000);
                   break;
                case "2":
-            	   if(cm.getData().equals("1 myLeft")) {
-            		   Opening(cm.getData());
-            	   }
-            	   else if(cm.getData().equals("2 myLeft")) {
-            		   Opening(cm.getData());
-            	   }
-            	   else if(cm.getData().equals("1 myRight")) {
-            		   Opening(cm.getData());
-            	   }
-            	   else if(cm.getData().equals("2 myRight")){
-            		   Opening(cm.getData());
-            	   }
-            	   break;
+                  if(cm.getData().equals("1 myLeft")) {
+                     Opening(cm.getData());
+                  }
+                  else if(cm.getData().equals("2 myLeft")) {
+                     Opening(cm.getData());
+                  }
+                  else if(cm.getData().equals("1 myRight")) {
+                     Opening(cm.getData());
+                  }
+                  else if(cm.getData().equals("2 myRight")){
+                     Opening(cm.getData());
+                  }
+                  break;
                case "3":
-            	   if(uID.equals("1")) {
-                	   ChatMsg chatmsg = new ChatMsg(UserName, "4", "배팅 시작!");
+                  if(uID.equals("1")) {
+                      ChatMsg chatmsg = new ChatMsg(UserName, "4", "배팅 시작!");
                        SendObject(chatmsg);
-            	   }
-            	   break;
+                  }
+                  break;
                case "4":
-            	   if(toggle) {
-            		   if(uID.equals("1")) // 여기까지 정상
-            			   batting();
-                	   else
-                		   waitbatting();  
-            		   toggle=!toggle;
-            	   }
-            	   else {
-            		   if(uID.equals("1"))
-                		   waitbatting();
-                	   else
-                		   batting();
-            		   toggle=!toggle;
-            	   }
-            	   break;
+                  if(toggle) {
+                     if(uID.equals("1")) // 여기까지 정상
+                        batting();
+                      else
+                         waitbatting();  
+                     toggle=!toggle;
+                  }
+                  else {
+                     if(uID.equals("1"))
+                         waitbatting();
+                      else
+                         batting();
+                     toggle=!toggle;
+                  }
+                  break;
                case "5":
-            	   if(!(cm.getData().split(" ")[1].equals("call")))
-                	   previous = cm.getData().split(" ")[1];
-            	   if(!previous.equals("none")&&(!(cm.getData().split(" ")[0].equals(uID)))) {
-            		   //1. 첫 베팅이 아닐 때
-            		   //2. 자신의 차례일 때
-            		   //3. 상대가 베팅한 금액만큼 베팅할 수 있을 때
-            		   if(previous.equals("bbing")&&(property>10000)) {
-                		   call.addMouseListener(callpressed);
-                		   call.setIcon(new ImageIcon(new ImageIcon("src/images/call1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-            		   }
-            		   else if(previous.equals("half")&&(property>15000)) {
-                		   call.addMouseListener(callpressed);
-                		   call.setIcon(new ImageIcon(new ImageIcon("src/images/call1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-            		   }
-            		   else if(previous.equals("ddadang")&&(property>20000)) {
-                		   call.addMouseListener(callpressed);
-                		   call.setIcon(new ImageIcon(new ImageIcon("src/images/call1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-            		   }
-            		   //만 콜 버튼이 활성화 되어야한다.
-            	   }
-            	   if(cm.getData().equals("1 bbing"))
-            		   updatePanmoney(amount+=10000);
-            	   else if(cm.getData().equals("2 bbing"))
-            		   updatePanmoney(amount+=10000);
-            	   else if(cm.getData().equals("1 half")) {
-            		   updatePanmoney(amount+=15000);
-            		   bbing.removeMouseListener(bbingpressed);
-            		   bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-            	   }
-            	   else if(cm.getData().equals("2 half")) {
-        			   updatePanmoney(amount+=15000);
-        			   bbing.removeMouseListener(bbingpressed);
-        			   bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-            	   }
-            	   else if(cm.getData().equals("1 ddadang")) {
-        			   updatePanmoney(amount+=20000);
-        			   bbing.removeMouseListener(bbingpressed);
-        			   bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-        			   half.removeMouseListener(halfpressed);
-        			   half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-            	   }
-            	   else if(cm.getData().equals("2 ddadang")) {
-        			   updatePanmoney(amount+=20000);
-        			   bbing.removeMouseListener(bbingpressed);
-        			   bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-        			   half.removeMouseListener(halfpressed);
-        			   half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-            	   }
-            	   else if(cm.getData().equals("1 die")) {    		   
-            		   showResult("2");
-            		   if(uID.equals("2"))
-            			   updateMymoney(property+=amount);
-               		   updatePanmoney(0);
-            		   reGame();
-            	   }
-            	   else if(cm.getData().equals("2 die")) {
-            		   showResult("1");
-            		   if(uID.equals("1"))
-            			   updateMymoney(property+=amount);
-            		   updatePanmoney(0);
-            		   reGame();
-            	   }
-            	   else if(cm.getData().equals("1 call")) {
-            		   if(uID.equals("1")) {
-                		   switch (previous) {
-            	   		   case "bbing":
-            	   			   updateMymoney(property-=10000);
-            	   			   break;
-            	   		   case "half":
-            	   			   updateMymoney(property-=15000);
-            	   			   break;
-            	   		   case "ddadang":
-            	   			   updateMymoney(property-=20000);
-            	   			   break;
-            	   		   }   
-            		   }
-            		   switch (previous) {
-        	   		   case "bbing":
-        	   			   updatePanmoney(amount+=10000);
-        	   			   break;
-        	   		   case "half":
-        	   			   updatePanmoney(amount+=15000);
-        	   			   break;
-        	   		   case "ddadang":
-        	   			   updatePanmoney(amount+=20000);
-        	   			   break;
-        	   		   } 	
-            		   battle();
-            	   }
-            	   else if(cm.getData().equals("2 call")) {
-            		   if(uID.equals("2")) {
-                		   switch (previous) {
-            	   		   case "bbing":
-            	   			   updateMymoney(property-=10000);
-            	   			   break;
-            	   		   case "half":
-            	   			   updateMymoney(property-=15000);
-            	   			   break;
-            	   		   case "ddadang":
-            	   			   updateMymoney(property-=20000);
-            	   			   break;
-            	   		   }   
-            		   }
-         	   		   switch (previous) {
-        	   		   case "bbing":
-        	   			   updatePanmoney(amount+=10000);
-        	   			   break;
-        	   		   case "half":
-        	   			   updatePanmoney(amount+=15000);
-        	   			   break;
-        	   		   case "ddadang":
-        	   			   updatePanmoney(amount+=20000);
-        	   			   break;
-        	   		   } 	
-            		   battle();
-            	   }
-            	   break;
+                  if(!(cm.getData().split(" ")[1].equals("call")))
+                      previous = cm.getData().split(" ")[1];
+                  if(!previous.equals("none")&&(!(cm.getData().split(" ")[0].equals(uID)))) {
+                     //1. 첫 베팅이 아닐 때
+                     //2. 자신의 차례일 때
+                     //3. 상대가 베팅한 금액만큼 베팅할 수 있을 때
+                     if(previous.equals("bbing")&&(property>10000)) {
+                         call.addMouseListener(callpressed);
+                         call.setIcon(new ImageIcon(new ImageIcon("src/images/call1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                     }
+                     else if(previous.equals("half")&&(property>15000)) {
+                         call.addMouseListener(callpressed);
+                         call.setIcon(new ImageIcon(new ImageIcon("src/images/call1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                     }
+                     else if(previous.equals("ddadang")&&(property>20000)) {
+                         call.addMouseListener(callpressed);
+                         call.setIcon(new ImageIcon(new ImageIcon("src/images/call1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                     }
+                     //만 콜 버튼이 활성화 되어야한다.
+                  }
+                  if(cm.getData().equals("1 bbing"))
+                     updatePanmoney(amount+=10000);
+                  else if(cm.getData().equals("2 bbing"))
+                     updatePanmoney(amount+=10000);
+                  else if(cm.getData().equals("1 half")) {
+                     updatePanmoney(amount+=15000);
+                     bbing.removeMouseListener(bbingpressed);
+                     bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                  }
+                  else if(cm.getData().equals("2 half")) {
+                    updatePanmoney(amount+=15000);
+                    bbing.removeMouseListener(bbingpressed);
+                    bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                  }
+                  else if(cm.getData().equals("1 ddadang")) {
+                    updatePanmoney(amount+=20000);
+                    bbing.removeMouseListener(bbingpressed);
+                    bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                    half.removeMouseListener(halfpressed);
+                    half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                  }
+                  else if(cm.getData().equals("2 ddadang")) {
+                    updatePanmoney(amount+=20000);
+                    bbing.removeMouseListener(bbingpressed);
+                    bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                    half.removeMouseListener(halfpressed);
+                    half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+                  }
+                  else if(cm.getData().equals("1 die")) {             
+                     showResult("2");
+                     if(uID.equals("2"))
+                        updateMymoney(property+=amount);
+                        updatePanmoney(0);
+                     reGame();
+                  }
+                  else if(cm.getData().equals("2 die")) {
+                     showResult("1");
+                     if(uID.equals("1"))
+                        updateMymoney(property+=amount);
+                     updatePanmoney(0);
+                     reGame();
+                  }
+                  else if(cm.getData().equals("1 call")) {
+                     if(uID.equals("1")) {
+                         switch (previous) {
+                           case "bbing":
+                              updateMymoney(property-=10000);
+                              break;
+                           case "half":
+                              updateMymoney(property-=15000);
+                              break;
+                           case "ddadang":
+                              updateMymoney(property-=20000);
+                              break;
+                           }   
+                     }
+                     switch (previous) {
+                       case "bbing":
+                          updatePanmoney(amount+=10000);
+                          break;
+                       case "half":
+                          updatePanmoney(amount+=15000);
+                          break;
+                       case "ddadang":
+                          updatePanmoney(amount+=20000);
+                          break;
+                       }    
+                     battle();
+                  }
+                  else if(cm.getData().equals("2 call")) {
+                     if(uID.equals("2")) {
+                         switch (previous) {
+                           case "bbing":
+                              updateMymoney(property-=10000);
+                              break;
+                           case "half":
+                              updateMymoney(property-=15000);
+                              break;
+                           case "ddadang":
+                              updateMymoney(property-=20000);
+                              break;
+                           }   
+                     }
+                        switch (previous) {
+                       case "bbing":
+                          updatePanmoney(amount+=10000);
+                          break;
+                       case "half":
+                          updatePanmoney(amount+=15000);
+                          break;
+                       case "ddadang":
+                          updatePanmoney(amount+=20000);
+                          break;
+                       }    
+                     battle();
+                  }
+                  break;
                case "6": //배팅 표시 프로토콜
-            	   if (cm.getData().split(" ")[0].equals("1")) { //1번 client에서 배팅 누를 경우
-            		   if (uID.equals("1")) //1번 client에서 출력
-            			   printMyBetting(cm.getData().split(" ")[1]);
-            		   else //2번 client에서 출력
-            			   printOtherBetting(cm.getData().split(" ")[1]);
-            	   }
-            	   else {//2번 client에서 배팅 누를 경우
-            		   if (uID.equals("1")) //1번 client에서 출력
-            			   printOtherBetting(cm.getData().split(" ")[1]);
-            		   else //2번 client에서 출력
-            			   printMyBetting(cm.getData().split(" ")[1]);
-            	   }
-            	   break;
+                  waitbatting();
+                  if (cm.getData().split(" ")[0].equals("1")) { //1번 client에서 배팅 누를 경우
+                     if (uID.equals("1")) //1번 client에서 출력
+                        printMyBetting(cm.getData().split(" ")[1]);
+                     else {//2번 client에서 출력
+                        printOtherBetting(cm.getData().split(" ")[1]);
+                        batting();
+                     }
+                     
+                  }
+                  else {//2번 client에서 배팅 누를 경우
+                     if (uID.equals("1")) {//1번 client에서 출력
+                        printOtherBetting(cm.getData().split(" ")[1]);
+                        batting();
+                     }
+                     else //2번 client에서 출력
+                        printMyBetting(cm.getData().split(" ")[1]);
+                  }
+                  break;
                case "7": //감정표현 프로토콜
-            	   if (cm.getData().split(" ")[0].equals("1")) { //1번 client에서 배팅 누를 경우
-            		   if (uID.equals("1")) //1번 client에서 출력
-            			   printMyEmotion(cm.getData().split(" ")[1]);
-            		   else //2번 client에서 출력
-            			   printOtherEmotion(cm.getData().split(" ")[1]);
-            	   }
-            	   else {//2번 client에서 배팅 누를 경우
-            		   if (uID.equals("1")) //1번 client에서 출력
-            			   printOtherEmotion(cm.getData().split(" ")[1]);
-            		   else //2번 client에서 출력
-            			   printMyEmotion(cm.getData().split(" ")[1]);
-            	   }
-            	   break;
+                  if (cm.getData().split(" ")[0].equals("1")) { //1번 client에서 배팅 누를 경우
+                     if (uID.equals("1")) //1번 client에서 출력
+                        printMyEmotion(cm.getData().split(" ")[1]);
+                     else //2번 client에서 출력
+                        printOtherEmotion(cm.getData().split(" ")[1]);
+                  }
+                  else {//2번 client에서 배팅 누를 경우
+                     if (uID.equals("1")) //1번 client에서 출력
+                        printOtherEmotion(cm.getData().split(" ")[1]);
+                     else //2번 client에서 출력
+                        printMyEmotion(cm.getData().split(" ")[1]);
+                  }
+                  break;
                case "0": //게임 전체 승패 프로토콜
-            	   gameEnd(cm.getData().split(" ")[0]);
-            	   break;
+                  gameEnd(cm.getData().split(" ")[0]);
+                  break;
                }
             } catch (IOException e) {
                AppendText("ois.readObject() error");
@@ -825,7 +815,7 @@ public class JavaObjClientGame extends JFrame {
                    Thread.sleep(10);
                 }
              case 2 :
-            	otherLeft.setCardSrc(array[i]);
+               otherLeft.setCardSrc(array[i]);
                 while(otherLeft.getX() > 100 || otherLeft.getY() > 30 ) {
                    if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
                    if (otherLeft.getY() > 30) otherLeft.setY(otherLeft.getY() - 9);
@@ -834,7 +824,7 @@ public class JavaObjClientGame extends JFrame {
                    Thread.sleep(10);
                 }
              case 3 :
-            	otherRight.setCardSrc(array[i]);
+               otherRight.setCardSrc(array[i]);
                 while(otherRight.getX() < 300 || otherRight.getY() > 30 ) {
                    if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
                    if (otherRight.getY() > 30) otherRight.setY(otherRight.getY() - 9);
@@ -851,7 +841,7 @@ public class JavaObjClientGame extends JFrame {
          for(int i=0;i<4;i++) {
             switch(i) {
             case 0 :
-            	otherLeft.setCardSrc(array[i]);
+               otherLeft.setCardSrc(array[i]);
                 while(otherLeft.getX() > 100 || otherLeft.getY() > 30 ) {
                    if (otherLeft.getX() > 100) otherLeft.setX(otherLeft.getX() - 5);
                    if (otherLeft.getY() > 30) otherLeft.setY(otherLeft.getY() - 9);
@@ -860,7 +850,7 @@ public class JavaObjClientGame extends JFrame {
                    Thread.sleep(10);
                 }
              case 1 :
-            	otherRight.setCardSrc(array[i]);
+               otherRight.setCardSrc(array[i]);
                 while(otherRight.getX() < 300 || otherRight.getY() > 30 ) {
                    if (otherRight.getX() < 300) otherRight.setX(otherRight.getX() + 5);
                    if (otherRight.getY() > 30) otherRight.setY(otherRight.getY() - 9);
@@ -896,266 +886,266 @@ public class JavaObjClientGame extends JFrame {
    }   
    
    public void Opening(String str) throws InterruptedException {  
-	   switch(str) {
-	   case "1 myLeft":
-		   if(uID.equals("1")) {
-			   while(myLeft.getY() > 300) {
+      switch(str) {
+      case "1 myLeft":
+         if(uID.equals("1")) {
+            while(myLeft.getY() > 300) {
                    myLeft.setY(myLeft.getY() - 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                }
-			   Thread.sleep(1000);
-			   while(myLeft.getY() < 390) {
+            Thread.sleep(1000);
+            while(myLeft.getY() < 390) {
                    myLeft.setY(myLeft.getY() + 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-			   }
-			   myLeft.getCard().removeMouseListener(leftcardpressed);
-			   myRight.getCard().removeMouseListener(rightcardpressed);
-		   }
-		   else {
-			   while(otherLeft.getY() < 120) {
-				   otherLeft.setY(otherLeft.getY() + 9);
-				   otherLeft.setCardBounds();
+            }
+            myLeft.getCard().removeMouseListener(leftcardpressed);
+            myRight.getCard().removeMouseListener(rightcardpressed);
+         }
+         else {
+            while(otherLeft.getY() < 120) {
+               otherLeft.setY(otherLeft.getY() + 9);
+               otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
-			   Thread.sleep(1000);
-			   while(otherLeft.getY() > 30) {
-				   otherLeft.setY(otherLeft.getY() - 9);
-				   otherLeft.setCardBounds();
+            Thread.sleep(1000);
+            while(otherLeft.getY() > 30) {
+               otherLeft.setY(otherLeft.getY() - 9);
+               otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-			   }
-			   otherLeft.setCardSrc(array[0]);
-			   otherLeft.setCardIcon(otherLeft.getCardSrc());
-			   otherLeft.flip();
-		   }
-		   break;
-	   case "2 myLeft":
-		   if(uID.equals("2")) {
-			   while(myLeft.getY() > 300) {
+            }
+            otherLeft.setCardSrc(array[0]);
+            otherLeft.setCardIcon(otherLeft.getCardSrc());
+            otherLeft.flip();
+         }
+         break;
+      case "2 myLeft":
+         if(uID.equals("2")) {
+            while(myLeft.getY() > 300) {
                    myLeft.setY(myLeft.getY() - 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
-			   Thread.sleep(1000);
-			   while(myLeft.getY() < 390) {
+            Thread.sleep(1000);
+            while(myLeft.getY() < 390) {
                    myLeft.setY(myLeft.getY() + 9);
                    myLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
-			   myLeft.getCard().removeMouseListener(leftcardpressed);
-			   myRight.getCard().removeMouseListener(rightcardpressed);
-		   }
-		   else {
-			   while(otherLeft.getY() < 120) {
-				   otherLeft.setY(otherLeft.getY() + 9);
-				   otherLeft.setCardBounds();
+            myLeft.getCard().removeMouseListener(leftcardpressed);
+            myRight.getCard().removeMouseListener(rightcardpressed);
+         }
+         else {
+            while(otherLeft.getY() < 120) {
+               otherLeft.setY(otherLeft.getY() + 9);
+               otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
-			   Thread.sleep(1000);
-			   while(otherLeft.getY() > 30) {
-				   otherLeft.setY(otherLeft.getY() - 9);
-				   otherLeft.setCardBounds();
+            Thread.sleep(1000);
+            while(otherLeft.getY() > 30) {
+               otherLeft.setY(otherLeft.getY() - 9);
+               otherLeft.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-			   }
-			   otherLeft.setCardSrc(array[2]);
-			   otherLeft.setCardIcon(otherLeft.getCardSrc());
-			   otherLeft.flip();
-		   }
-		   break;
-	   case "1 myRight":
-		   if(uID.equals("1")) {
-			   while(myRight.getY() > 300) {
+            }
+            otherLeft.setCardSrc(array[2]);
+            otherLeft.setCardIcon(otherLeft.getCardSrc());
+            otherLeft.flip();
+         }
+         break;
+      case "1 myRight":
+         if(uID.equals("1")) {
+            while(myRight.getY() > 300) {
                    myRight.setY(myRight.getY() - 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
-			   Thread.sleep(1000);
-			   while(myRight.getY() < 390) {
+            Thread.sleep(1000);
+            while(myRight.getY() < 390) {
                    myRight.setY(myRight.getY() + 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                }
-			   myLeft.getCard().removeMouseListener(leftcardpressed);
-			   myRight.getCard().removeMouseListener(rightcardpressed);
-		   }
-		   else {
-			   while(otherRight.getY() < 120) {
-				   otherRight.setY(otherRight.getY() + 9);
-				   otherRight.setCardBounds();
+            myLeft.getCard().removeMouseListener(leftcardpressed);
+            myRight.getCard().removeMouseListener(rightcardpressed);
+         }
+         else {
+            while(otherRight.getY() < 120) {
+               otherRight.setY(otherRight.getY() + 9);
+               otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
-			   Thread.sleep(1000);
-			   while(otherRight.getY() > 30) {
-				   otherRight.setY(otherRight.getY() - 9);
-				   otherRight.setCardBounds();
+            Thread.sleep(1000);
+            while(otherRight.getY() > 30) {
+               otherRight.setY(otherRight.getY() - 9);
+               otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-			   }
-			   otherRight.setCardSrc(array[1]);
-			   otherRight.setCardIcon(otherRight.getCardSrc());
-			   otherRight.flip();
-		   }
-		   break;
-	   case "2 myRight":
-		   if(uID.equals("2")) {
-			   while(myRight.getY() > 300) {
+            }
+            otherRight.setCardSrc(array[1]);
+            otherRight.setCardIcon(otherRight.getCardSrc());
+            otherRight.flip();
+         }
+         break;
+      case "2 myRight":
+         if(uID.equals("2")) {
+            while(myRight.getY() > 300) {
                    myRight.setY(myRight.getY() - 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
-			   Thread.sleep(1000);
-			   while(myRight.getY() < 390) {
+            Thread.sleep(1000);
+            while(myRight.getY() < 390) {
                    myRight.setY(myRight.getY() + 9);
                    myRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                }
-			   myLeft.getCard().removeMouseListener(leftcardpressed);
-			   myRight.getCard().removeMouseListener(rightcardpressed);
-		   }
-		   else {
-			   while(otherRight.getY() < 120) {
-				   otherRight.setY(otherRight.getY() + 9);
-				   otherRight.setCardBounds();
+            myLeft.getCard().removeMouseListener(leftcardpressed);
+            myRight.getCard().removeMouseListener(rightcardpressed);
+         }
+         else {
+            while(otherRight.getY() < 120) {
+               otherRight.setY(otherRight.getY() + 9);
+               otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
                 }
-			   Thread.sleep(1000);
-			   while(otherRight.getY() > 30) {
-				   otherRight.setY(otherRight.getY() - 9);
-				   otherRight.setCardBounds();
+            Thread.sleep(1000);
+            while(otherRight.getY() > 30) {
+               otherRight.setY(otherRight.getY() - 9);
+               otherRight.setCardBounds();
                    repaint();
                    Thread.sleep(10);
-			   }
-			   otherRight.setCardSrc(array[3]);
-			   otherRight.setCardIcon(otherRight.getCardSrc());
-			   otherRight.flip();
-		   }
-		   break;
-	   }
-	   count++;
-	   if(count == 2) {
-		   if(uID.equals("1")) {
-			   ChatMsg msg = new ChatMsg(UserName, "3", "배팅버튼 활성화");
-	           SendObject(msg);  
-		   }
-	   }
+            }
+            otherRight.setCardSrc(array[3]);
+            otherRight.setCardIcon(otherRight.getCardSrc());
+            otherRight.flip();
+         }
+         break;
+      }
+      count++;
+      if(count == 2) {
+         if(uID.equals("1")) {
+            ChatMsg msg = new ChatMsg(UserName, "3", "배팅버튼 활성화");
+              SendObject(msg);  
+         }
+      }
    }
    
    public void batting() {
-	   if(property>10000) {
-		   bbing.addMouseListener(bbingpressed);
-		   bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   }
-		   
-	   if(property>15000) {
-		   half.addMouseListener(halfpressed);
-		   half.setIcon(new ImageIcon(new ImageIcon("src/images/half1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   }
-	   if(property>20000) {
-		   ddadang.addMouseListener(ddadangpressed);
-		   ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   }
-	   die.addMouseListener(diepressed);
-	   die.setIcon(new ImageIcon(new ImageIcon("src/images/die1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      if(property>10000) {
+         bbing.addMouseListener(bbingpressed);
+         bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      }
+         
+      if(property>15000) {
+         half.addMouseListener(halfpressed);
+         half.setIcon(new ImageIcon(new ImageIcon("src/images/half1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      }
+      if(property>20000) {
+         ddadang.addMouseListener(ddadangpressed);
+         ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      }
+      die.addMouseListener(diepressed);
+      die.setIcon(new ImageIcon(new ImageIcon("src/images/die1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
    }
    
    public void waitbatting() {
-	   bbing.removeMouseListener(bbingpressed);
-	   half.removeMouseListener(halfpressed);
-	   ddadang.removeMouseListener(ddadangpressed);
-	   die.removeMouseListener(diepressed);
-	   call.removeMouseListener(callpressed);
-	   
-	   bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   die.setIcon(new ImageIcon(new ImageIcon("src/images/die2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   call.setIcon(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      bbing.removeMouseListener(bbingpressed);
+      half.removeMouseListener(halfpressed);
+      ddadang.removeMouseListener(ddadangpressed);
+      die.removeMouseListener(diepressed);
+      call.removeMouseListener(callpressed);
+      
+      bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      die.setIcon(new ImageIcon(new ImageIcon("src/images/die2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      call.setIcon(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
    }
    
    public void updatePanmoney(int updatedAmount) {
-	   panmoney.setText(Integer.toString(updatedAmount));
+      panmoney.setText(Integer.toString(updatedAmount));
    }
    
-   public void updateMymoney(int updatedAmount) {	   
-	   if(updatedAmount<10000) {
-		   bbing.removeMouseListener(bbingpressed);
-		   bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-		   half.removeMouseListener(halfpressed);
-		   half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-		   ddadang.removeMouseListener(ddadangpressed);
-		   ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-		   mymoney.setText(Integer.toString(updatedAmount));
-	   }
-	   else if(updatedAmount<15000) {
-		   half.removeMouseListener(halfpressed);
-		   half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-		   ddadang.removeMouseListener(ddadangpressed);
-		   ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-		   mymoney.setText(Integer.toString(updatedAmount));
-	   }
-	   else if(updatedAmount<20000) {
-		   ddadang.removeMouseListener(ddadangpressed);
-		   ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadnag2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-		   mymoney.setText(Integer.toString(updatedAmount));
-	   }
-	   else 
-		   mymoney.setText(Integer.toString(updatedAmount));
+   public void updateMymoney(int updatedAmount) {      
+      if(updatedAmount<10000) {
+         bbing.removeMouseListener(bbingpressed);
+         bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+         half.removeMouseListener(halfpressed);
+         half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+         ddadang.removeMouseListener(ddadangpressed);
+         ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+         mymoney.setText(Integer.toString(updatedAmount));
+      }
+      else if(updatedAmount<15000) {
+         half.removeMouseListener(halfpressed);
+         half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+         ddadang.removeMouseListener(ddadangpressed);
+         ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+         mymoney.setText(Integer.toString(updatedAmount));
+      }
+      else if(updatedAmount<20000) {
+         ddadang.removeMouseListener(ddadangpressed);
+         ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadnag2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+         mymoney.setText(Integer.toString(updatedAmount));
+      }
+      else 
+         mymoney.setText(Integer.toString(updatedAmount));
    }
    
    public void reGame() {
-	   previous="none";
-	   amount=0;
-	   count=0;
-	   
-	   myLeft.setX(200);
-	   myLeft.setY(210);
-	   myLeft.setCardBounds();
-	   myLeft.getCard().setVisible(false);
-	   myRight.setX(200);
-	   myRight.setY(210);
-	   myRight.setCardBounds();
-	   myRight.getCard().setVisible(false);
-	   otherLeft.setX(200);
-	   otherLeft.setY(210);
-	   otherLeft.setCardBounds();
-	   otherLeft.getCard().setVisible(false);
-	   otherRight.setX(200);
-	   otherRight.setY(210);
-	   otherRight.setCardBounds();
-	   otherRight.getCard().setVisible(false);
-	   
-	   bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   die.setIcon(new ImageIcon(new ImageIcon("src/images/die2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   call.setIcon(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-	   
-	   bbing.removeMouseListener(bbingpressed);
-	   half.removeMouseListener(halfpressed);
-	   ddadang.removeMouseListener(ddadangpressed);
-	   die.removeMouseListener(diepressed);
-	   call.removeMouseListener(callpressed);
-	   
-	   shuffle.setVisible(true);
+      previous="none";
+      amount=0;
+      count=0;
+      
+      myLeft.setX(200);
+      myLeft.setY(210);
+      myLeft.setCardBounds();
+      myLeft.getCard().setVisible(false);
+      myRight.setX(200);
+      myRight.setY(210);
+      myRight.setCardBounds();
+      myRight.getCard().setVisible(false);
+      otherLeft.setX(200);
+      otherLeft.setY(210);
+      otherLeft.setCardBounds();
+      otherLeft.getCard().setVisible(false);
+      otherRight.setX(200);
+      otherRight.setY(210);
+      otherRight.setCardBounds();
+      otherRight.getCard().setVisible(false);
+      
+      bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      half.setIcon(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      ddadang.setIcon(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      die.setIcon(new ImageIcon(new ImageIcon("src/images/die2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      call.setIcon(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      
+      bbing.removeMouseListener(bbingpressed);
+      half.removeMouseListener(halfpressed);
+      ddadang.removeMouseListener(ddadangpressed);
+      die.removeMouseListener(diepressed);
+      call.removeMouseListener(callpressed);
+      
+      shuffle.setVisible(true);
    }
    
    public void battle() throws InterruptedException {
-	   if(uID.equals("1"))
+      if(uID.equals("1"))
            result = new JokboMatch(new Jokbo(myLeft, myRight).calculateJokbo()+" "+new Jokbo(otherLeft, otherRight).calculateJokbo());
        else
            result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
@@ -1163,7 +1153,7 @@ public class JavaObjClientGame extends JFrame {
        if(result.selectWinner().equals("A")) {
            if(uID.equals("1"))
               updateMymoney(property+=amount);
-       	   showResult("1");
+             showResult("1");
        }
        else if(result.selectWinner().equals("B")) {
            if(uID.equals("2"))
@@ -1171,243 +1161,244 @@ public class JavaObjClientGame extends JFrame {
            showResult("2");
        }
        else if(result.selectWinner().equals("무승부")) {
-    	   if (uID.equals("1"))
-    		   updateMymoney(property+=amount/2);
-    	   else
-    		   updateMymoney(property+=amount/2);
-    	   showResult("무승부");
+          if (uID.equals("1"))
+             updateMymoney(property+=amount/2);
+          else
+             updateMymoney(property+=amount/2);
+          showResult("무승부");
        }
        reGame();
    }
    
    public void showResult(String winner) throws InterruptedException {
-	   if(winner.equals("1")) {
-		   if(uID.equals("1")) {
-			   panResult.setIcon(panWin);
-			   panResult.setVisible(true);
-			   Thread.sleep(2500);
-			   panResult.setVisible(false);
-		   }
-		   else {
-			   panResult.setIcon(panLose);
-			   panResult.setVisible(true);
-			   Thread.sleep(2500);
-			   panResult.setVisible(false);
-		   }   
-	   }
-	   else if (winner.equals("2")){
-		   if(uID.equals("1")) {
-			   panResult.setIcon(panLose);
-			   panResult.setVisible(true);
-			   Thread.sleep(2500);
-			   panResult.setVisible(false);
-		   }
-		   else {
-			   panResult.setIcon(panWin);
-			   panResult.setVisible(true);
-			   Thread.sleep(2500);
-			   panResult.setVisible(false);
-		   }   
-	   }
-	   else if (winner.equals("무승부")) {
-		   panResult.setIcon(panDraw);
-		   panResult.setVisible(true);
-		   Thread.sleep(2500);
-		   panResult.setVisible(false);
-	   }
-	   if(property <= 10000) {
-		   ChatMsg end = new ChatMsg(UserName, "0", String.format("%s end", uID));
-		   SendObject(end);
-	   }
+      waitbatting();
+      if(winner.equals("1")) {
+         if(uID.equals("1")) {
+            panResult.setIcon(panWin);
+            panResult.setVisible(true);
+            Thread.sleep(2500);
+            panResult.setVisible(false);
+         }
+         else {
+            panResult.setIcon(panLose);
+            panResult.setVisible(true);
+            Thread.sleep(2500);
+            panResult.setVisible(false);
+         }   
+      }
+      else if (winner.equals("2")){
+         if(uID.equals("1")) {
+            panResult.setIcon(panLose);
+            panResult.setVisible(true);
+            Thread.sleep(2500);
+            panResult.setVisible(false);
+         }
+         else {
+            panResult.setIcon(panWin);
+            panResult.setVisible(true);
+            Thread.sleep(2500);
+            panResult.setVisible(false);
+         }   
+      }
+      else if (winner.equals("무승부")) {
+         panResult.setIcon(panDraw);
+         panResult.setVisible(true);
+         Thread.sleep(2500);
+         panResult.setVisible(false);
+      }
+      if(property < 20000) {
+         ChatMsg end = new ChatMsg(UserName, "0", String.format("%s end", uID));
+         SendObject(end);
+      }
    }
    private void printMyEmotion(String emotion) throws InterruptedException {
-	   switch(emotion) {
-	   case "angry":
-		   myEmotionIcon.setIcon(new ImageIcon("src/emotions/angry_icon.png"));
-		   myEmotionIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myEmotionIcon.setVisible(false);
-		   break;
-	   case "sad":
-		   myEmotionIcon.setIcon(new ImageIcon("src/emotions/sad_icon.png"));
-		   myEmotionIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myEmotionIcon.setVisible(false);
-		   break;
-	   case "thank":
-		   myEmotionIcon.setIcon(new ImageIcon("src/emotions/thank_icon.png"));
-		   myEmotionIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myEmotionIcon.setVisible(false);
-		   break;
-	   case "sorry":
-		   myEmotionIcon.setIcon(new ImageIcon("src/emotions/sorry_icon.png"));
-		   myEmotionIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myEmotionIcon.setVisible(false);
-		   break;
-	   }
+      switch(emotion) {
+      case "angry":
+         myEmotionIcon.setIcon(new ImageIcon("src/emotions/angry_icon.png"));
+         myEmotionIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myEmotionIcon.setVisible(false);
+         break;
+      case "sad":
+         myEmotionIcon.setIcon(new ImageIcon("src/emotions/sad_icon.png"));
+         myEmotionIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myEmotionIcon.setVisible(false);
+         break;
+      case "thank":
+         myEmotionIcon.setIcon(new ImageIcon("src/emotions/thank_icon.png"));
+         myEmotionIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myEmotionIcon.setVisible(false);
+         break;
+      case "sorry":
+         myEmotionIcon.setIcon(new ImageIcon("src/emotions/sorry_icon.png"));
+         myEmotionIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myEmotionIcon.setVisible(false);
+         break;
+      }
    }
    private void printOtherEmotion(String emotion) throws InterruptedException {
-	   switch(emotion) {
-	   case "angry":
-		   otherEmotionIcon.setIcon(new ImageIcon("src/emotions/angry_icon.png"));
-		   otherEmotionIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherEmotionIcon.setVisible(false);
-		   break;
-	   case "sad":
-		   otherEmotionIcon.setIcon(new ImageIcon("src/emotions/sad_icon.png"));
-		   otherEmotionIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherEmotionIcon.setVisible(false);
-		   break;
-	   case "thank":
-		   otherEmotionIcon.setIcon(new ImageIcon("src/emotions/thank_icon.png"));
-		   otherEmotionIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherEmotionIcon.setVisible(false);
-		   break;
-	   case "sorry":
-		   otherEmotionIcon.setIcon(new ImageIcon("src/emotions/sorry_icon.png"));
-		   otherEmotionIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherEmotionIcon.setVisible(false);
-		   break;
-	   }
+      switch(emotion) {
+      case "angry":
+         otherEmotionIcon.setIcon(new ImageIcon("src/emotions/angry_icon.png"));
+         otherEmotionIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherEmotionIcon.setVisible(false);
+         break;
+      case "sad":
+         otherEmotionIcon.setIcon(new ImageIcon("src/emotions/sad_icon.png"));
+         otherEmotionIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherEmotionIcon.setVisible(false);
+         break;
+      case "thank":
+         otherEmotionIcon.setIcon(new ImageIcon("src/emotions/thank_icon.png"));
+         otherEmotionIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherEmotionIcon.setVisible(false);
+         break;
+      case "sorry":
+         otherEmotionIcon.setIcon(new ImageIcon("src/emotions/sorry_icon.png"));
+         otherEmotionIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherEmotionIcon.setVisible(false);
+         break;
+      }
    }
    private void printMyBetting(String betting) throws InterruptedException {
-	   switch(betting) {
-	   case "call":
-		   myBettingIcon.setIcon(new ImageIcon("src/emotions/call_send.png"));
-		   myBettingIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myBettingIcon.setVisible(false);
-		   break;
-	   case "bbing":
-		   myBettingIcon.setIcon(new ImageIcon("src/emotions/bbing_send.png"));
-		   myBettingIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myBettingIcon.setVisible(false);
-		   break;
-	   case "half":
-		   myBettingIcon.setIcon(new ImageIcon("src/emotions/half_send.png"));
-		   myBettingIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myBettingIcon.setVisible(false);
-		   break;
-	   case "ddadang":
-		   myBettingIcon.setIcon(new ImageIcon("src/emotions/ddadang_send.png"));
-		   myBettingIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myBettingIcon.setVisible(false);
-		   break;
-	   case "die":
-		   myBettingIcon.setIcon(new ImageIcon("src/emotions/die_send.png"));
-		   myBettingIcon.setVisible(true);
-		   myMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   myMessage.setVisible(false);
-		   myBettingIcon.setVisible(false);
-		   break;
-	   }
+      switch(betting) {
+      case "call":
+         myBettingIcon.setIcon(new ImageIcon("src/emotions/call_send.png"));
+         myBettingIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myBettingIcon.setVisible(false);
+         break;
+      case "bbing":
+         myBettingIcon.setIcon(new ImageIcon("src/emotions/bbing_send.png"));
+         myBettingIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myBettingIcon.setVisible(false);
+         break;
+      case "half":
+         myBettingIcon.setIcon(new ImageIcon("src/emotions/half_send.png"));
+         myBettingIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myBettingIcon.setVisible(false);
+         break;
+      case "ddadang":
+         myBettingIcon.setIcon(new ImageIcon("src/emotions/ddadang_send.png"));
+         myBettingIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myBettingIcon.setVisible(false);
+         break;
+      case "die":
+         myBettingIcon.setIcon(new ImageIcon("src/emotions/die_send.png"));
+         myBettingIcon.setVisible(true);
+         myMessage.setVisible(true);
+         Thread.sleep(1000);
+         myMessage.setVisible(false);
+         myBettingIcon.setVisible(false);
+         break;
+      }
    }
    private void printOtherBetting(String betting) throws InterruptedException {
-	   switch(betting) {
-	   case "call":
-		   otherBettingIcon.setIcon(new ImageIcon("src/emotions/call_send.png"));
-		   otherBettingIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherBettingIcon.setVisible(false);
-		   break;
-	   case "bbing":
-		   otherBettingIcon.setIcon(new ImageIcon("src/emotions/bbing_send.png"));
-		   otherBettingIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherBettingIcon.setVisible(false);
-		   break;
-	   case "half":
-		   otherBettingIcon.setIcon(new ImageIcon("src/emotions/half_send.png"));
-		   otherBettingIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherBettingIcon.setVisible(false);
-		   break;
-	   case "ddadang":
-		   otherBettingIcon.setIcon(new ImageIcon("src/emotions/ddadang_send.png"));
-		   otherBettingIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherBettingIcon.setVisible(false);
-		   break;
-	   case "die":
-		   otherBettingIcon.setIcon(new ImageIcon("src/emotions/die_send.png"));
-		   otherBettingIcon.setVisible(true);
-		   otherMessage.setVisible(true);
-		   Thread.sleep(1000);
-		   otherMessage.setVisible(false);
-		   otherBettingIcon.setVisible(false);
-		   break;
-	   }
+      switch(betting) {
+      case "call":
+         otherBettingIcon.setIcon(new ImageIcon("src/emotions/call_send.png"));
+         otherBettingIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherBettingIcon.setVisible(false);
+         break;
+      case "bbing":
+         otherBettingIcon.setIcon(new ImageIcon("src/emotions/bbing_send.png"));
+         otherBettingIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherBettingIcon.setVisible(false);
+         break;
+      case "half":
+         otherBettingIcon.setIcon(new ImageIcon("src/emotions/half_send.png"));
+         otherBettingIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherBettingIcon.setVisible(false);
+         break;
+      case "ddadang":
+         otherBettingIcon.setIcon(new ImageIcon("src/emotions/ddadang_send.png"));
+         otherBettingIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherBettingIcon.setVisible(false);
+         break;
+      case "die":
+         otherBettingIcon.setIcon(new ImageIcon("src/emotions/die_send.png"));
+         otherBettingIcon.setVisible(true);
+         otherMessage.setVisible(true);
+         Thread.sleep(1000);
+         otherMessage.setVisible(false);
+         otherBettingIcon.setVisible(false);
+         break;
+      }
    }
    private void gameEnd(String Loser) {
-	   moneyBoard.setVisible(false);
-	   mymoney.setVisible(false);
-	   panmoney.setVisible(false);
-	   sadBtn.setVisible(false);
-	   angryBtn.setVisible(false);
-	   thankBtn.setVisible(false);
-	   sorryBtn.setVisible(false);
-	   shuffle.setVisible(false);
-	   call.setVisible(false);
-	   bbing.setVisible(false);
-	   ddadang.setVisible(false);
-	   half.setVisible(false);
-	   die.setVisible(false);
-	   myJokbo.setVisible(false);
-	   myJokboBg.setVisible(false);
-	   durumari.setVisible(false);
-	   myLeft.getCard().setVisible(false);
-	   myRight.getCard().setVisible(false);
-	   otherLeft.getCard().setVisible(false);
-	   otherRight.getCard().setVisible(false);
-	   if (uID.equals(Loser)) {
-		   gameResult.setIcon(gameLose);
-		   gameResult.setVisible(true);
-	   }
-	   else {
-		   gameResult.setIcon(gameWin);
-		   gameResult.setVisible(true);;
-	   }
+      moneyBoard.setVisible(false);
+      mymoney.setVisible(false);
+      panmoney.setVisible(false);
+      sadBtn.setVisible(false);
+      angryBtn.setVisible(false);
+      thankBtn.setVisible(false);
+      sorryBtn.setVisible(false);
+      shuffle.setVisible(false);
+      call.setVisible(false);
+      bbing.setVisible(false);
+      ddadang.setVisible(false);
+      half.setVisible(false);
+      die.setVisible(false);
+      myJokbo.setVisible(false);
+      myJokboBg.setVisible(false);
+      durumari.setVisible(false);
+      myLeft.getCard().setVisible(false);
+      myRight.getCard().setVisible(false);
+      otherLeft.getCard().setVisible(false);
+      otherRight.getCard().setVisible(false);
+      if (uID.equals(Loser)) {
+         gameResult.setIcon(gameLose);
+         gameResult.setVisible(true);
+      }
+      else {
+         gameResult.setIcon(gameWin);
+         gameResult.setVisible(true);;
+      }
    }
 }

@@ -4,7 +4,7 @@ public class JokboMatch {
 
 
     public JokboMatch(String str) { // 积己磊
-    	String array[] = str.split(" ");
+       String array[] = str.split(" ");
         this.AJokbo = array[0];
         this.BJokbo = array[1];
     }
@@ -224,6 +224,8 @@ public class JokboMatch {
                 case "捞动":
                 case "绘动":
                     return "A";
+                case "噶烹":
+                   return "公铰何";
                 default:
                     return "B";
             }
@@ -241,6 +243,8 @@ public class JokboMatch {
                 case "捞动":
                 case "绘动":
                     return "B";
+                case "噶烹":
+                   return "公铰何";
                 default:
                     return "A";
             }

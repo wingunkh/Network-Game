@@ -47,14 +47,14 @@ public class RoomThread extends Thread{
       });
    }
 
-	public RoomThread(ServerSocket serverSocket, Socket socket, String creator) {
-		super();
-		this.serverSocket = serverSocket;
-		this.socket= socket;
-		this.creator = creator;
-		AcceptServer accept_server = new AcceptServer();
-		accept_server.start();
-	}
+   public RoomThread(ServerSocket serverSocket, Socket socket, String creator) {
+      super();
+      this.serverSocket = serverSocket;
+      this.socket= socket;
+      this.creator = creator;
+      AcceptServer accept_server = new AcceptServer();
+      accept_server.start();
+   }
 
 
    // 새로운 참가자 accept() 하고 user thread를 새로 생성한다.
@@ -207,8 +207,8 @@ public class RoomThread extends Thread{
                   msg = String.format("[%s] %s", cm.getId(),cm.getData());
                   WriteOneObject(cm);
                   if (UserVec.size() == 2) {
-                	  cm.setCode("104");
-                	  WriteAllObject(cm);
+                     cm.setCode("104");
+                     WriteAllObject(cm);
                   }
                } else if (cm.getCode().matches("400")) { // logout message 처리
                   Logout();
@@ -217,9 +217,8 @@ public class RoomThread extends Thread{
                   for (int i = 0; i < 4; i++) {
                      dupCheck[i] = rand.nextInt(20);
                      for (int j = 0; j < i; j++) {
-                        if (dupCheck[i] == dupCheck[j]) {
+                        if (dupCheck[i] == dupCheck[j])
                            i--;
-                        }
                      }
                   }
                   cm.setData(
@@ -228,40 +227,35 @@ public class RoomThread extends Thread{
                         )
                   );
                   msg = String.format("[%s] %s", cm.getId(), cm.getData());
-                  
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("2")) {
                   cm.setData(cm.getData());
                   msg = String.format("%s", cm.getData());
-                  
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("3")) {
                   cm.setData(cm.getData());
                   msg = String.format("%s", cm.getData());
-                   // server 화면에 출력
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("4")) {
                   cm.setData(cm.getData());
                   msg = String.format("%s", cm.getData());
-                   // server 화면에 출력
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("5")) {
                   cm.setData(cm.getData());
                   msg = String.format("%s", cm.getData());
-                   // server 화면에 출력
                   WriteAllObject(cm);
                } else if(cm.getCode().matches("6")) {
-             	  cm.setData(cm.getData());
-             	  msg = String.format("%s",  cm.getData());
-             	  WriteAllObject(cm);
+                  cm.setData(cm.getData());
+                  msg = String.format("%s",  cm.getData());
+                  WriteAllObject(cm);
                 } else if(cm.getCode().matches("7")) {
-            	  cm.setData(cm.getData());
-            	  msg = String.format("%s",  cm.getData());
-            	  WriteAllObject(cm);
+                 cm.setData(cm.getData());
+                 msg = String.format("%s",  cm.getData());
+                 WriteAllObject(cm);
                } else if(cm.getCode().matches("0")) {
-            	  cm.setData(cm.getData());
-            	  msg = String.format("%s", cm.getData());
-            	  WriteAllObject(cm);
+                 cm.setData(cm.getData());
+                 msg = String.format("%s", cm.getData());
+                 WriteAllObject(cm);
                }
             } catch (IOException e) {
                try {

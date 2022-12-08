@@ -36,11 +36,7 @@ public class JavaObjServerView extends JFrame {
    private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
    private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
    private Vector Room = new Vector();
-   
-   private int[] dupCheck = new int[4];
    private int cnt=0;
-   
-   private Random rand = new Random();
    public static void main(String[] args) {
       EventQueue.invokeLater(new Runnable() {
          public void run() {
@@ -201,7 +197,6 @@ public class JavaObjServerView extends JFrame {
       public void WriteOneObject(Object ob) {
          try {
             ChatMsg msg = (ChatMsg) ob;
-             System.out.println(String.format("WriteOneObject %s", msg.getCode()));
              oos.writeObject(ob);
          } 
          catch (IOException e) {
@@ -241,24 +236,6 @@ public class JavaObjServerView extends JFrame {
          }
       }
 
-		// 나를 제외한 User들에게 방송. 각각의 UserService Thread의 WriteONe() 을 호출한다.
-		public void WriteOthers(String str) {
-			for (int i = 0; i < user_vc.size(); i++) {
-				UserService user = (UserService) user_vc.elementAt(i);
-				if (user != this)
-					user.WriteOne(str);
-			}
-		}
-		
-		public void WriteOthersObject(Object ob) {
-			ChatMsg msg = (ChatMsg)ob;
-			for (int i = 0; i < user_vc.size(); i++) {
-				UserService user = (UserService) user_vc.elementAt(i);
-				if (user != this)
-					user.WriteOneObject(msg);
-			}
-		}
-
       public void run() {
          while (true) { // 사용자 접속을 계속해서 받기 위해 while문
             try {
@@ -293,47 +270,8 @@ public class JavaObjServerView extends JFrame {
                } else if (cm.getCode().matches("400")) { // logout message 처리
                   Logout();
                   break;
-               } else if (cm.getCode().matches("1")) {
-                  for (int i = 0; i < 4; i++) {
-                     dupCheck[i] = rand.nextInt(20);
-                     for (int j = 0; j < i; j++) {
-                        if (dupCheck[i] == dupCheck[j]) {
-                           i--;
-                        }
-                     }
-                  }
-                  cm.setData(
-                        String.format("%02d %02d %02d %02d",
-                           dupCheck[0], dupCheck[1], dupCheck[2], dupCheck[3]
-                        )
-                  );
-                  msg = String.format("[%s] %s", cm.getId(), cm.getData());
-                  AppendText(msg);
-                  WriteAllObject(cm);
-               } else if(cm.getCode().matches("2")) {
-                  cm.setData(cm.getData());
-                  msg = String.format("%s", cm.getData());
-                  AppendText(msg);
-                  WriteAllObject(cm);
-               } else if(cm.getCode().matches("3")) {
-                  cm.setData(cm.getData());
-                  msg = String.format("%s", cm.getData());
-                  AppendText(msg); // server 화면에 출력
-                  WriteAllObject(cm);
-               } else if(cm.getCode().matches("4")) {
-                  cm.setData(cm.getData());
-                  msg = String.format("%s", cm.getData());
-                  AppendText(msg); // server 화면에 출력
-                  WriteAllObject(cm);
-               } else if(cm.getCode().matches("5")) {
-                  cm.setData(cm.getData());
-                  msg = String.format("%s", cm.getData());
-                  AppendText(msg); // server 화면에 출력
-                  WriteAllObject(cm);
                } else if (cm.getCode().matches("101")){ // 로비 입장 프로토콜
                   cnt = 0;
-                  System.out.println("101 Lobby Enter Protocol");
-                  System.out.println(Room.size());
                   cm.setData(Integer.toString(Room.size()));
                   AppendText(msg);
                   WriteOneObject(cm);
@@ -358,7 +296,7 @@ public class JavaObjServerView extends JFrame {
                   if (cnt == (Room.size() - 1)) 
                      cm.setData(String.format("%d last %s %d", rt.getServerPort(), rt.getCreator(), rt.getUserCount()));
                   else
-                     cm.setData(String.format("%d yet ",  rt.getServerPort()));
+                     cm.setData(String.format("%d yet %s %d",  rt.getServerPort(), rt.getCreator(), rt.getUserCount()));
                   WriteOneObject(cm);
                   cnt++;
                } else if (cm.getCode().matches("999")) { // 방 생성 프로토콜
