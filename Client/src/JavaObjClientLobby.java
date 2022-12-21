@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -49,11 +48,11 @@ import javax.swing.UIManager;
 
 public class JavaObjClientLobby extends JFrame{
    private static final long serialVersionUID = 1L;
+   private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의 
    private JPanel contentPane;
    private JTextField txtInput;
    private String UserName;
    private JButton btnSend;
-   private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의 
    private Socket socket; // 연결소켓
    private ObjectInputStream ois;
    private ObjectOutputStream oos;
@@ -63,8 +62,6 @@ public class JavaObjClientLobby extends JFrame{
    private String uID;
    private String backSrc;
    private ImageIcon backIcon;
-   
-   private int mHoveredJListIndex = -1;
    
    private JScrollPane lobbyPane;
    DefaultListModel model;

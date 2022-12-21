@@ -1,5 +1,3 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,79 +6,87 @@ import java.net.Socket;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.Icon;
-import java.awt.Component;
 
 public class JavaObjClientGame extends JFrame {
    private static final long serialVersionUID = 1L;
-   private JPanel contentPane;
-   private String UserName;
    private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
    private Socket socket; // 연결소켓
    private ObjectInputStream ois;
    private ObjectOutputStream oos;
-   private JLabel lblUserName;
-   
-   /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
-   private String uID;
+
+   private JPanel contentPane;
    private JLabel Background;
-   private JButton shuffle;
+   
    private JLabel durumari;
    private JLabel bbing;
    private JLabel half;
    private JLabel ddadang;
    private JLabel die;
    private JLabel call;
-   private JLabel myJokbo;
    private JLabel myJokboBg;
+   private JLabel myJokbo;
+   
+   private JLabel userBoard;
+   private JLabel lblUserName;
+   private JLabel exitBtn;
+   
+   private JLabel moneyBoard;
    private JLabel panmoney;
    private JLabel mymoney;
-   private JLabel moneyBoard;
+   
    private JLabel myMessage;
    private JLabel otherMessage;
+   
    private JLabel angryBtn;
    private JLabel thankBtn;
-   private JLabel sadBtn;
    private JLabel sorryBtn;
+   private JLabel sadBtn;
+   
    private JLabel myEmotionIcon;
    private JLabel otherEmotionIcon;
    private JLabel myBettingIcon;
    private JLabel otherBettingIcon;
-   private String backSrc;
-   private ImageIcon backIcon;
+
+   private JLabel panResult;
+   private JLabel gameResult;
+
+   private JButton shuffle;
+   
    private Card myLeft;
    private Card myRight;
    private Card otherLeft;
    private Card otherRight;
-   private String array[];
+
    private Jokbo jokbo;
    private JokboMatch result;
-   private JLabel panResult;
-   private JLabel gameResult;
+
+   private String uID;
+   private String UserName;
+   private String array[];
+   private String backSrc = "src/images/background2.png";
    private String previous = "none";
+   
+   private int count=0;
+   private int amount=0;
+   private int property=100000;
+   private boolean toggle=true;
+   
+   private ImageIcon backIcon = new ImageIcon(new ImageIcon(backSrc).getImage()
+		   .getScaledInstance(900, 600, java.awt.Image.SCALE_SMOOTH));
    private ImageIcon panWin = new ImageIcon("src/images/smallWin.png");
    private ImageIcon panLose = new ImageIcon("src/images/smallLose.png");
    private ImageIcon panDraw = new ImageIcon("src/images/smallDraw.png");
    private ImageIcon gameWin = new ImageIcon("src/images/win.png");
    private ImageIcon gameLose = new ImageIcon("src/images/lose.png");
-   private int count=0;
-   private int amount=0;
-   private int property=100000;
-   private boolean toggle=true;
+   
    private MouseAdapter leftcardpressed = new MouseAdapter() {
        @Override
        public void mouseClicked(MouseEvent e) {
@@ -172,9 +178,6 @@ public class JavaObjClientGame extends JFrame {
            SendObject(msg);
        }
    };
-   private JLabel userBoard;
-   private JLabel exitBtn;
-   /*우리가 만든 JavaObjectClientView 클래스 내 지역변수 선언하는 공간*/
 
    public JavaObjClientGame(String username, String ip_addr, String port_no) {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -185,12 +188,30 @@ public class JavaObjClientGame extends JFrame {
       setContentPane(contentPane);
       contentPane.setLayout(null);
       
-      /*게임 배경*/
-      backSrc = "src/images/background2.png";
-      backIcon = new ImageIcon(new ImageIcon(backSrc).getImage().getScaledInstance(900, 600, java.awt.Image.SCALE_SMOOTH));     
-      /*게임 배경*/
+      /* 시작 버튼 */
+      shuffle = new JButton("");
+      shuffle.setIcon(new ImageIcon("src/buttons/Start1.png"));
+      shuffle.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+             ChatMsg msg = new ChatMsg(UserName, "1", "덱 분배");
+              SendObject(msg);
+          }
+          public void mouseEntered(MouseEvent e) {
+             shuffle.setIcon(new ImageIcon("src/buttons/Start2.png"));
+          }
+          public void mouseExited(MouseEvent e) {
+             shuffle.setIcon(new ImageIcon("src/buttons/Start1.png"));
+          }
+       });
+      shuffle.setBorderPainted(false);
+      shuffle.setContentAreaFilled(false);
+      shuffle.setBounds(165, 260, 140, 54);
+      shuffle.setVisible(false);
+      contentPane.add(shuffle);
+      /* 시작 버튼 */
 
-      /*화투 패*/
+      /* 화투 패 */
       myLeft = new Card(200, 210);
       myLeft.setCardBounds();
       contentPane.add(myLeft.getCard());
@@ -202,12 +223,69 @@ public class JavaObjClientGame extends JFrame {
       otherLeft = new Card(200, 210);
       otherLeft.setCardBounds();
       contentPane.add(otherLeft.getCard());
+      
       otherRight = new Card(200, 210);
       otherRight.setCardBounds();
       contentPane.add(otherRight.getCard());
-      /*화투 패*/
+      /* 화투 패 */
+       
+      /* 베팅 버튼 */
+      half = new JLabel(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      half.setToolTipText("\"1.5\uB9CC\uC6D0\"");
+      half.setBounds(686, 384, 130, 50);
+      contentPane.add(half);
       
-      /*내 족보*/
+      ddadang = new JLabel(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      ddadang.setToolTipText("\"2\uB9CC\uC6D0\"");
+      ddadang.setBounds(524, 444, 130, 50);
+      contentPane.add(ddadang);
+      
+      die = new JLabel(new ImageIcon(new ImageIcon("src/images/die2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      die.setBounds(686, 444, 130, 50);
+      contentPane.add(die);
+      call = new JLabel(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      call.setBounds(524, 504, 130, 50);
+      contentPane.add(call);
+      
+      bbing= new JLabel(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
+      bbing.setToolTipText("\"1\uB9CC\uC6D0\"");
+      bbing.setBounds(524, 384, 130, 50);
+      contentPane.add(bbing);
+      /* 베팅 버튼 */
+      
+      /* 베팅 표현 */
+      myBettingIcon = new JLabel("myBettingIcon");
+      myBettingIcon.setLocation(192, 340);
+      myBettingIcon.setVisible(false);
+      myBettingIcon.setSize(64, 40);
+      contentPane.add(myBettingIcon);
+      
+      otherBettingIcon = new JLabel("otherBettingIcon");
+      otherBettingIcon.setLocation(192, 170);
+      otherBettingIcon.setSize(64, 40);
+      otherBettingIcon.setVisible(false);
+      contentPane.add(otherBettingIcon);
+      /* 베팅 표현 */
+      
+      /* 내 족보 */
+      myJokbo = new JLabel();
+      myJokbo.setLocation(706, 504);
+      myJokbo.setSize(110, 50);
+      myJokbo.setFont(new Font("한컴 울주 반구대 암각화체", Font.PLAIN, 28));
+      contentPane.add(myJokbo);
+      
+      myJokboBg = new JLabel();
+      myJokboBg.setLocation(686, 504);
+      myJokboBg.setSize(130, 50);
+      myJokboBg.setIcon(new ImageIcon("src/images/flower.png"));
+      contentPane.add(myJokboBg);
+      /* 내 족보 */
+      
+      /* 두루마리 */
+      durumari = new JLabel(new ImageIcon(new ImageIcon("src/images/durumari.png").getImage().getScaledInstance(400, 240, java.awt.Image.SCALE_SMOOTH)));
+      durumari.setBounds(476, 345, 400, 240);
+      contentPane.add(durumari);
+      /* 두루마리 */
       
       /* 감정 표현 */
       angryBtn = new JLabel("New label");
@@ -215,16 +293,16 @@ public class JavaObjClientGame extends JFrame {
       angryBtn.setBounds(12, 545, 110, 42);
       contentPane.add(angryBtn);
       
-      sorryBtn = new JLabel("New label");
-      sorryBtn.setIcon(new ImageIcon("src/emotions/sorry2.png"));
-      sorryBtn.setBounds(232, 545, 110, 42);
-      contentPane.add(sorryBtn);
-      
       thankBtn = new JLabel("New label");
       thankBtn.setIcon(new ImageIcon("src/emotions/thank2.png"));
       thankBtn.setBounds(122, 545, 110, 42);
       contentPane.add(thankBtn);
       
+      sorryBtn = new JLabel("New label");
+      sorryBtn.setIcon(new ImageIcon("src/emotions/sorry2.png"));
+      sorryBtn.setBounds(232, 545, 110, 42);
+      contentPane.add(sorryBtn);
+     
       sadBtn = new JLabel("New label");
       sadBtn.setIcon(new ImageIcon("src/emotions/sad2.png"));
       sadBtn.setBounds(342, 545, 110, 42);
@@ -247,6 +325,23 @@ public class JavaObjClientGame extends JFrame {
         }
       });
       
+      thankBtn.addMouseListener(new MouseAdapter() {
+          public void mouseEntered(MouseEvent e) {
+             thankBtn.setIcon(new ImageIcon("src/emotions/thank1.png"));
+          }
+          public void mouseExited(MouseEvent e) {
+             thankBtn.setIcon(new ImageIcon("src/emotions/thank2.png"));
+          }
+          public void mouseClicked(MouseEvent e) {
+            ChatMsg msg;
+            if(uID.equals("1"))
+               msg = new ChatMsg(UserName, "7", "1 thank");
+            else 
+               msg = new ChatMsg(UserName, "7", "2 thank");
+            SendObject(msg);
+           }
+       });
+      
       sorryBtn.addMouseListener(new MouseAdapter() {
          public void mouseEntered(MouseEvent e) {
             sorryBtn.setIcon(new ImageIcon("src/emotions/sorry1.png"));
@@ -260,23 +355,6 @@ public class JavaObjClientGame extends JFrame {
               msg = new ChatMsg(UserName, "7", "1 sorry");
            else 
               msg = new ChatMsg(UserName, "7", "2 sorry");
-           SendObject(msg);
-          }
-      });
-      
-      thankBtn.addMouseListener(new MouseAdapter() {
-         public void mouseEntered(MouseEvent e) {
-            thankBtn.setIcon(new ImageIcon("src/emotions/thank1.png"));
-         }
-         public void mouseExited(MouseEvent e) {
-            thankBtn.setIcon(new ImageIcon("src/emotions/thank2.png"));
-         }
-         public void mouseClicked(MouseEvent e) {
-           ChatMsg msg;
-           if(uID.equals("1"))
-              msg = new ChatMsg(UserName, "7", "1 thank");
-           else 
-              msg = new ChatMsg(UserName, "7", "2 thank");
            SendObject(msg);
           }
       });
@@ -297,146 +375,77 @@ public class JavaObjClientGame extends JFrame {
            SendObject(msg);
           }
       });
-      myEmotionIcon = new JLabel("myEmotionIcon");
+      
+      myEmotionIcon = new JLabel();
       myEmotionIcon.setLocation(205, 345);
       myEmotionIcon.setVisible(false);
       myEmotionIcon.setSize(35, 35);
       contentPane.add(myEmotionIcon);
-      otherEmotionIcon = new JLabel("otherEmotionIcon");
+      
+      otherEmotionIcon = new JLabel();
       otherEmotionIcon.setLocation(205, 175);
       otherEmotionIcon.setSize(35, 35);
       otherEmotionIcon.setVisible(false);
       contentPane.add(otherEmotionIcon);
       /* 감정 표현 */
-      /* 베팅 표현 */
-      myBettingIcon = new JLabel("myBettingIcon");
-      myBettingIcon.setLocation(192, 340);
-      myBettingIcon.setVisible(false);
-      myBettingIcon.setSize(64, 40);
-      contentPane.add(myBettingIcon);
-      otherBettingIcon = new JLabel("otherBettingIcon");
-      otherBettingIcon.setLocation(192, 170);
-      otherBettingIcon.setSize(64, 40);
-      otherBettingIcon.setVisible(false);
-      contentPane.add(otherBettingIcon);
-      /* 베팅 표현 */
-      /* 내 족보 */
-      myJokbo = new JLabel();
-      myJokbo.setLocation(706, 504);
-      myJokbo.setSize(110, 50);
-      myJokbo.setFont(new Font("휴먼옛체", Font.PLAIN, 28));
-      contentPane.add(myJokbo);
       
-      myJokboBg = new JLabel();
-      myJokboBg.setLocation(686, 504);
-      myJokboBg.setSize(130, 50);
-      myJokboBg.setIcon(new ImageIcon("src/images/flower.png"));
-      contentPane.add(myJokboBg);
-      /*내 족보*/
-      
-      /*판돈*/
+      /* 판돈 */
       panmoney = new JLabel(Integer.toString(amount), SwingConstants.RIGHT);
       panmoney.setForeground(new Color(255, 255, 255));
       panmoney.setFont(new Font("맑은 고딕 Semilight", Font.BOLD, 25));
       panmoney.setBounds(608, 253, 110, 28);
       contentPane.add(panmoney);
-      /*판돈*/
+      /* 판돈 */
       
-      /*내돈*/  
+      /* 개인 보유금액 */  
       mymoney = new JLabel("100000", SwingConstants.RIGHT);
       mymoney.setForeground(new Color(255, 255, 255));
       mymoney.setFont(new Font("맑은 고딕 Semilight", Font.BOLD, 20));
       mymoney.setBounds(620, 299, 100, 19);
       contentPane.add(mymoney);
-      /*내돈*/
+      /* 개인 보유금액 */
       
-      /*말풍선*/
-      myMessage = new JLabel("");
+      /* 금액 표시판 */
+      moneyBoard = new JLabel("New label");
+      moneyBoard.setIcon(new ImageIcon("src/images/moneyboard.png"));
+      moneyBoard.setBounds(484, 246, 275, 83);
+      contentPane.add(moneyBoard);
+      /* 금액 표시판 */
+      
+      /* 말풍선 */
+      myMessage = new JLabel();
       myMessage.setBounds(180, 330, 90, 80);
       myMessage.setVisible(false);
       myMessage.setIcon(new ImageIcon("src/images/myBubble.png"));
       contentPane.add(myMessage);
       
-      otherMessage = new JLabel("");
+      otherMessage = new JLabel();
       otherMessage.setBounds(180, 145, 90, 80);
       otherMessage.setVisible(false);
       otherMessage.setIcon(new ImageIcon("src/images/otherBubble.png"));
       contentPane.add(otherMessage);
-      /*말풍선*/
-      
-      /* 배팅 버튼 */
-      half = new JLabel(new ImageIcon(new ImageIcon("src/images/half2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-      half.setToolTipText("\"1.5\uB9CC\uC6D0\"");
-      half.setBounds(686, 384, 130, 50);
-      contentPane.add(half);
-      
-      ddadang = new JLabel(new ImageIcon(new ImageIcon("src/images/ddadang2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-      ddadang.setToolTipText("\"2\uB9CC\uC6D0\"");
-      ddadang.setBounds(524, 444, 130, 50);
-      contentPane.add(ddadang);
-      
-      die = new JLabel(new ImageIcon(new ImageIcon("src/images/die2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-      die.setBounds(686, 444, 130, 50);
-      contentPane.add(die);
-      call = new JLabel(new ImageIcon(new ImageIcon("src/images/call2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-      call.setBounds(524, 504, 130, 50);
-      contentPane.add(call);
-      
-      bbing= new JLabel(new ImageIcon(new ImageIcon("src/images/bbing2.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
-      bbing.setToolTipText("\"1\uB9CC\uC6D0\"");
-      bbing.setBounds(524, 384, 130, 50);
-      contentPane.add(bbing);
-      
-      shuffle = new JButton("");
-      shuffle.setIcon(new ImageIcon("src/buttons/Start1.png"));
-      shuffle.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-             ChatMsg msg = new ChatMsg(UserName, "1", "덱 분배");
-              SendObject(msg);
-          }
-          public void mouseEntered(MouseEvent e) {
-             shuffle.setIcon(new ImageIcon("src/buttons/Start2.png"));
-          }
-          public void mouseExited(MouseEvent e) {
-             shuffle.setIcon(new ImageIcon("src/buttons/Start1.png"));
-          }
-       });
-      shuffle.setBorderPainted(false);
-      shuffle.setContentAreaFilled(false);
-      shuffle.setBounds(165, 260, 140, 54);
-      shuffle.setVisible(false);
-      contentPane.add(shuffle);
-      /* 배팅 버튼 */
-      /*시작 버튼*/
+      /* 말풍선 */
 
-      /*두루마리*/
-      durumari = new JLabel(new ImageIcon(new ImageIcon("src/images/durumari.png").getImage().getScaledInstance(400, 240, java.awt.Image.SCALE_SMOOTH)));
-      durumari.setBounds(476, 345, 400, 240);
-      contentPane.add(durumari);
-      /*두루마리*/
-
+      /* 사용자명 */
+      UserName = username;
       lblUserName = new JLabel("Name");
+      lblUserName.setText(username);
       lblUserName.setBackground(Color.WHITE);
       lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
       lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
       lblUserName.setBounds(746, 17, 62, 40);
       contentPane.add(lblUserName);
       setVisible(true);
+      /* 사용자명 */
 
-      UserName = username;
-      lblUserName.setText(username);
-      
-      moneyBoard = new JLabel("New label");
-      moneyBoard.setIcon(new ImageIcon("src/images/moneyboard.png"));
-      moneyBoard.setBounds(484, 246, 275, 83);
-      contentPane.add(moneyBoard);
-      
+      /* 사용자명 표시판 */
       userBoard = new JLabel("New label");
       userBoard.setIcon(new ImageIcon("src/images/userboard.png"));
       userBoard.setBounds(743, 10, 70, 54);
       contentPane.add(userBoard);
+      /* 사용자명 표시판 */
       
+      /* 종료버튼 */
       exitBtn = new JLabel("New label");
       exitBtn.setIcon(new ImageIcon("src/buttons/Exit1.png"));
       exitBtn.setBounds(813, 10, 63, 54);
@@ -454,23 +463,29 @@ public class JavaObjClientGame extends JFrame {
           }
        });
       contentPane.add(exitBtn);
+      /* 종료버튼 */
       
+      /* 각 판 결과 */
       panResult = new JLabel("New label");
       panResult.setBounds(120, 235, 200, 100);
       panResult.setVisible(false);
       contentPane.add(panResult);
+      /* 각 판 결과 */
       
+      /* 최종 결과 */
       gameResult = new JLabel("New label");
       gameResult.setBounds(175, 29, 500, 525);
       gameResult.setVisible(false);
       contentPane.add(gameResult);
+      /* 최종 결과 */
       
+      /* 게임 배경화면 */
       Background = new JLabel("");
-      Background.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 15));
       Background.setIcon(backIcon);
       Background.setBounds(0, 0, 884, 595);
       contentPane.add(Background);
-      
+      /* 게임 배경화면 */
+
       try {
          socket = new Socket(ip_addr, Integer.parseInt(port_no));
 
@@ -513,14 +528,14 @@ public class JavaObjClientGame extends JFrame {
                } else
                   continue;
                switch (cm.getCode()) {
-               case "100":
+               case "100": //로그인 프로토콜
                   uID=cm.getData();
                   break;
-               case "104":
-                 shuffle.setVisible(true);
-                 contentPane.repaint();
-                 break;
-               case "1":
+               case "104": //시작 버튼 생성 프로토콜 (방 인원 2명일 시)
+                  shuffle.setVisible(true);
+                  contentPane.repaint();
+                  break;
+               case "1": //카드 분배 프로토콜
                   array = cm.getData().split(" ");
                   shuffle.setVisible(false);
                   myLeft.getCard().setVisible(true);
@@ -546,7 +561,7 @@ public class JavaObjClientGame extends JFrame {
                   updateMymoney(property-=10000);
                   updatePanmoney(amount+=20000);
                   break;
-               case "2":
+               case "2": //패 공개 프로토콜
                   if(cm.getData().equals("1 myLeft")) {
                      Opening(cm.getData());
                   }
@@ -560,15 +575,15 @@ public class JavaObjClientGame extends JFrame {
                      Opening(cm.getData());
                   }
                   break;
-               case "3":
+               case "3": //베팅 시작 프로토콜
                   if(uID.equals("1")) {
-                      ChatMsg chatmsg = new ChatMsg(UserName, "4", "배팅 시작!");
+                      ChatMsg chatmsg = new ChatMsg(UserName, "4", "베팅 시작!");
                        SendObject(chatmsg);
                   }
                   break;
-               case "4":
+               case "4": //베팅 활성화 프로토콜 (toggle)
                   if(toggle) {
-                     if(uID.equals("1")) // 여기까지 정상
+                     if(uID.equals("1"))
                         batting();
                       else
                          waitbatting();  
@@ -582,7 +597,7 @@ public class JavaObjClientGame extends JFrame {
                      toggle=!toggle;
                   }
                   break;
-               case "5":
+               case "5": //베팅 진행 프로토콜
                   if(!(cm.getData().split(" ")[1].equals("call")))
                       previous = cm.getData().split(" ")[1];
                   if(!previous.equals("none")&&(!(cm.getData().split(" ")[0].equals(uID)))) {
@@ -700,18 +715,17 @@ public class JavaObjClientGame extends JFrame {
                      battle();
                   }
                   break;
-               case "6": //배팅 표시 프로토콜
+               case "6": //베팅 말풍선 프로토콜
                   waitbatting();
-                  if (cm.getData().split(" ")[0].equals("1")) { //1번 client에서 배팅 누를 경우
-                     if (uID.equals("1")) //1번 client에서 출력
+                  if (cm.getData().split(" ")[0].equals("1")) {
+                     if (uID.equals("1"))
                         printMyBetting(cm.getData().split(" ")[1]);
-                     else {//2번 client에서 출력
+                     else {
                         printOtherBetting(cm.getData().split(" ")[1]);
                         batting();
                      }
-                     
                   }
-                  else {//2번 client에서 배팅 누를 경우
+                  else {//2번 client에서 베팅 누를 경우
                      if (uID.equals("1")) {//1번 client에서 출력
                         printOtherBetting(cm.getData().split(" ")[1]);
                         batting();
@@ -720,21 +734,21 @@ public class JavaObjClientGame extends JFrame {
                         printMyBetting(cm.getData().split(" ")[1]);
                   }
                   break;
-               case "7": //감정표현 프로토콜
-                  if (cm.getData().split(" ")[0].equals("1")) { //1번 client에서 배팅 누를 경우
-                     if (uID.equals("1")) //1번 client에서 출력
+               case "7": //감정표현 말풍선 프로토콜
+                  if (cm.getData().split(" ")[0].equals("1")) {
+                     if (uID.equals("1"))
                         printMyEmotion(cm.getData().split(" ")[1]);
-                     else //2번 client에서 출력
+                     else
                         printOtherEmotion(cm.getData().split(" ")[1]);
                   }
-                  else {//2번 client에서 배팅 누를 경우
-                     if (uID.equals("1")) //1번 client에서 출력
+                  else {
+                     if (uID.equals("1"))
                         printOtherEmotion(cm.getData().split(" ")[1]);
-                     else //2번 client에서 출력
+                     else
                         printMyEmotion(cm.getData().split(" ")[1]);
                   }
                   break;
-               case "0": //게임 전체 승패 프로토콜
+               case "0": //최종 승패 결정 프로토콜
                   gameEnd(cm.getData().split(" ")[0]);
                   break;
                }
@@ -747,10 +761,9 @@ public class JavaObjClientGame extends JFrame {
                   break;
                } catch (Exception ee) {
                   break;
-               } // catch문 끝
-            } // 바깥 catch문끝
+               }
+            }
             catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             }
          }
@@ -1039,7 +1052,7 @@ public class JavaObjClientGame extends JFrame {
       count++;
       if(count == 2) {
          if(uID.equals("1")) {
-            ChatMsg msg = new ChatMsg(UserName, "3", "배팅버튼 활성화");
+            ChatMsg msg = new ChatMsg(UserName, "3", "베팅버튼 활성화");
               SendObject(msg);  
          }
       }
@@ -1050,7 +1063,6 @@ public class JavaObjClientGame extends JFrame {
          bbing.addMouseListener(bbingpressed);
          bbing.setIcon(new ImageIcon(new ImageIcon("src/images/bbing1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
       }
-         
       if(property>15000) {
          half.addMouseListener(halfpressed);
          half.setIcon(new ImageIcon(new ImageIcon("src/images/half1.png").getImage().getScaledInstance(130, 50,java.awt.Image.SCALE_SMOOTH)));
@@ -1145,7 +1157,7 @@ public class JavaObjClientGame extends JFrame {
    }
    
    public void battle() throws InterruptedException {
-      if(uID.equals("1"))
+       if(uID.equals("1"))
            result = new JokboMatch(new Jokbo(myLeft, myRight).calculateJokbo()+" "+new Jokbo(otherLeft, otherRight).calculateJokbo());
        else
            result = new JokboMatch(new Jokbo(otherLeft, otherRight).calculateJokbo()+" "+new Jokbo(myLeft, myRight).calculateJokbo());
@@ -1211,6 +1223,7 @@ public class JavaObjClientGame extends JFrame {
          SendObject(end);
       }
    }
+   
    private void printMyEmotion(String emotion) throws InterruptedException {
       switch(emotion) {
       case "angry":
@@ -1221,6 +1234,22 @@ public class JavaObjClientGame extends JFrame {
          myMessage.setVisible(false);
          myEmotionIcon.setVisible(false);
          break;
+      case "thank":
+          myEmotionIcon.setIcon(new ImageIcon("src/emotions/thank_icon.png"));
+          myEmotionIcon.setVisible(true);
+          myMessage.setVisible(true);
+          Thread.sleep(1000);
+          myMessage.setVisible(false);
+          myEmotionIcon.setVisible(false);
+          break;
+      case "sorry":
+          myEmotionIcon.setIcon(new ImageIcon("src/emotions/sorry_icon.png"));
+          myEmotionIcon.setVisible(true);
+          myMessage.setVisible(true);
+          Thread.sleep(1000);
+          myMessage.setVisible(false);
+          myEmotionIcon.setVisible(false);
+          break;
       case "sad":
          myEmotionIcon.setIcon(new ImageIcon("src/emotions/sad_icon.png"));
          myEmotionIcon.setVisible(true);
@@ -1229,24 +1258,9 @@ public class JavaObjClientGame extends JFrame {
          myMessage.setVisible(false);
          myEmotionIcon.setVisible(false);
          break;
-      case "thank":
-         myEmotionIcon.setIcon(new ImageIcon("src/emotions/thank_icon.png"));
-         myEmotionIcon.setVisible(true);
-         myMessage.setVisible(true);
-         Thread.sleep(1000);
-         myMessage.setVisible(false);
-         myEmotionIcon.setVisible(false);
-         break;
-      case "sorry":
-         myEmotionIcon.setIcon(new ImageIcon("src/emotions/sorry_icon.png"));
-         myEmotionIcon.setVisible(true);
-         myMessage.setVisible(true);
-         Thread.sleep(1000);
-         myMessage.setVisible(false);
-         myEmotionIcon.setVisible(false);
-         break;
       }
    }
+   
    private void printOtherEmotion(String emotion) throws InterruptedException {
       switch(emotion) {
       case "angry":
@@ -1257,6 +1271,22 @@ public class JavaObjClientGame extends JFrame {
          otherMessage.setVisible(false);
          otherEmotionIcon.setVisible(false);
          break;
+      case "thank":
+          otherEmotionIcon.setIcon(new ImageIcon("src/emotions/thank_icon.png"));
+          otherEmotionIcon.setVisible(true);
+          otherMessage.setVisible(true);
+          Thread.sleep(1000);
+          otherMessage.setVisible(false);
+          otherEmotionIcon.setVisible(false);
+          break;
+      case "sorry":
+          otherEmotionIcon.setIcon(new ImageIcon("src/emotions/sorry_icon.png"));
+          otherEmotionIcon.setVisible(true);
+          otherMessage.setVisible(true);
+          Thread.sleep(1000);
+          otherMessage.setVisible(false);
+          otherEmotionIcon.setVisible(false);
+          break;
       case "sad":
          otherEmotionIcon.setIcon(new ImageIcon("src/emotions/sad_icon.png"));
          otherEmotionIcon.setVisible(true);
@@ -1265,24 +1295,9 @@ public class JavaObjClientGame extends JFrame {
          otherMessage.setVisible(false);
          otherEmotionIcon.setVisible(false);
          break;
-      case "thank":
-         otherEmotionIcon.setIcon(new ImageIcon("src/emotions/thank_icon.png"));
-         otherEmotionIcon.setVisible(true);
-         otherMessage.setVisible(true);
-         Thread.sleep(1000);
-         otherMessage.setVisible(false);
-         otherEmotionIcon.setVisible(false);
-         break;
-      case "sorry":
-         otherEmotionIcon.setIcon(new ImageIcon("src/emotions/sorry_icon.png"));
-         otherEmotionIcon.setVisible(true);
-         otherMessage.setVisible(true);
-         Thread.sleep(1000);
-         otherMessage.setVisible(false);
-         otherEmotionIcon.setVisible(false);
-         break;
       }
    }
+   
    private void printMyBetting(String betting) throws InterruptedException {
       switch(betting) {
       case "call":
@@ -1327,6 +1342,7 @@ public class JavaObjClientGame extends JFrame {
          break;
       }
    }
+   
    private void printOtherBetting(String betting) throws InterruptedException {
       switch(betting) {
       case "call":
@@ -1371,15 +1387,9 @@ public class JavaObjClientGame extends JFrame {
          break;
       }
    }
+   
    private void gameEnd(String Loser) {
-      moneyBoard.setVisible(false);
-      mymoney.setVisible(false);
-      panmoney.setVisible(false);
-      sadBtn.setVisible(false);
-      angryBtn.setVisible(false);
-      thankBtn.setVisible(false);
-      sorryBtn.setVisible(false);
-      shuffle.setVisible(false);
+      durumari.setVisible(false);
       call.setVisible(false);
       bbing.setVisible(false);
       ddadang.setVisible(false);
@@ -1387,11 +1397,23 @@ public class JavaObjClientGame extends JFrame {
       die.setVisible(false);
       myJokbo.setVisible(false);
       myJokboBg.setVisible(false);
-      durumari.setVisible(false);
+      
+      moneyBoard.setVisible(false);
+      panmoney.setVisible(false);
+      mymoney.setVisible(false);
+      
+      angryBtn.setVisible(false);
+      thankBtn.setVisible(false);
+      sorryBtn.setVisible(false);
+      sadBtn.setVisible(false);
+      
+	  shuffle.setVisible(false);
+      
       myLeft.getCard().setVisible(false);
       myRight.getCard().setVisible(false);
       otherLeft.getCard().setVisible(false);
       otherRight.getCard().setVisible(false);
+      
       if (uID.equals(Loser)) {
          gameResult.setIcon(gameLose);
          gameResult.setVisible(true);

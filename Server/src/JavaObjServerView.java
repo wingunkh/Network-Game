@@ -27,14 +27,13 @@ import java.util.Random;
 
 public class JavaObjServerView extends JFrame {
    private static final long serialVersionUID = 1L;
+   private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
    private JPanel contentPane;
    JTextArea textArea;
    private JTextField txtPortNumber;
-
    private ServerSocket socket; // 서버소켓
    private Socket client_socket; // accept() 에서 생성된 client 소켓
    private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
-   private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
    private Vector Room = new Vector();
    private int cnt=0;
    public static void main(String[] args) {
@@ -257,7 +256,7 @@ public class JavaObjServerView extends JFrame {
                   AppendObject(cm);
                } else
                   continue;
-               if (cm.getCode().matches("100")) {
+               if (cm.getCode().matches("100")) { //로그인 프로토콜
                   UserName = cm.getId();
                   cm.setData(Integer.toString(user_vc.size()));
                   msg = String.format("[%s] %s", cm.getId(),cm.getData());
@@ -335,9 +334,9 @@ public class JavaObjServerView extends JFrame {
                   break;
                } catch (Exception ee) {
                   break;
-               } // catch문 끝
-            } // 바깥 catch문끝
-         } // while
-      } // run
+               }
+            } 
+         } 
+      } 
    }
 }

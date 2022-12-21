@@ -2,11 +2,10 @@
 import java.io.Serializable;
 import javax.swing.ImageIcon;
 
-/*--------------------9주차--------------------*/
 class ChatMsg implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
-	private String code; // 100:로그인, 400:로그아웃, 200:채팅메시지, 300:Image
+	private String code;
 	private String data;
 	public ImageIcon img;
 
@@ -44,4 +43,3 @@ class ChatMsg implements Serializable {
 		this.img = img;
 	}
 }
-/*--------------------9주차--------------------*/
